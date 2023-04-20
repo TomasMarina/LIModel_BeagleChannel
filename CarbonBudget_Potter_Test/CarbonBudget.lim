@@ -1,0 +1,326 @@
+Data    :   Potter Cove Carbon Budget model 
+
+Units   :   Fluxes:             g C/m2/d
+            Standing stocks:    g C/m2
+
+### PARAMETERS
+!
+!-- Stock
+!
+BioPHY  = 2.21
+BioMEZO = 0.0032
+BioMIZO = 0.0008 		! Micro zooplankton
+BioMAZO = 0.068
+BioMPB  = 0.15     		! Microphyto benthos
+BioMAA  = 24    		! Macro algae
+BioDET_s  = 61.46  		! Sediment Detritus
+BioBAC_w = 0.0015     	! Water column prokBiomass Biomass ==ariotes
+BioBAC_s = 0.052 		! Soft Sediment Prokaryotes
+BioIBMA = 16.6			! Inbenthic macrofauna
+BioIBME = 6.5 			! Inbenthic meiofauna
+BioEBMA = 34.5			! Epibenthic mega fauna
+BioDOC  = 10            ! Dissolved Organic Carbon
+
+!-- RESPIRATION DATA 
+	
+RespirationIBMA     =      182.99 {g C m-2 Year-1}
+RespirationIBME     =      182.99 {g C m-2 Year-1}
+RespirationFISH     =      29.54  {g C m-2 Year-1}
+
+ProductionMAA       =      42.48  
+ProductionPHY       =      36.59  
+
+ProductionDET_p     =     0.018 ! MAA->DET_p
+
+
+!-- CONSTRAINTS  --!  
+!!!!!!!!!!!!!!!!!!!!  
+
+!-- General - used for compartments that have respiration data
+ minAE        =  0.40  !
+ maxAE        =  0.80 
+ minPE        =  0.30
+ maxPE        =  0.60
+
+
+!--
+minAE_EBMA     = 0.26
+maxAE_EBMA     = 0.61   ! Ascidians+Laternula @Taitan2008
+
+!-- Bacteria
+ minBGE       =  0.20
+ maxBGE       =  0.45
+
+
+### END PARAMETERS
+
+###### STOCK
+
+PHY    = BioPHY    ! phytoplankton 
+MAA    = BioMAA    ! Macro algae
+MPB    = BioMPB    ! Microphyto benthos
+BAC_s  = BioBAC_s  ! Soft Sediment Prokaryotes
+BAC_w  = BioBAC_w  ! Water column prokariotes
+FISH    = XNA
+IBMA   = BioIBMA   ! Inbenthic macrofauna
+IBME   = BioIBME   ! Inbenthic meiofauna
+EBMA   = BioEBMA   ! Epibenthic mega fauna
+MIZO   = BioMIZO   ! Micro zooplankton
+MEZO   = BioMEZO   ! Meso zooplankton
+MAZO   = BioMAZO   ! Macro zooplankton (Salps & Krill)
+DET_s  = BioDET_s  ! Sediment Detritus
+DET_w  = BioDOC    ! Water column detritus =DOC???
+DET_p  = XNA       ! Phyto detritus
+
+### END STOCK
+
+##### EXTERNALS 
+ 
+EXP 
+DIC
+
+### END EXTERNALS
+
+###### FLOW 
+
+!-- Outflows are defined together 
+
+!-- Phytoplankton
+DIC ->  PHY     ! Primary production Growth
+PHY ->  MIZO    ! predation by micro zooplankton 
+PHY ->  MEZO    ! predation by meso zooplankton 
+PHY ->  DIC     ! respiration
+PHY ->  DET_w   ! Deposition 
+PHY ->  EXP     ! export production
+
+!-- Macro algae
+DIC ->  MAA     ! NPP Growth
+MAA ->  FISH    ! predation by fish  
+MAA ->  EBMA    ! predation by epibenthic macrofauna  
+MAA ->  MAZO    ! predation by macro zooplankton 
+MAA ->  DIC     ! respiration
+MAA ->  DET_p   ! to phyto detritus 
+MAA ->  EXP     ! export production
+
+!-- Microphytobenthos 
+DIC ->  MPB     ! NPP Growth
+MPB ->  IBME    ! predation by meio benthos   
+MPB ->  EBMA    ! predation by epibenthic macrofauna  
+MPB ->  IBMA    ! predation by inbenthic macro
+MPB ->  DIC     ! respiration
+MPB ->  DET_s   ! to phyto detritus 
+
+!-- Bacteria_sediment
+BAC_s ->  DIC   !respiration
+BAC_s ->  DET_s !death
+BAC_s ->  IBMA   !grazing
+BAC_s ->  IBME   !grazing
+BAC_s ->  EBMA   !grazing
+	
+!-- Bacteria_water column
+DET_w ->  BAC_w  !
+BAC_w ->  DIC    !respiration
+BAC_w ->  DET_w  !death
+BAC_w ->  IBMA   !grazing
+BAC_w ->  EBMA   !grazing
+BAC_w ->  MIZO   !grazing
+
+!-- Fish
+FISH   ->  DIC   !respiration
+FISH   ->  EXP   !export production
+FISH   ->  DET_w !faeces production
+
+!-- Inbenthic macrofauna 
+IBMA   ->  DIC   !respiration
+IBMA   ->  EBMA  !predation by epibenthic macrofauna
+IBMA   ->  DET_s !faeces production
+
+!-- Inbenthic meiofauna 
+IBME   ->  DIC   !respiration
+IBME   ->  EBMA  !predation by epibenthic macrofauna
+IBME   ->  DET_s !faeces production
+
+!-- Epibenthic macrofauna 
+EBMA   ->  DIC   !respiration
+EBMA   ->  DET_s !faeces production
+
+
+!-- Macro Zooplankton 
+MAZO  ->  FISH   !feeding on water column macro zooplankton
+MAZO  ->  DIC   !respiration
+MAZO  ->  EXP   !export production
+MAZO  ->  DET_w !faeces production
+
+
+!-- Meso Zooplankton 
+MEZO  ->  FISH   !feeding on water column macro zooplankton
+MEZO  ->  DIC   !respiration
+MEZO  ->  EXP   !export production
+MEZO  ->  DET_w !faeces production
+
+!-- Micro Zooplankton 
+MIZO  ->  MEZO   !feeding on water column macro zooplankton
+MIZO  ->  MAZO   !feeding on water column macro zooplankton
+MIZO  ->  DIC   !respiration
+MIZO  ->  DET_w !faeces production
+
+!!!!!!!!!!!!!!!!!!!!
+!--   SEDIMENT   --!
+!!!!!!!!!!!!!!!!!!!!
+ 
+!-- Detritus_sediment
+DET_p ->  DET_s  ! Phyto detritus to sediment 
+DET_w ->  DET_s  !deposition of detritus
+DET_w ->  EBMA   !consumption by epi macrofauna
+DET_p ->  EBMA   !consumption by epi macrofauna
+DET_w ->  IBMA   !consumption by in macrofauna
+DET_s ->  IBMA   !consumption by in macrofauna
+DET_s ->  IBME   !consumption by in meiofauna
+DET_s ->  BAC_s  !consumption by sedimentary bacteria
+DET_p ->  BAC_w  !consumption by water column bacteria
+
+
+!-- Bacteria_sediment
+BAC_s ->  DIC    !respiration
+BAC_s ->  DET_s  !death
+BAC_s ->  IBMA   !grazing
+BAC_s ->  IBME   !grazing
+
+################################ END FLOW
+
+
+###### VARIABLES 
+
+!-- Macroalgae
+
+ DecompMAA        =  MAA->DET_p
+
+!-- Phytoplankton 
+ RespPHY         =  PHY->DIC                         ! Respiration
+ UptaPHY         =  DIC->PHY                         ! Production 
+ ProdPHY         =  UptaPHY - RespPHY - PHY->DET_w   
+
+!-- Macroalgae  
+ RespMAA         =  MAA->DIC 
+ UptaMAA         =  DIC->MAA
+ ProdMAA         =  UptaMAA - RespMAA - MAA->DET_p
+
+!-- MicroPhytoBenthos MPB  
+ RespMPB         =  MPB->DIC 
+ UptaMPB         =  DIC->MPB
+ ProdMPB         =  UptaMPB - RespMPB - MPB->DET_s
+
+!-- Sediment bacteria
+ RespBAC_s       =  BAC_s->DIC
+ UptaBAC_s       =  flowto(BAC_s)
+ ProdBAC_s       =  UptaBAC_s - RespBAC_s - BAC_s -> DET_s
+
+!-- Water column Pelagic bacteria
+ RespBAC_w       =  BAC_w->DIC                               ! Respiration
+ UptaBAC_w       =  flowto(BAC_w)                             ! 
+ ProdBAC_w       =  UptaBAC_s - RespBAC_s - BAC_w -> DET_w
+
+
+!-- Inbenthic macrofauna
+ RespIBMA         =  IBMA->DIC
+ UptaIBMA         =  flowto(IBMA) 
+ AssiIBMA         =  UptaIBMA - IBMA->DET_s
+ ProdIBMA         =  AssiIBMA - RespIBMA  
+
+!-- Inbenthic meiofauna
+ RespIBME         =  IBME->DIC
+ UptaIBME         =  flowto(IBME) 
+ AssiIBME         =  UptaIBME - IBME->DET_s
+ ProdIBME         =  AssiIBME - RespIBME  
+
+!-- Epibenthic macrofauna
+ RespEBMA         =  EBMA->DIC
+ UptaEBMA         =  flowto(EBMA) 
+ AssiEBMA         =  UptaEBMA - EBMA->DET_s
+ ProdEBMA         =  AssiEBMA - RespEBMA  
+
+!-- Micro Zooplankton 
+ RespMIZO         =  MIZO->DIC
+ UptaMIZO         =  flowto(MIZO) 
+ AssiMIZO         =  UptaMIZO - MIZO->DET_w
+ ProdMIZO         =  AssiMIZO - RespMIZO  
+
+
+!-- Meso  Zooplankton 
+ RespMEZO         =  MEZO->DIC
+ UptaMEZO         =  flowto(MEZO) 
+ AssiMEZO         =  UptaMEZO - MEZO->DET_w
+ ProdMEZO         =  AssiMEZO - RespMEZO  
+
+!-- Macro Zooplankton 
+ RespMAZO         =  MAZO->DIC
+ UptaMAZO         =  flowto(MAZO) 
+ AssiMAZO         =  UptaMAZO - MAZO->DET_w
+ ProdMAZO         =  AssiMAZO - RespMAZO  
+
+!-- Fish
+ RespFISH         =  FISH->DIC
+ UptaFISH         =  flowto(FISH)           !sums all inflows  
+ AssiFISH         =  UptaFISH - FISH->DET_w
+ ProdFISH         =  AssiFISH - RespFISH  
+
+### END VARIABLES
+
+
+
+################################ EQUATION 
+
+!-- Respiration/Production equations
+
+RespIBMA     =   RespirationIBMA
+RespIBME     =   RespirationIBME
+RespFISH     =   RespirationFISH
+ProdMAA      =   ProductionMAA  
+ProdPHY      =   ProductionPHY
+DecompMAA    =   DecompositionMAA 
+
+################################ END EQUATION
+
+################################ CONSTRAINT 
+
+!-- Physiological constraints
+! AE = Assimilation efficiency
+! PE = Production efficiency
+! BGE = Bacterial growth efficiency
+
+!-- Sedimentary bacteria
+ ProdBAC_s       =  [minBGE,maxBGE]*UptaBAC_s
+
+!-- Water col  bacteria
+ ProdBAC_w       =  [minBGE,maxBGE]*UptaBAC_w
+
+!-- Fish
+ AssiFISH         =  [minAE,maxAE]*UptaFISH
+ ProdFISH         =  [minPE,maxPE]*AssiFISH
+
+!-- IBMA
+ AssiIBMA         =  [minAE,maxAE]*UptaIBMA
+ ProdIBMA         =  [minPE,maxPE]*AssiIBMA
+
+!-- IBME
+ AssiIBME         =  [minAE,maxAE]*UptaIBME
+ ProdIBME         =  [minPE,maxPE]*AssiIBME
+
+!-- EBMA
+ AssiEBMA         =  [minAE_EBMA,maxAE_EBMA]*UptaEBMA
+ ProdEBMA         =  [minPE,maxPE]*AssiEBMA
+
+!-- MAZO
+ AssiMAZO         =  [minAE,maxAE]*UptaMAZO
+ ProdMAZO         =  [minPE,maxPE]*AssiMAZO
+
+!-- MEZO
+ AssiMEZO         =  [minAE,maxAE]*UptaMEZO
+ ProdMEZO         =  [minPE,maxPE]*AssiMEZO
+
+!-- MIZO
+ AssiMIZO         =  [minAE,maxAE]*UptaMIZO
+ ProdMIZO         =  [minPE,maxPE]*AssiMIZO
+
+
+################################ END CONSTRAINT 

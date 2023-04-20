@@ -1,0 +1,337 @@
+---
+title: "Potter Cove Carbon Budget"
+author: "L.A.S."
+date: "December 1, 2016"
+output: html_document
+---
+
+## Estimation of phytoplankton standing stock 
+
+
+
+```{r DataConversion, eval=TRUE}
+
+load(".RData")
+
+chla <- read.delim("../CarbonBudgetData/chla_mgdm3_PotterCove.dat")
+require(dplyr)
+chla <-  chla %>% mutate(chlaE1 = replace(chlaE1, chlaE1==0, NA),chlaE2 = replace(chlaE2, chlaE2==0, NA),chlaTot=(chlaE1+chlaE2)/2)
+
+require(fitdistrplus)
+chla1 <- as.numeric(na.omit(chla$chlaTot))
+chla_dist <- descdist(chla1, discrete=FALSE, boot=500)
+
+
+chla_dist$mean * 1e-3 * 55
+chla_dist$max  * 1e-3 * 55
+chla_dist$min  * 1e-3 * 55
+
+```
+
+* Mean Standing stock anual Chla µg/l mg/m2 40.12
+      * SD 96.59
+      * Min 1.50
+      * Max 1042.64
+      * Median 18.69
+* mg -> 1e-3 g          
+* µg chla -> 55 µg C 
+
+* Mean phyto C g/m2 2.206862
+* Max phyto C g/m2  57.3452
+* Min phyto C g/m2  0.0826
+
+```{r DataConversionPhyto, eval=TRUE}
+require(dplyr)
+# Anual average standing stock 
+#
+data <- tibble(box="Phyto",type="Stock",
+                mean= round(chla_dist$mean,4) * 1e-3 * 55 ,
+                max = round(chla_dist$max,4)  * 1e-3 * 55 ,
+                min = round(chla_dist$min,4)  * 1e-3 * 55,
+                sd =  round(chla_dist$sd,4)  * 1e-3 * 55)
+
+
+# Production
+
+# Data from Schloss, I. R., Ferreyra, G. A., & Curtosi, A. (1988). Phytoplankton prirnary production in Potter Cove, King George Island. In C. Wiencke, G. Ferreyra, W. E. Arntz, & C. Rinaldi (Eds.), The Potter Cove Coastal Ecosystem, Antarctica. Ber. Polarforsch. (Vol. 299, pp. 67–73).
+
+# Producción (mg C m-2 día-1) de 91 a 478 media 236 para producción (para pasar a anual multiplicar por 180 dias). Ambos guarismos son de Schloss, Ferreyra, Curtosi. También aparecen en Tesis Schloss  48.68 g C m² año-1. 
+
+# data <- data %>% mutate(type="Stock")
+# data <- select(data, box,type,mean:sd)
+
+data <- add_row(data, box="Phyto", type="Prod", 
+                mean= 236*180/1000,
+                max = 478*180/1000,
+                min = 91*180/1000)
+
+```
+
+# Zoo plankton
+
+* Garcia, M. D., Hoffmeyer, M. S., Abbate, M. C. L., Barría de Cao, M. S., Pettigrosso, R. E., Almandoz, G. O., … Schloss, I. R. (2016). Micro- and mesozooplankton responses during two contrasting summers in a coastal Antarctic environment. Polar Biology, 39(1), 123–137. https://doi.org/10.1007/s00300-015-1678-z
+
+Units are  micro zoo µg/l C = -> 1e-06*1000 g m-3
+Units are  meso zoo µg/m3 C = -> 1e-06 g m-3
+Units are  macrozoo µg/m3 C = -> 1e-06 g m-3
+
+conversion from m3 to Area --> Area of PC / Volume of PC above 30 m  = 0.1380776919 m2/m3
+
+
+
+```{r DataConversionZoo, eval=TRUE}
+# Anual average standing stock 
+#
+#
+
+areaVol <- 0.1380776919
+
+data <- add_row(data, box="MacroZoo", type="Stock",mean=(494940.97*1e-6*areaVol),
+                          max=(4418890.21*1e-6*areaVol),
+                          min=0)
+data <- add_row(data, box="MesoZoo", type="Stock", mean=(22871.32*1e-6*areaVol),
+                          max=(97133.15*1e-6*areaVol),
+                          min=(171.21*1e-6*areaVol))
+
+data <- add_row(data, box="MicroZoo", type="Stock", mean=(5.50*1e-3*areaVol),
+                          max=(35.96*1e-3*areaVol),
+                          min=(0.46*1e-3*areaVol))
+
+data %>% mutate_if(is.numeric, round, digits=4) 
+
+
+```
+
+# Epibentos Sahade - Barnes 2006
+
+Standard conversions 
+@brey2010   C/Dry Mass 0.3587,  C/AFDM 0.4745
+
+```{r DataConversionEPI, eval=TRUE}
+
+require(dplyr)
+
+data <- add_row(data, box="EpiBenthos",type="Stock", mean=(34.76),
+                          max=(70.1286926365),
+                          min=(2.3348481999))
+
+save.image()
+
+```
+
+
+
+# Summer Macroalgae from @quartino2008a Extrapolated to the whole cove surface
+
+
+@Quartino2008 g de peso seco de alga = 18,75 Joules
+
+@Neveux2015 g de peso seco a Carbon = 0.28575
+
+```{r DataConversionMACRO, eval=TRUE}
+
+#
+data <- add_row(data, box="Macroalgae", type="Stock",
+                mean=round(83.95*0.286,4),
+                          max=NA,
+                          min=NA)
+
+data <- add_row(data, box="Macroalgae", type="Prod", 
+                mean=round(127.94*0.286,4),
+                          max=NA,
+                          min=NA)
+
+data %>% mutate_if(is.numeric, round, digits=4) 
+
+```
+
+
+# Summer Meiofauna 0 - 5 cm
+#
+
+```{r DataConversionMEIO, eval=TRUE}
+
+data <- add_row(data, box="InMacro", type="Stock", mean=16.93)
+
+data <- add_row(data, box="InMeio", type="Stock", mean=6.4663)
+
+
+```
+
+
+
+## Bacterial standing stock
+
+
+Mean 1e8 Cells/L
+Max  1e9
+min  1e6 
+
+5 fgC/Cell
+
+1 fg = 1e-15 g
+
+1 L integrated in 30 m is 300
+
+```{r BacterialStock, eval=TRUE}
+
+temp <- (1e8* 5* 1e-15* 300)
+tem1 <- (1e9* 5* 1e-15* 300)
+tem2 <- (1e6* 5* 1e-15* 300)
+
+data <- add_row(data, box="PelagicBact", type="Stock", mean=temp,max=tem1,min=tem2)
+
+# Bacteria in Sediments 
+# From @Pasotti2015a
+# multiplied by the Proportion of soft sediments in PC 0.6864
+
+data <- add_row(data, box="SedimentBact",type="Stock",
+                mean=0.076 * 0.6864)
+
+data %>% mutate_if(is.numeric, round, digits=4) 
+
+
+save.image()
+```
+
+# Fish metabolism 
+
+@Campbell2008
+[units]  mg de O2 / 100 g x h
+
+```{r fishMetabolism, eval=TRUE}
+
+
+# Conversion molC/molO2 x 100 / 1000
+# the average values of winter from april to november= 248 days (see fig 4)
+
+temp_winter <- (1.48 * 0.375348450566896 * 100/1000)* 248
+temp_sumer  <- (3.59 * 0.375348450566896 * 100/1000)* (365-248)
+
+
+data <- add_row(data, box="Fish", type="Resp",
+                mean=temp_winter+temp_sumer)
+
+# Range: invierno 1 a 4 / verano 1,5 a 5
+
+temp_winter <- (1 * 0.375348450566896 * 100/1000)* 248
+temp_sumer  <- (1.5 * 0.375348450566896 * 100/1000)* (365-248)
+
+data[13,]$min <- temp_winter+temp_sumer
+
+temp_winter <- (4 * 0.375348450566896 * 100/1000)* 248
+temp_sumer  <- (5 * 0.375348450566896 * 100/1000)* (365-248)
+
+data[13,]$max <- temp_winter+temp_sumer
+
+data %>% mutate_if(is.numeric, round, digits=4) 
+
+save.image()
+```
+
+# Microphytobentos
+
+@Atencio2008
+```{r stockMPB, eval=FALSE}
+
+
+temp <-c(5.04, 6.17, 3.07, 1.05, 3.6) # means
+temp1 <-c(0.05, 0.05,0.14, 0.05, 0.5) # SD
+
+
+# MPB in Sediments 
+# 
+# multiplied by the Proportion of soft sediments in PC 0.6864
+
+temp <-weighted.mean(temp,1/temp1)   #[mg chla/ m2]
+
+temp <- temp/1000*55*0.6864  # g/1000mg 55C/chla SoftSediment/TotalArea
+
+data <- add_row(data, box="MPB", type="Stock",
+                mean=temp)
+data %>% mutate_if(is.numeric, round, digits=4) 
+
+```
+
+# DOC
+
+@Ferreyra2008
+
+DOC (µ Mol C/L)
+
+micro Mol /L =  12 micro g /L = mili g /m3 = 1e-3 g/m3
+
+conversion from m3 to Area --> Area of PC / Volume of PC above 30 m  = 0.1380776919 m2/m3
+
+```{r stockDOC, eval=FALSE}
+
+temp <- 39.15 * 12 * 1e-03 * 0.1380776919
+
+data <- add_row(data, box="DOCWater",type="Stock", mean=(39.15*1e-3*areaVol),
+                          max=(55.15*1e-3*areaVol),
+                          min=(24.84*1e-3*areaVol))
+#data<-data[-14,]
+
+
+data <- add_row(data, box="POCWater",type="Stock", mean=(21.18*1e-3*areaVol),
+                          max=(41.45*1e-3*areaVol),
+                          min=(9.46*1e-3*areaVol))
+
+data %>% mutate_if(is.numeric, round, digits=4) 
+
+0.0076+.0057
+save.image()
+```
+
+
+## Use LIM package to obtain unknown flows
+
+```{r testLim, eval=FALSE}
+
+require(LIM)
+require(dplyr)
+require(tidyr)
+web.lim<-Setup("R/PotterCove_new.lim")
+#web.lim<-Setup("R/PotterCove_test.lim")
+
+#web.lim<-Setup("R/ScheldtIntertidal.input")
+
+
+
+pars <- Ldei(web.lim)
+webranges<- Xranges(web.lim)
+xs <-Xsample(web.lim,jmp=10,iter=500)
+
+dxs <- gather(data.frame(xs),flowname,flowvalue)
+library(ggplot2)
+
+flow_names <- unique(dxs$flowname) 
+for(i in flow_names) 
+  {
+  print(ggplot(dxs %>% filter(flowname==i), aes(x = flowvalue)) + 
+     #geom_histogram(bins = 10) + facet_wrap(~flowname, scales = 'free_x'))
+     geom_density() + facet_wrap(~flowname, scales = 'free_x'))
+  }  
+# 
+# p <- ggplot(dxs, aes(flowname,flowvalue)) + geom_point()
+# p + stat_summary(fun.y = "mean", colour = "red", size = 1, geom = "point") +theme_bw()+coord_flip() + scale_y_log10()
+
+mdxs <-  dxs %>% group_by(flowname) %>% summarise(mflow = mean(flowvalue), sdflow= sd(flowvalue), high= mflow+sdflow,low=mflow-sdflow ) %>% arrange(desc(mflow))
+write.csv(mdxs,"Data/flowdata.csv")
+
+require(viridis)
+ggplot(mdxs, aes(flowname,mflow,colour=flowname)) + geom_point() + geom_linerange(aes(ymin = low, ymax = high)) +theme_bw()+coord_flip() + scale_y_log10() + scale_colour_viridis(discrete = T,guide=FALSE) 
+ggsave("Figures/FluxesRanges2020.jpg",width=7,height=7,units="in",dpi=600)
+
+## Solamente para PHY 
+##
+ggplot(mdxs %>% filter(grepl('PHY',flowname)), aes(flowname,mflow,colour=flowname)) + geom_point() + geom_linerange(aes(ymin = low, ymax = high)) + theme_bw()+coord_flip() + scale_colour_viridis(discrete = T,guide=FALSE) 
+
+ggplot(mdxs %>% filter(grepl('BAC_s',flowname)), aes(flowname,mflow,colour=flowname)) + geom_point() + geom_linerange(aes(ymin = low, ymax = high)) + theme_bw()+coord_flip() + scale_colour_viridis(discrete = T,guide=FALSE) 
+
+ggplot(mdxs %>% filter(grepl('BAC_w',flowname)), aes(flowname,mflow,colour=flowname)) + geom_point() + geom_linerange(aes(ymin = low, ymax = high)) + theme_bw()+coord_flip() + scale_colour_viridis(discrete = T,guide=FALSE) 
+
+ggplot(mdxs %>% filter(grepl('FISH',flowname)), aes(flowname,mflow,colour=flowname)) + geom_point() + geom_linerange(aes(ymin = low, ymax = high)) + theme_bw()+coord_flip() + scale_colour_viridis(discrete = T,guide=FALSE) 
+
+```
+

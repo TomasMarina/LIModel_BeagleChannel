@@ -1,0 +1,1277 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"xm",
+				"xmax"
+			],
+			[
+				"mean",
+				"mean_sims"
+			],
+			[
+				"Re",
+				"ReplacementRate"
+			],
+			[
+				"DE",
+				"DeltaDq"
+			],
+			[
+				"Peri",
+				"PERIwd"
+			],
+			[
+				"ol",
+				"oldcd"
+			],
+			[
+				"BCI",
+				"BCIwd"
+			],
+			[
+				"d1_",
+				"d1_delta"
+			],
+			[
+				"bib",
+				"bib"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "R/CWC_Rockall.input",
+			"settings":
+			{
+				"buffer_size": 23506,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "R/ScheldtIntertidal.input",
+			"settings":
+			{
+				"buffer_size": 19754,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "R/PotterCove_test.lim",
+			"settings":
+			{
+				"buffer_size": 8851,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "R/PotterCove.lim",
+			"settings":
+			{
+				"buffer_size": 8631,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/leonardo/Dropbox/Projects/Becas/becaGualterio_LAS.md",
+			"settings":
+			{
+				"buffer_size": 28443,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/leonardo/Dropbox/Projects/PotterCove/FoodWebStability/Talk_Cambridge.Rmd",
+			"settings":
+			{
+				"buffer_size": 5456,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/leonardo/Dropbox/Cursos/MathEcology/Curso3.1.Rmd",
+			"settings":
+			{
+				"buffer_size": 9481,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/leonardo/Dropbox/Ecología Trófica Marina/MANUSCRITOS EN PREPARACIÓN 2016-17/TOMAS/Small-world/Analisis_R/small-world.R",
+			"settings":
+			{
+				"buffer_size": 6751,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/home/leonardo/Dropbox/Projects/PotterCove/FoodWebTopology/Grado.txt",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "R/foodwebs.lim",
+			"settings":
+			{
+				"buffer_size": 1268,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Comments.md",
+			"settings":
+			{
+				"buffer_size": 11617,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Draft.md",
+			"settings":
+			{
+				"buffer_size": 4596,
+				"line_ending": "Unix",
+				"name": "# Carbon fluxes and bentho-pelagic link in the wes"
+			}
+		},
+		{
+			"file": "Notes.md",
+			"settings":
+			{
+				"buffer_size": 8504,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Tasks.md",
+			"settings":
+			{
+				"buffer_size": 1523,
+				"line_ending": "Unix",
+				"name": "# TASKS"
+			}
+		},
+		{
+			"file": "/home/leonardo/Dropbox/Projects/PotterCove/CarbonBudgetData/Benthos_data_pangea.md",
+			"settings":
+			{
+				"buffer_size": 570,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/leonardo/R/x86_64-pc-linux-gnu-library/3.3/LIM/doc/examples/Foodweb/Takapoto.input",
+			"settings":
+			{
+				"buffer_size": 8426,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/home/leonardo/Dropbox/Projects/CriticalGlobalForest/makefile",
+			"settings":
+			{
+				"buffer_size": 1001,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "CarbonBudget.mak",
+			"settings":
+			{
+				"buffer_size": 855,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/leonardo/Dropbox/Pandoc/Git_commands.md",
+			"settings":
+			{
+				"buffer_size": 3574,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "Packages/User/pandoc.sublime-build",
+	"command_palette":
+	{
+		"height": 392.0,
+		"selected_items":
+		[
+			[
+				"synxm",
+				"Set Syntax: XML"
+			],
+			[
+				"synxml",
+				"Set Syntax: XML"
+			],
+			[
+				"syh",
+				"Set Syntax: HTML"
+			],
+			[
+				"syr",
+				"Set Syntax: R"
+			],
+			[
+				"ynr",
+				"Set Syntax: R"
+			],
+			[
+				"synr",
+				"Set Syntax: R"
+			],
+			[
+				"synp",
+				"Set Syntax: Pandoc"
+			],
+			[
+				"ta",
+				"Table Editor: Disable for current view"
+			],
+			[
+				"tae",
+				"Table Editor: Enable for current view"
+			],
+			[
+				"Package Control: ",
+				"Package Control: List Packages"
+			],
+			[
+				"syp",
+				"Set Syntax: Pandoc"
+			],
+			[
+				"Package Control: in",
+				"Package Control: Install Package"
+			],
+			[
+				"pack",
+				"Package Control: Install Package"
+			],
+			[
+				"sR",
+				"SublimeREPL: R"
+			],
+			[
+				"syn p",
+				"Set Syntax: Pandoc"
+			],
+			[
+				"syR",
+				"Set Syntax: R"
+			],
+			[
+				"syn",
+				"Set Syntax: Pandoc"
+			],
+			[
+				"r",
+				"Rot13 Selection"
+			],
+			[
+				"sy",
+				"Set Syntax: Pandoc"
+			],
+			[
+				"synR",
+				"Set Syntax: R"
+			],
+			[
+				"Snippet: ",
+				"Snippet: Add eta-squared abbreviation based n LaTeX definition"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"packa",
+				"Package Control: Remove Package"
+			],
+			[
+				"previ",
+				"Markdown Preview: preview in Browser"
+			],
+			[
+				"mark",
+				"Markdown Preview: open Markdown Cheat sheet"
+			],
+			[
+				"prev",
+				"Markdown Preview: preview in Browser"
+			],
+			[
+				"contr",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 602.0
+	},
+	"console":
+	{
+		"height": 139.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/leonardo/Dropbox/Projects/PotterCove/FoodWebStability/Lotka-VolterraGeneralizedNetworkModel.md",
+		"/home/leonardo/Dropbox/Projects/Becas/repair/word/document.xml",
+		"/home/leonardo/Dropbox/Multifractals/CriticalTransition/ctnhm.md",
+		"/home/leonardo/Downloads/scholar (1).ris",
+		"/home/leonardo/Dropbox/Projects/PotterCove/FoodWebSmallWorld/AllNetworksDegree.dat",
+		"/home/leonardo/Dropbox/Projects/PotterCove/FoodWebSmallWorld/AllNetworksParms.dat",
+		"/home/leonardo/Dropbox/Projects/NetworkComplexity/Weddel.csv",
+		"/home/leonardo/Dropbox/Projects/NetworkComplexity/Data/EcologicalArchivesE086-135-D1/bodysizes_2008.txt",
+		"/home/leonardo/R/x86_64-pc-linux-gnu-library/3.4/LIM/doc/examples/Foodweb/ScheldtIntertidal.input",
+		"/home/leonardo/blog/lsaracad/_drafts/2017-09-24-How-food-webs-cope-with-environmental-change.md",
+		"/home/leonardo/Dropbox/Projects/PotterCove/CarbonBudget/CarbonBudget.lim",
+		"/home/leonardo/Dropbox/Projects/PotterCove/CarbonBudget/CB12.lim",
+		"/home/leonardo/Dropbox/Projects/PotterCove/CarbonBudget/CB8.lim",
+		"/home/leonardo/Dropbox/Projects/PotterCove/CarbonBudget/CB5.lim",
+		"/home/leonardo/R/x86_64-pc-linux-gnu-library/3.4/LIM/doc/examples/Foodweb/foodweb.lim",
+		"/home/leonardo/blog/lsaracad/_pages/about.md",
+		"/home/leonardo/R/x86_64-pc-linux-gnu-library/3.4/LIM/doc/examples/Foodweb/Takapoto.input",
+		"/home/leonardo/R/x86_64-pc-linux-gnu-library/3.4/LIM/doc/examples/Foodweb/Hausgarten_LIMpackage.input",
+		"/home/leonardo/R/x86_64-pc-linux-gnu-library/3.4/LIM/doc/examples/Foodweb/ExampleLIM_Underdetermined.input",
+		"/home/leonardo/Downloads/inferring-critical-points-of-ecosystem-transitions-from-spatial-data.ris",
+		"/home/leonardo/blog/lsaracad/.gitignore",
+		"/home/leonardo/blog/lsaracad/_talks/.gitignore",
+		"/home/leonardo/Dropbox/Projects/PotterCove/CarbonBudget/R/PotterCove.input",
+		"/home/leonardo/Dropbox/Projects/PotterCove/CarbonBudget/CarbonBudget.md",
+		"/home/leonardo/Dropbox/Projects/PotterCove/CarbonBudget/R/RigaAutumn.input",
+		"/home/leonardo/Dropbox/Projects/CriticalGlobalForest/Results/africa/africa_AF_1_randomized_p_sweep.R",
+		"/home/leonardo/Dropbox/Projects/CriticalGlobalForest/Results/copy.sh",
+		"/home/leonardo/blog/lsarnew/content/post/managing-content.md",
+		"/home/leonardo/blog/lsarnew/config.toml",
+		"/home/leonardo/blog/lsarnew/content/post/migrate-from-jekyll.md",
+		"/home/leonardo/blog/lsarnew/content/post/writing-markdown-latex.md",
+		"/home/leonardo/blog/lsarnew/content/project/multifractals-in-r.md",
+		"/home/leonardo/blog/lsarnew/content/project/multifractals-in-r/Curso1.md",
+		"/home/leonardo/blog/lsarnew/content/publication/clothing-search.md",
+		"/home/leonardo/blog/lsarnew/content/publication/_index.md",
+		"/home/leonardo/blog/lsarnew/content/project/deep-learning.md",
+		"/home/leonardo/blog/lsaravia/source/project/multifractals-in-r/Curso1.md",
+		"/home/leonardo/blog/lsarnew/content/home/projects.md",
+		"/home/leonardo/blog/lsarnew/content/tags/academic/_index.md",
+		"/home/leonardo/blog/lsarnew/content/post/_index.md",
+		"/home/leonardo/Dropbox/Projects/NetworkComplexity/Notes.md",
+		"/home/leonardo/blog/lsarnew/content/post/getting-started.md",
+		"/home/leonardo/blog/lsaravia/_config.yml",
+		"/home/leonardo/blog/lsaravia/source/_posts/2013-08-29-multifractals-in-ecology-using-r.md",
+		"/home/leonardo/blog/lsarnew/content/project/example-external-project.md",
+		"/home/leonardo/blog/lsaravia/source/project/metapopulations-in-r/index.md",
+		"/home/leonardo/blog/lsaravia/source/aboutme.html",
+		"/home/leonardo/blog/lsarnew/content/home/about.md",
+		"/home/leonardo/blog/lsarnew/content/home/posts.md",
+		"/home/leonardo/blog/lsarnew/content/home/publications.md",
+		"/home/leonardo/blog/lsarnew/content/home/contact.md",
+		"/home/leonardo/blog/lsaravia/source/index.html",
+		"/home/leonardo/Dropbox/Projects/PotterCove/FoodWebStability/Figures/mystyle.tex",
+		"/home/leonardo/Downloads/La importancia de la estupidez en la investigación.md",
+		"/home/leonardo/Dropbox/Projects/CriticalGlobalForest/Results/africa/africa_AF_1_30_perc_threshold_in_MOD44B.MRTWEB.A2014065.051.Percent_Tree_Cover.tif_Correlation_analisys.R",
+		"/home/leonardo/Academicos/MOD44B051/hdf/listfileMOD44B.051.txt",
+		"/home/leonardo/Dropbox/Projects/PotterCove/CarbonBudget/Data/SoftSedBiom_Avg_UGent_PF_UB.xlsx",
+		"/home/leonardo/Dropbox/Projects/NetworkComplexity/Data/Sources.md",
+		"/home/leonardo/Dropbox/Projects/NetworkComplexity/LaComplejidadDeLasRedesComplejas.md",
+		"/home/leonardo/Downloads/Antarctic FoodsWebs/WEB20.csv",
+		"/home/leonardo/Downloads/Antarctic FoodsWebs/WEB341.csv",
+		"/home/leonardo/Downloads/Antarctic FoodsWebs/WEB340.csv",
+		"/home/leonardo/Downloads/Antarctic FoodsWebs/WEB266.csv",
+		"/home/leonardo/Downloads/Antarctic FoodsWebs/WEB30.csv",
+		"/home/leonardo/Dropbox/Ecología Trófica Marina/MANUSCRITOS EN PREPARACIÓN 2016-17/GEORGINA/Modelo Georgina.txt",
+		"/home/leonardo/Dropbox/Ecología Trófica Marina/redcompletaconmei.csv",
+		"/home/leonardo/Dropbox/Projects/PotterCove/CarbonBudgetData/Pasotti-etal_2013/datasets/PotterCove_pigments.tab",
+		"/home/leonardo/Dropbox/Projects/CGFCorrLength/Fit_heavy_tails.Rmd",
+		"/home/leonardo/Dropbox/Projects/PotterCove/CarbonBudgetData/chla_mgm3_PotterCove.dat",
+		"/home/leonardo/Dropbox/CV/cv2016.md",
+		"/home/leonardo/R/x86_64-pc-linux-gnu-library/3.4/LIM/doc/examples/Foodweb/BrouageMudflat.input",
+		"/home/leonardo/Dropbox/Projects/PotterCove/CarbonBudgetData/CBModel.Rmd",
+		"/home/leonardo/Dropbox/Projects/PotterCove/CarbonBudgetData/chla_mgdm3_PotterCove.dat",
+		"/home/leonardo/Dropbox/Ecología Trófica Marina/MANUSCRITOS EN PREPARACIÓN 2016-17/TOMAS/Small-world/Redes empiricas/PotterCove_FW.csv",
+		"/home/leonardo/Dropbox/Projects/CriticalGlobalForest/RBE2016/AbstractJASAFO.md",
+		"/home/leonardo/Dropbox/Multifractals/CriticalTransition/Talks/Ungs_Talk.md",
+		"/home/leonardo/Dropbox/LabBiologia/PICT2016/DescripcionTecnicaPICT2017.md",
+		"/home/leonardo/Dropbox/Projects/IndicSuelo/NullModels/Outline.md",
+		"/home/leonardo/Dropbox/Projects/PotterCove/CarbonBudgetData/Benthos_data_conversion.dat",
+		"/home/leonardo/Dropbox/Projects/PotterCove/CarbonBudgetData/Benthos_data_pangea.dat",
+		"/home/leonardo/Dropbox/Projects/PotterCove/CarbonBudgetData/Benthos_data.dat",
+		"/home/leonardo/Dropbox/Projects/PotterCove/ModelingPhytoZoo/PhytoBlooms/CorrMonth.dat",
+		"/home/leonardo/Dropbox/Projects/PotterCove/ModelingPhytoZoo/PhytoBlooms/PhytoBloomsMonthly.Rmd",
+		"/home/leonardo/Dropbox/Projects/CGFCorrLength/Download_modis.md",
+		"/home/leonardo/Dropbox/Projects/PotterCove/CarbonBudget/R/CWC_Rockall.input",
+		"/home/leonardo/Downloads/connectedComponent.hpp",
+		"/home/leonardo/Downloads/10.1007%2F978-3-642-59419-9_34.ris",
+		"/home/leonardo/Dropbox/Projects/CGFCorrLength/MOD44B051/hdf/modisMOD44B.051.log",
+		"/home/leonardo/Dropbox/Projects/CGFCorrLength/MOD44B051/hdf/listfileMOD44B.051.txt",
+		"/home/leonardo/Dropbox/Projects/PotterCove/CarbonBudget/R/foodwebs.lim",
+		"/home/leonardo/R/x86_64-pc-linux-gnu-library/3.3/LIM/doc/examples/Foodweb/RigaAutumn.input",
+		"/home/leonardo/.netrc file",
+		"/home/leonardo/Dropbox/Projects/CGFCorrLength/MOD44B051/Download.txt",
+		"/home/leonardo/.cache/.fr-76NomF/summary.txt",
+		"/home/leonardo/Dropbox/Projects/CGFCorrLength/Map_study_areas.Rmd",
+		"/home/leonardo/Dropbox/Projects/CriticalGlobalForest/Map_Max_patches.Rmd",
+		"/home/leonardo/.bashrc",
+		"/home/leonardo/Dropbox/Projects/PotterCove/CarbonBudgetData/chla.dat",
+		"/home/leonardo/.cache/.fr-vroSWf/summary.txt",
+		"/home/leonardo/.cache/.fr-jjwA1A/summary.txt",
+		"/home/leonardo/Dropbox/Projects/PotterCove/FoodWebStability/Test_bkgr.tex",
+		"/home/leonardo/Dropbox/Projects/PotterCove/FoodWebStability/Figures/beamer_template.tex",
+		"/home/leonardo/Dropbox/Projects/PotterCove/FoodWebStability/Figures/mystyle1.tex",
+		"/home/leonardo/Dropbox/Projects/PotterCove/CarbonBudget/.gitignore",
+		"/home/leonardo/Dropbox/Projects/nhtn/.gitignore",
+		"/home/leonardo/blog/oldblog/source/_includes/custom/head.html",
+		"/home/leonardo/blog/oldblog/source/_includes/custom/header.html",
+		"/home/leonardo/blog/oldblog/source/_includes/custom/widgets.html",
+		"/home/leonardo/blog/oldblog/source/_includes/custom/navigation.html",
+		"/home/leonardo/blog/oldblog/source/aboutme.html",
+		"/home/leonardo/blog/oldblog/source/_includes/custom/footer.html",
+		"/home/leonardo/blog/coffee-cafe/_layouts/default.html",
+		"/home/leonardo/Dropbox/cpp/CaNew/IpsMultiContact/IpsMultiContact.h",
+		"/home/leonardo/blog/oldblog/source/_includes/site/navigation.html",
+		"/home/leonardo/blog/oldblog/source/_includes/custom/asides/about.html",
+		"/home/leonardo/blog/oldblog/source/_includes/custom/intro.html",
+		"/home/leonardo/Dropbox/Revisiones/AnnalsForestScience/Comments.md",
+		"/home/leonardo/R/x86_64-pc-linux-gnu-library/3.3/LIM/doc/examples/Foodweb/foodweb.lim",
+		"/home/leonardo/Dropbox/Projects/PotterCove/CarbonBudget/R/test_fw.lim",
+		"/home/leonardo/R/x86_64-pc-linux-gnu-library/3.3/LIM/doc/examples/Foodweb/simple.input",
+		"/home/leonardo/R/x86_64-pc-linux-gnu-library/3.3/LIM/doc/examples/Foodweb/RigaSpring.input",
+		"/home/leonardo/Dropbox/Projects/PotterCove/CarbonBudget/# Comments.md",
+		"/home/leonardo/Dropbox/Projects/CriticalGlobalForest/Outline.md",
+		"/home/leonardo/Dropbox/Projects/CriticalGlobalForest/margins.sty",
+		"/home/leonardo/Dropbox/Projects/CriticalGlobalForest/R/power_fun.r",
+		"/home/leonardo/Dropbox/Projects/CriticalGlobalForest/CriticalGF.md",
+		"/home/leonardo/Dropbox/Projects/CriticalGlobalForest/Fit_heavy_tails.Rmd",
+		"/home/leonardo/Dropbox/Projects/PotterCove/SeaIce/Questions.md"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			"<open folders>",
+			"*",
+			"*.h",
+			"*.h, *.cpp ",
+			"*.h *.cpp ",
+			"*.h",
+			"*.c*",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"w:cstheme",
+			"<[^>]+>",
+			"TOC",
+			"BAC_s ->  DIC",
+			"RespirationFISH",
+			"DET_w",
+			"PHY -",
+			"RespirationFISH",
+			"ProductionDET_p",
+			"SedResp",
+			"MinMPBRes",
+			"GPP",
+			"MAA",
+			"MAA ->  DET",
+			"RespFIS",
+			"respFIS",
+			"FIS",
+			"FIS ",
+			"respFISH",
+			"DET_s",
+			"PHY->",
+			"PHY ->",
+			"assiPHY",
+			"MinProdMicro",
+			"MinMPBRes",
+			"MPB",
+			"EXTE",
+			"XNA",
+			"MAZO",
+			"FIS",
+			"MAA",
+			"minRelBacINF",
+			"UptaPHY",
+			"MIZO",
+			"EBMA",
+			"RespirationCWC",
+			"Bivalvia",
+			"RespBIV",
+			"Bivalvia",
+			"->  BAC_s",
+			"BAC_s",
+			"ProdBAC_s",
+			"ProdBAC_w",
+			"ProdBAC_s",
+			"UptaBIO",
+			"UptaCWC",
+			"minPE",
+			"minBGE",
+			"MEZO",
+			"MAZO",
+			"IBME",
+			"IBMA",
+			"ZOO_w",
+			"FIS",
+			"PHY_w",
+			"BAC_s",
+			"IB",
+			"IBMA",
+			"minProdCWC",
+			"RespirationCWC",
+			"RespCWC",
+			"Bac",
+			"INF",
+			"Biomass",
+			"biomass",
+			"pzpBiomass",
+			"burial",
+			"maxRespPOL",
+			"MeioGrazMin",
+			"maxRespPOL",
+			"DETburial",
+			"IBMA",
+			"INF",
+			"PHY",
+			"FIS",
+			"PHY",
+			"minRelBacINF",
+			"RelBacUptaINF",
+			"INF",
+			"EUN",
+			"UptaBIO",
+			"minBGE",
+			" minBGE",
+			"minRespSUS",
+			"phytodetritus",
+			"phy",
+			"EUN",
+			"BIO",
+			"BAC_s",
+			"XNA",
+			"ColdwaterCoral",
+			"</blockquote>",
+			"<blockquote>",
+			"CriticalGF",
+			"pueyo",
+			"where we",
+			"robust",
+			"separation ",
+			"self",
+			"finite-size",
+			"table S1",
+			"table s1",
+			"PowerExp_gt10e7_year",
+			"**",
+			"km",
+			"A?o",
+			"GLS",
+			"A?o",
+			"corrado",
+			"'*Tree_Cover.tif_Top_200_forest_patches.tif'",
+			"Results/ ",
+			"rsync",
+			"--delete",
+			"--exclude '*.tif'",
+			"No",
+			"S3",
+			"S2",
+			"PowerLaw",
+			".00000",
+			",Value=round(Value,0)",
+			"collapse",
+			"\\times^{0",
+			"Southeast",
+			"{",
+			"\\times^{07}",
+			"South East",
+			"7",
+			"{07}"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+			"",
+			"NA  .*NA ",
+			"NA  ",
+			"NA",
+			"-1560.434",
+			"NA",
+			"\\)",
+			"\\(",
+			"automata",
+			"\\Delta",
+			"\\mu",
+			"",
+			")",
+			")⁠",
+			"\\epsilon"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 3,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "R/CWC_Rockall.input",
+					"settings":
+					{
+						"buffer_size": 23506,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 437.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "R/ScheldtIntertidal.input",
+					"settings":
+					{
+						"buffer_size": 19754,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								11517,
+								11517
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 7050.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "R/PotterCove_test.lim",
+					"settings":
+					{
+						"buffer_size": 8851,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6470,
+								6470
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 3961.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "R/PotterCove.lim",
+					"settings":
+					{
+						"buffer_size": 8631,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4755,
+								4755
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 2935.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "/home/leonardo/Dropbox/Projects/Becas/becaGualterio_LAS.md",
+					"settings":
+					{
+						"buffer_size": 28443,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3000,
+								3000
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Markdown/Markdown.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 731.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "/home/leonardo/Dropbox/Projects/PotterCove/FoodWebStability/Talk_Cambridge.Rmd",
+					"settings":
+					{
+						"buffer_size": 5456,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5456,
+								5456
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 3600.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "/home/leonardo/Dropbox/Cursos/MathEcology/Curso3.1.Rmd",
+					"settings":
+					{
+						"buffer_size": 9481,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2935,
+								2935
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1073.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "R/PotterCove_test.lim",
+					"settings":
+					{
+						"buffer_size": 8851,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 2736.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "/home/leonardo/Dropbox/Ecología Trófica Marina/MANUSCRITOS EN PREPARACIÓN 2016-17/TOMAS/Small-world/Analisis_R/small-world.R",
+					"settings":
+					{
+						"buffer_size": 6751,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1397,
+								1397
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/R/R.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 608.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "/home/leonardo/Dropbox/Projects/PotterCove/FoodWebTopology/Grado.txt",
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "R/foodwebs.lim",
+					"settings":
+					{
+						"buffer_size": 1268,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1268,
+								1268
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 595.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "Comments.md",
+					"settings":
+					{
+						"buffer_size": 11617,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								9284,
+								9284
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Markdown/Markdown.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 2045.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "Draft.md",
+					"settings":
+					{
+						"buffer_size": 4596,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4576,
+								4576
+							]
+						],
+						"settings":
+						{
+							"auto_name": "# Carbon fluxes and bentho-pelagic link in the wes",
+							"spell_check": true,
+							"syntax": "Packages/Markdown/Markdown.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "Notes.md",
+					"settings":
+					{
+						"buffer_size": 8504,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								8445,
+								8445
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Markdown/Markdown.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 2115.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"file": "Tasks.md",
+					"settings":
+					{
+						"buffer_size": 1523,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1217,
+								1217
+							]
+						],
+						"settings":
+						{
+							"auto_name": "# TASKS",
+							"spell_check": true,
+							"syntax": "Packages/Markdown/Markdown.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 212.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 14,
+					"file": "/home/leonardo/Dropbox/Projects/PotterCove/CarbonBudgetData/Benthos_data_pangea.md",
+					"settings":
+					{
+						"buffer_size": 570,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								566,
+								566
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Markdown/Markdown.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 15,
+					"file": "/home/leonardo/R/x86_64-pc-linux-gnu-library/3.3/LIM/doc/examples/Foodweb/Takapoto.input",
+					"settings":
+					{
+						"buffer_size": 8426,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 501.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 16,
+					"file": "/home/leonardo/Dropbox/Projects/CriticalGlobalForest/makefile",
+					"settings":
+					{
+						"buffer_size": 1001,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Makefile/Makefile.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 17,
+					"file": "CarbonBudget.mak",
+					"settings":
+					{
+						"buffer_size": 855,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								33,
+								33
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 18,
+					"file": "/home/leonardo/Dropbox/Pandoc/Git_commands.md",
+					"settings":
+					{
+						"buffer_size": 3574,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Markdown/Markdown.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 156.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 34.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 97.0
+	},
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"ne",
+				"/home/leonardo/Dropbox/Projects/CriticalGlobalForest/Notes.md"
+			],
+			[
+				"ot",
+				"/home/leonardo/Dropbox/Projects/CriticalGlobalForest/Outline.md"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+			[
+				"",
+				"/home/leonardo/Dropbox/CV/cv.sublime-project"
+			],
+			[
+				"cla",
+				"/home/leonardo/Dropbox/LabBiologia/LOF/clases.sublime-project"
+			],
+			[
+				"blo",
+				"/home/leonardo/blog/blog.sublime-project"
+			],
+			[
+				"glo",
+				"/home/leonardo/Dropbox/Projects/CriticalGlobalForest/CriticalGF.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"show_minimap": false,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true
+}
