@@ -1,0 +1,182 @@
+=============================================
+file: flowbeagle.lim
+
+require(LIM)
+lim <- Setup("flowbeagle.lim")
+Ldei(lim)
+Xranges(lim)
+=============================================
+  
+## COMPARTMENTS
+
+PHYTO       ! Phytoplankton
+POM_w       ! Particulate Organic Matter in suspension
+POM_s       ! Particulate Organic Matter in sediment
+MACROAL     ! Macroalgae
+MICROZOO    ! Microzooplankton (Copepoda + Euphausiidae)
+ICHTHYOPL   ! Ichthyoplankton
+AMPH        ! Amphipoda (Themisto gaudichaudii)
+GRIMO       ! Grimothea gregaria (Decapoda)
+SUSP        ! Suspension-feeders (Mytilus sp.)
+DETR        ! Detritivores (Halicarcinus planatus, Isopods)
+GRAZ        ! Grazers (Nacella sp., limpet, chitons)
+OMNIN       ! Omnivores invertebrates (Arbacia dufresnii)
+CARIN       ! Carnivores invertebrates (Anasterias antarctica, Nemertea)
+FISHPEL     ! Pelagic fish (Sprattus fuegensis)
+FISHBENPEL  ! Benthopelagic fish (Patagonotothen sp., Eleginus maclovinus)
+FISHDEM     ! Demersal fish (Cottoperca sp.)
+BIRDS       ! Seabirds (Spheniscus magellanicus, Phalacrocorax atriceps, Leucopaeus scoresbi)
+MAM         ! Marine mammals (Arctocephalus australis, Otaria flavescens, Phocoena spinipinnis)
+
+## END COMPARTMENTS
+
+
+## EXTERNALS
+
+ExtTC3  ! external pool of terrestrial plants
+ExtCEP  ! external pool of cephalopoda (food for MAM)
+
+## END EXTERNALS
+
+  
+## FLOWS
+
+CO2   -> PHYTO    ! net primary production
+CO2   -> MACROAL  ! net primary production
+
+PHYTO   -> POM_w  ! phyto mortality = phytodetritus, contribution 60% (winter)
+MACROAL -> POM_w  ! Macrocystis pirifera detach, MModel 9% (summer)
+TC3     -> POM_w  ! terrestrial input, MModel 15% (spring)
+POM_s   -> POM_w  ! POM deposition, MModel 10% (summer)
+
+MACROAL -> POM_s  ! Macrocystis pirifera deposition, MModel 50% (winter)
+TC3     -> POM_s  ! terrestrial input, MModel 7% (autumn)
+PHYTO   -> POM_s  ! phytodetritus deposition, MModel 10% (autumn)
+POM_w   -> POM_s  ! POM deposition, MModel 15% (spring)
+
+!--------!
+! Following compartments eat, grow, respire & defaecate. If they are preyed upon, this flow is included in the block of its predator.
+!--------!
+
+!-- MICROZOO
+! IN
+PHYTO   -> MICROZOO ! predation, MModel 50% (autumn)
+POM_w   -> MICROZOO ! predation, MModel 76% (spring)
+POM_s   -> MICROZOO ! predation, MModel 15% (spring)
+
+! OUT
+
+!-- ICHTHYOPL
+! IN
+PHYTO     -> ICHTHYOPL ! predation, MModel 4% (spring)
+POM_w     -> ICHTHYOPL ! predation, MModel 4% (autumn)
+POM_s     -> ICHTHYOPL ! predation, MModel 30% (winter)
+MICROZOO  -> ICHTHYOPL ! predation, MModel 77% (spring)
+
+! OUT
+
+!-- AMPH
+! IN
+MICROZOO -> AMPH ! predation
+
+! OUT
+
+!-- GRIMO
+! IN
+PHYTO    -> GRIMO ! predation
+POM_s    -> GRIMO ! predation
+MACROAL  -> GRIMO ! predation
+MICROZOO -> GRIMO ! predation
+DETR     -> GRIMO ! predation
+AMPH     -> GRIMO ! predation
+
+! OUT
+
+!-- SUSP
+! IN
+PHYTO   -> SUSP ! filtering, MModel 6% (winter)
+POM_w   -> SUSP ! filtering, MModel 60% (winter)
+POM_s   -> SUSP ! filtering, MModel 42% (autumn)
+
+
+! OUT
+
+!-- DETR
+! IN
+TC3     -> DETR ! filtering, MModel 10% (autumn)
+MACROAL -> DETR ! filtering, MModel 66% (autumn)
+POM_s   -> DETR ! filtering, MModel 24% (autumn)
+
+! OUT
+
+!-- GRAZ
+! IN
+MACROAL -> GRAZ ! grazing, MModel 14% (autumn)
+POM_s   -> GRAZ ! grazing, MModel 86% (autumn)
+
+! OUT
+
+!-- OMNIN
+! IN
+PHYTO     -> OMNIN ! filtering
+MACROAL   -> OMNIN ! grazing
+MICROZOO  -> OMNIN ! predation
+SUSP      -> OMNIN ! predation
+DETR      -> OMNIN ! predation
+
+! OUT
+
+!-- CARIN
+! IN
+DETR  -> CARIN ! predation, MModel 11% (autumn)
+GRAZ  -> CARIN ! predation, MModel 22% (autumn)
+SUSP  -> CARIN ! predation, MModel 67% (autumn)
+
+! OUT
+
+!-- FISHPEL
+! IN
+PHYTO     -> FISHPEL ! filtering
+MICROZOO  -> FISHPEL ! predation
+DETR      -> FISHPEL ! predation
+
+! OUT
+
+!-- FISHBENPEL
+! IN
+MACROAL  -> FISHBENPEL ! grazing
+MICROZOO -> FISHBENPEL ! predation
+DETR     -> FISHBENPEL ! predation
+SUSP     -> FISHBENPEL ! predation
+GRIMO    -> FISHBENPEL ! predation
+FISHPEL  -> FISHBENPEL ! predation
+GRAZ     -> FISHBENPEL ! predation
+CARIN    -> FISHBENPEL ! predation
+
+! OUT
+
+!-- FISHDEM
+! IN
+POM_s     -> FISHDEM ! filtering
+MICROZOO  -> FISHDEM ! predation
+DETR      -> FISHDEM ! predation
+GRIMO     -> FISHDEM ! predation
+FISHBENPEL-> FISHDEM ! predation
+
+! OUT
+
+!-- BIRDS
+! IN
+GRIMO   -> BIRDS ! predation
+FISHPEL -> BIRDS ! predation
+FISHDEM -> BIRDS ! predation
+
+! OUT
+
+!-- MAM
+! IN
+FISHPEL -> MAM ! predation
+
+! OUT
+
+## END FLOWS
