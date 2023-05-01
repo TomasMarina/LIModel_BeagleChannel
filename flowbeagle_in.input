@@ -1,0 +1,317 @@
+==============================================================
+Carbon flow model during spring in inner (western) Beagle Channel
+
+Time: spring
+Space: inner & outer BC
+
+Units:  fluxes: g C/m2/d
+        stocks: g C/m2
+
+Tomás I. Marina, Karline Soetaert, Dick van Oevelen
+==============================================================
+
+!--------------------------------------------------------------------------------------------------!									
+!                                                                                                  !									
+!                                     PARAMETERS & VARIABLES                                       !									
+!                                                                                                  !									
+!--------------------------------------------------------------------------------------------------!
+
+###### PARAMETERS
+
+!-- STOCKS
+! Bacteria from Carrasco et al. 2023 (https://doi.org/10.1016/j.jmarsys.2023.103880)
+
+minstDOC  = 0.56  {mg C/L}    ! 
+maxstDOC  = 1.09  {mg C/L}    ! 
+stPHY     = 88.93 {µg C/L}    ! mean spring 2012-2014, Iachetti et al. 2021
+stDOC     = 0.78  {mg C/L}    ! 
+stAMP     = 0.399 {g C/m2}
+stSUF     = 2.493 {g C/m2}
+
+!-- STABLE ISOTOPE
+ 
+isoTC3    = -29.2             ! Bruno et al. 2023
+isoOMW    = -22.7             ! Bruno et al. 2023
+isoOMS    = -17.9             ! Bruno et al. 2023
+isoPHY    =
+isoALG    = -15.1             ! Bruno et al. 2023
+isoSUF    = -18.9             ! Bruno et al. 2023
+isoICH    = -18.9             ! Bruno et al. 2023
+isoMIZ    = -19.9             ! Bruno et al. 2023 (110–213 μm)
+isoGRI    = -17.8             ! from Golfo San Jorge, Funes et al. 2018
+isoBIR    = -17.3             ! Spheniscus magellanicus, Dodino et al. 2022
+
+!-- CONTRIBUTION (from Bruno et al. 2023)
+! Ask Dick if this is redundant with SI
+
+
+###### END PARAMETERS
+
+
+###### VARIABLES
+
+!-- TERRESTRIAL PLANTS
+
+!-- DOC
+
+!-- ORGANIC MATTER (OMW, OMS)
+
+!-- PHYTOPLANKTON (data Latorre et al. 2023)
+respPHY   = PHY ->  DIC       ! respiration
+uptaPHY   = DIC ->  PHY       ! uptake
+prodPHY   = uptaPHY - respPHY ! production
+
+!-- MACROALGAE
+mortALG   = ALG ->  OMW       ! detach of Macrocystis pirifera (ask Juli K.)
+
+!-- BACTERIA (data Malits &/or Rodriguez-Florez et al. 2023)
+respBAC   = BAC ->  DIC       ! respiration
+uptaBAC   = DOC ->  BAC       ! uptake
+prodBAC   = uptaBAC - respBAC ! production
+
+!-- MICROZOOPLANKTON
+respMIZ   = MIZ ->  DIC       ! respiration
+
+
+!-- ICHTHYOPLANKTON
+
+!-- AMPHIPODA
+
+!-- GRIMOTHEA GREGARIA
+
+!-- SUSPENSION FEEDERS
+
+!-- DETRITIVORES
+
+!-- GRAZERS
+
+!-- OMNIVOROUS INVERTEBRATES
+
+!-- CARNIVOROUS INVERTEBRATES
+
+!-- PELAGIC FISH (Sprattus)
+
+!-- BENTHO-PELAGIC FISH
+
+!-- DEMERSAL FISH
+
+!-- CEPHALOPODA
+
+!-- BIRDS
+
+!-- MARINE MAMMALS
+
+###### END VARIABLES
+
+!--------------------------------------------------------------------------------------------------!									
+!                                                                                                  !									
+!                                        SYSTEM DECLARATION                                        !									
+!                                  (COMPARTMENTS, EXTERNALS, FLOWS)                                !									
+!                                                                                                  !									
+!--------------------------------------------------------------------------------------------------!
+
+###### COMPARTMENTS
+
+DOC     ! Dissolved Organic Carbon
+OMW     ! Particulate Organic Matter in water column
+OMS     ! Particulate Organic Matter in sediment
+PHY     ! Phytoplankton (diatoms)
+BAC     ! Bacteria
+ALG     ! Macroalgae
+MIZ     ! Microzooplankton (Copepoda, Appendicularia, Cladocera, 110–213 μm)
+ICH     ! Ichthyoplankton
+AMP     ! Amphipoda (Themisto gaudichaudii)
+GRI     ! Grimothea gregaria (Decapoda)
+SUF     ! Suspension-feeders (Mytilus sp.)
+DET     ! Detritivores (Halicarcinus planatus, Isopods)
+GRA     ! Grazers (Nacella sp., limpet, chitons)
+OMN     ! Omnivorous invertebrates (Echinoidea-Arbacia dufresnii)
+CAR     ! Carnivorous invertebrates (Asteroidea, Nemertea)
+FPL     ! Pelagic fish (Sprattus fuegensis)
+FBP     ! Benthopelagic fish (Patagonotothen sp., Eleginops maclovinus)
+FDM     ! Demersal fish (Cottoperca sp., Bathyraja sp.)
+BIR     ! Seabirds (Spheniscus magellanicus, Phalacrocorax atriceps, Leucopaeus scoresbi)
+MAM     ! Marine mammals (Arctocephalus australis, Otaria flavescens, Phocoena spinipinnis)
+
+###### END COMPARTMENTS
+
+
+###### EXTERNALS
+
+eDIC    ! Dissolved Inorganic Carbon
+eTC3    ! external pool of terrestrial plants
+eCEP    ! external pool of cephalopoda (food for MAM)
+
+###### END EXTERNALS
+
+  
+###### FLOWS
+
+!-- DIC
+eDIC  ->  PHY     ! net primary production
+eDIC  ->  ALG     ! net primary production
+
+!-- TERRESTRIAL PLANTS
+eTC3  ->  OMW     ! terrestrial input
+eTC3  ->  OMS     ! terrestrial input
+eTC3  ->  DET     ! filtering
+
+!-- DOC
+DOC   ->  OMW
+
+!-- ORGANIC MATTER (OMW, OMS)
+OMW   ->  OMS     ! OM deposition
+OMW   ->  MIZ     ! predation
+OMW   ->  ICH     ! predation
+OMW   ->  SUF     ! filtering
+OMS   ->  MIZ     ! predation
+OMS   ->  ICH     ! predation
+OMS   ->  GRI     ! predation
+OMS   ->  SUF     ! filtering
+OMS   ->  DET     ! filtering
+OMS   ->  GRA     ! grazing
+OMS   ->  FDM     ! filtering
+
+!-- PHYTOPLANKTON
+PHY   ->  DIC     ! respiration
+PHY   ->  OMW     ! mortality = phytodetritus
+PHY   ->  MIZ     ! predation
+PHY   ->  OMS     ! sedimentation
+PHY   ->  ICH     ! predation
+PHY   ->  GRI     ! predation
+PHY   ->  SUF     ! filtering
+PHY   ->  OMN     ! filtering
+PHY   ->  FPL     ! filtering
+
+!-- MACROALGAE
+ALG   ->  DIC     ! respiration
+ALG   ->  OMW     ! detach
+ALG   ->  OMS     ! Macrocystis pirifera deposition
+ALG   ->  GRI     ! predation
+ALG   ->  DET     ! filtering
+ALG   ->  GRA     ! grazing
+ALG   ->  OMN     ! grazing
+ALG   ->  FBP     ! grazing
+
+!-- MICROZOOPLANKTON
+MIZ   ->  DIC     ! respiration
+MIZ   ->  OMW     ! mortality
+MIZ   ->  ICH     ! predation
+MIZ   ->  AMP     ! predation
+MIZ   ->  GRI     ! predation
+MIZ   ->  FBP     ! predation
+MIZ   ->  OMN     ! predation
+MIZ   ->  FPL     ! predation
+MIZ   ->  FDM     ! predation
+
+!-- ICHTHYOPLANKTON
+ICH   ->  DIC     ! respiration
+ICH   ->  OMW     ! mortality
+ICH   ->  AMP     ! predation
+ICH   ->  FBP     ! predation
+ICH   ->  FPL     ! predation
+ICH   ->  BIR     ! predation
+
+!-- AMPHIPODA
+AMP   ->  DIC     ! respiration
+AMP   ->  OMW     ! mortality
+AMP   ->  GRI     ! predation
+AMP   ->  FPL     ! predation
+AMP   ->  FBP     ! predation
+AMP   ->  FDM     ! predation
+AMP   ->  BIR     ! predation
+
+!-- GRIMOTHEA GREGARIA
+GRI   ->  DIC     ! respiration
+GRI   ->  OMW     ! mortality
+GRI   ->  FBP     ! predation
+GRI   ->  FDM     ! predation
+GRI   ->  BIR     ! predation
+GRI   ->  MAM     ! predation
+
+!-- SUSPENSION FEEDERS
+SUF   ->  DIC     ! respiration
+SUF   ->  OMW     ! mortality
+SUF   ->  OMN     ! predation
+SUF   ->  CAR     ! predation
+SUF   ->  FBP     ! predation
+
+!-- DETRITIVORES
+DET   ->  DIC     ! respiration
+DET   ->  OMW     ! mortality
+DET   ->  GRI     ! predation
+DET   ->  OMN     ! predation
+DET   ->  CAR     ! predation
+DET   ->  FPL     ! predation
+DET   ->  FBP     ! predation
+DET   ->  FDM     ! predation
+DET   ->  BIR     ! predation
+
+!-- GRAZERS
+GRA   ->  DIC     ! respiration
+GRA   ->  OMW     ! mortality
+GRA   ->  CAR     ! predation
+GRA   ->  FBP     ! predation
+
+!-- OMNIVOROUS INVERTEBRATES
+OMN   ->  DIC     ! respiration
+OMN   ->  OMW     ! mortality
+OMN   ->  CAR     ! predation
+OMN   ->  FDM     ! predation
+
+!-- CARNIVOROUS INVERTEBRATES
+CAR   ->  DIC     ! respiration
+CAR   ->  OMW     ! mortality
+CAR   ->  FBP     ! predation
+
+!-- PELAGIC FISH (Sprattus)
+FPL   ->  DIC     ! respiration
+FPL   ->  OMW     ! mortality
+FPL   ->  FBP     ! predation
+FPL   ->  BIR     ! predation
+FPL   ->  MAM     ! predation
+
+!-- BENTHO-PELAGIC FISH
+FBP   ->  DIC     ! respiration
+FBP   ->  OMW     ! mortality
+FBP   ->  FBP     ! predation
+FBP   ->  FDM     ! predation
+FBP   ->  BIR     ! predation
+FBP   ->  MAM     ! predation
+
+!-- DEMERSAL FISH
+FDM   ->  DIC     ! respiration
+FDM   ->  OMW     ! mortality
+FDM   ->  FDM     ! predation
+FDM   ->  BIR     ! predation
+
+!-- CEPHALOPODA
+eCEP  ->  MAM     ! predation
+
+!-- BIRDS
+BIR   ->  DIC     ! respiration
+BIR   ->  OMW     ! mortality
+
+!-- MARINE MAMMALS
+MAM   ->  DIC     ! respiration
+MAM   ->  OMW     ! mortality
+
+###### END FLOWS
+
+
+!--------------------------------------------------------------------------------------------------!									
+!                                                                                                  !									
+!                                         DATA DECLARATION                                         !									
+!                                  (RATES, EQUATIONS, CONSTRAINTS)                                 !									
+!                                                                                                  !									
+!--------------------------------------------------------------------------------------------------!
+
+! Particularly during springtime, the contribution of macroalgae and phytoplankton to SPOM (particulate organic matter in sediment) and POM (particulate organic matter in the water column), respectively, both of which serve as direct food sources for zooplankton and fish larvae, is higher than that from terrestrial sources (Bruno et al. 2023).
+
+
+! TO DO
+! Download articles from Binational campaign
+! Add detritus types: labile (natural mortality and primary producers), semi-labile (faeces) & refractory
+! Bacterial data
+! Add proportional contribution to OMW, OMS, SUF, MIZ & ICH or is redundant w/ SI? Bruno et al. 2023 (table 5)
+
