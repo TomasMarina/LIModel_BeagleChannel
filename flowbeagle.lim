@@ -1,182 +1,236 @@
-=============================================
-file: flowbeagle.lim
+==============================================================
+Carbon flow model of Beagle Channel: inner and outer contrast
 
-require(LIM)
-lim <- Setup("flowbeagle.lim")
-Ldei(lim)
-Xranges(lim)
-=============================================
-  
+Time: spring
+Space: inner & outer BC
+
+Units:  fluxes: g C/m2/d
+        stocks: g C/m2
+
+Tomás I. Marina, Karline Soetaert, Dick van Oevelen
+==============================================================
+
+!--------------------------------------------------------------------------------------------------!									
+!                                                                                                  !									
+!                                     PARAMETERS & VARIABLES                                       !									
+!                                                                                                  !									
+!--------------------------------------------------------------------------------------------------!
+
+## PARAMETERS
+
+!-- Stocks
+! Bacteria from Carrasco et al. 2023 (https://doi.org/10.1016/j.jmarsys.2023.103880)
+
+minDOC  = 0.56 {mg C/L}     ! spring
+maxDOC  = 1.09 {mg C/L}     ! spring
+pPHY    = 22.2 {µg C/L}
+pDOC    = 0.78 {mg C/L}     ! spring
+pAMP    = 0.399 {g C/m2}
+pSUF    = 2.493 {g C/m2}
+
+!-- Stable isotope data
+! from Bruno et al. 2023 (https://doi.org/10.1016/j.jmarsys.2023.103859), 
+isoOMW  = -22.7
+isoOMS  = -17.9
+isoALG  = -15.1     ! mean btw blade, stipe & holdfast
+isoSUF  = -18.9
+isoICH  = -18.9
+
+
+## END PARAMETERS
+
+!--------------------------------------------------------------------------------------------------!									
+!                                                                                                  !									
+!                                        SYSTEM DECLARATION                                        !									
+!                                  (COMPARTMENTS, EXTERNALS, FLOWS)                                !									
+!                                                                                                  !									
+!--------------------------------------------------------------------------------------------------!
+
 ## COMPARTMENTS
 
-PHYTO       ! Phytoplankton
-POM_w       ! Particulate Organic Matter in suspension
-POM_s       ! Particulate Organic Matter in sediment
-MACROAL     ! Macroalgae
-MICROZOO    ! Microzooplankton (Copepoda + Euphausiidae)
-ICHTHYOPL   ! Ichthyoplankton
-AMPH        ! Amphipoda (Themisto gaudichaudii)
-GRIMO       ! Grimothea gregaria (Decapoda)
-SUSP        ! Suspension-feeders (Mytilus sp.)
-DETR        ! Detritivores (Halicarcinus planatus, Isopods)
-GRAZ        ! Grazers (Nacella sp., limpet, chitons)
-OMNIN       ! Omnivores invertebrates (Arbacia dufresnii)
-CARIN       ! Carnivores invertebrates (Anasterias antarctica, Nemertea)
-FISHPEL     ! Pelagic fish (Sprattus fuegensis)
-FISHBENPEL  ! Benthopelagic fish (Patagonotothen sp., Eleginus maclovinus)
-FISHDEM     ! Demersal fish (Cottoperca sp.)
-BIRDS       ! Seabirds (Spheniscus magellanicus, Phalacrocorax atriceps, Leucopaeus scoresbi)
-MAM         ! Marine mammals (Arctocephalus australis, Otaria flavescens, Phocoena spinipinnis)
+DOC     ! Dissolved Organic Carbon
+OMW     ! Particulate Organic Matter in water column
+OMS     ! Particulate Organic Matter in sediment
+PHY     ! Phytoplankton
+BAC     ! Bacteria
+ALG     ! Macroalgae
+MIZ     ! Microzooplankton (Copepoda + Euphausiidae)
+ICH     ! Ichthyoplankton
+AMP     ! Amphipoda (Themisto gaudichaudii)
+GRI     ! Grimothea gregaria (Decapoda)
+SUF     ! Suspension-feeders (Mytilus sp.)
+DET     ! Detritivores (Halicarcinus planatus, Isopods)
+GRA     ! Grazers (Nacella sp., limpet, chitons)
+OMN     ! Omnivores invertebrates (Arbacia dufresnii)
+CAR     ! Carnivores invertebrates (Anasterias antarctica, Nemertea)
+FPL     ! Pelagic fish (Sprattus fuegensis)
+FBP     ! Benthopelagic fish (Patagonotothen sp., Eleginus maclovinus)
+FDM     ! Demersal fish (Cottoperca sp.)
+BIR     ! Seabirds (Spheniscus magellanicus, Phalacrocorax atriceps, Leucopaeus scoresbi)
+MAM     ! Marine mammals (Arctocephalus australis, Otaria flavescens, Phocoena spinipinnis)
 
 ## END COMPARTMENTS
 
 
 ## EXTERNALS
 
-ExtTC3  ! external pool of terrestrial plants
-ExtCEP  ! external pool of cephalopoda (food for MAM)
+eCO2    ! carbon dioxide
+eTC3    ! external pool of terrestrial plants
+eCEP    ! external pool of cephalopoda (food for MAM)
 
 ## END EXTERNALS
 
   
 ## FLOWS
 
-CO2   -> PHYTO    ! net primary production
-CO2   -> MACROAL  ! net primary production
+DOC   ->  OMW
 
-PHYTO   -> POM_w  ! phyto mortality = phytodetritus, contribution 60% (winter)
-MACROAL -> POM_w  ! Macrocystis pirifera detach, MModel 9% (summer)
-TC3     -> POM_w  ! terrestrial input, MModel 15% (spring)
-POM_s   -> POM_w  ! POM deposition, MModel 10% (summer)
+eCO2  ->  PHY    ! net primary production
+eCO2  ->  ALG    ! net primary production
 
-MACROAL -> POM_s  ! Macrocystis pirifera deposition, MModel 50% (winter)
-TC3     -> POM_s  ! terrestrial input, MModel 7% (autumn)
-PHYTO   -> POM_s  ! phytodetritus deposition, MModel 10% (autumn)
-POM_w   -> POM_s  ! POM deposition, MModel 15% (spring)
+PHY   ->  OMW    ! phyto mortality = phytodetritus, contribution 60% (winter)
+ALG   ->  OMW    ! Macrocystis pirifera detach, MModel 9% (summer)
+eTC3  ->  OMW    ! terrestrial input, MModel 15% (spring)
+OMS   ->  OMW    ! POM deposition, MModel 10% (summer)
+
+ALG   ->  OMS    ! Macrocystis pirifera deposition, MModel 50% (winter)
+eTC3  ->  OMS    ! terrestrial input, MModel 7% (autumn)
+PHY   ->  OMS    ! phytodetritus sedimentation, MModel 10% (autumn)
+OMW   ->  OMS    ! OM deposition, MModel 15% (spring)
 
 !--------!
-! Following compartments eat, grow, respire & defaecate. If they are preyed upon, this flow is included in the block of its predator.
+! The following compartments eat, grow, respire & defaecate. If they are preyed upon, this flow is included in the block of its predator.
 !--------!
 
-!-- MICROZOO
+!-- MIZ
 ! IN
-PHYTO   -> MICROZOO ! predation, MModel 50% (autumn)
-POM_w   -> MICROZOO ! predation, MModel 76% (spring)
-POM_s   -> MICROZOO ! predation, MModel 15% (spring)
+PHY   ->  MIZ    ! predation, MModel 50% (autumn)
+OMW   ->  MIZ    ! predation, MModel 76% (spring)
+OMS   ->  MIZ    ! predation, MModel 15% (spring)
 
 ! OUT
 
-!-- ICHTHYOPL
+!-- ICH
 ! IN
-PHYTO     -> ICHTHYOPL ! predation, MModel 4% (spring)
-POM_w     -> ICHTHYOPL ! predation, MModel 4% (autumn)
-POM_s     -> ICHTHYOPL ! predation, MModel 30% (winter)
-MICROZOO  -> ICHTHYOPL ! predation, MModel 77% (spring)
+PHY   ->  ICH    ! predation, MModel 4% (spring)
+OMW   ->  ICH    ! predation, MModel 4% (autumn)
+OMS   ->  ICH    ! predation, MModel 30% (winter)
+MIZ   ->  ICH    ! predation, MModel 77% (spring)
 
 ! OUT
 
-!-- AMPH
+!-- AMP
 ! IN
-MICROZOO -> AMPH ! predation
+MIZ   ->  AMP    ! predation
 
 ! OUT
 
-!-- GRIMO
+!-- GRI
 ! IN
-PHYTO    -> GRIMO ! predation
-POM_s    -> GRIMO ! predation
-MACROAL  -> GRIMO ! predation
-MICROZOO -> GRIMO ! predation
-DETR     -> GRIMO ! predation
-AMPH     -> GRIMO ! predation
+PHY   ->  GRI    ! predation
+OMS   ->  GRI    ! predation
+ALG   ->  GRI    ! predation
+MIZ   ->  GRI    ! predation
+DET   ->  GRI    ! predation
+AMP   ->  GRI    ! predation
 
 ! OUT
 
-!-- SUSP
+!-- SUF
 ! IN
-PHYTO   -> SUSP ! filtering, MModel 6% (winter)
-POM_w   -> SUSP ! filtering, MModel 60% (winter)
-POM_s   -> SUSP ! filtering, MModel 42% (autumn)
+PHY   ->  SUF    ! filtering, MModel 6% (winter)
+OMW   ->  SUF    ! filtering, MModel 60% (winter)
+OMS   ->  SUF    ! filtering, MModel 42% (autumn)
 
 
 ! OUT
 
-!-- DETR
+!-- DET
 ! IN
-TC3     -> DETR ! filtering, MModel 10% (autumn)
-MACROAL -> DETR ! filtering, MModel 66% (autumn)
-POM_s   -> DETR ! filtering, MModel 24% (autumn)
+eTC3  ->  DET    ! filtering, MModel 10% (autumn)
+ALG   ->  DET    ! filtering, MModel 66% (autumn)
+OMS   ->  DET    ! filtering, MModel 24% (autumn)
 
 ! OUT
 
-!-- GRAZ
+!-- GRA
 ! IN
-MACROAL -> GRAZ ! grazing, MModel 14% (autumn)
-POM_s   -> GRAZ ! grazing, MModel 86% (autumn)
+ALG   ->  GRA    ! grazing, MModel 14% (autumn)
+OMS   ->  GRA    ! grazing, MModel 86% (autumn)
 
 ! OUT
 
-!-- OMNIN
+!-- OMN
 ! IN
-PHYTO     -> OMNIN ! filtering
-MACROAL   -> OMNIN ! grazing
-MICROZOO  -> OMNIN ! predation
-SUSP      -> OMNIN ! predation
-DETR      -> OMNIN ! predation
+PHY   ->  OMN    ! filtering
+ALG   ->  OMN    ! grazing
+MIZ   ->  OMN    ! predation
+SUF   ->  OMN    ! predation
+DET   ->  OMN    ! predation
 
 ! OUT
 
-!-- CARIN
+!-- CAR
 ! IN
-DETR  -> CARIN ! predation, MModel 11% (autumn)
-GRAZ  -> CARIN ! predation, MModel 22% (autumn)
-SUSP  -> CARIN ! predation, MModel 67% (autumn)
+DET   ->  CAR    ! predation, MModel 11% (autumn)
+GRA   ->  CAR    ! predation, MModel 22% (autumn)
+SUF   ->  CAR    ! predation, MModel 67% (autumn)
 
 ! OUT
 
-!-- FISHPEL
+!-- FPL
 ! IN
-PHYTO     -> FISHPEL ! filtering
-MICROZOO  -> FISHPEL ! predation
-DETR      -> FISHPEL ! predation
+PHY   ->  FPL    ! filtering
+MIZ   ->  FPL    ! predation
+DET   ->  FPL    ! predation
 
 ! OUT
 
-!-- FISHBENPEL
+!-- FBP
 ! IN
-MACROAL  -> FISHBENPEL ! grazing
-MICROZOO -> FISHBENPEL ! predation
-DETR     -> FISHBENPEL ! predation
-SUSP     -> FISHBENPEL ! predation
-GRIMO    -> FISHBENPEL ! predation
-FISHPEL  -> FISHBENPEL ! predation
-GRAZ     -> FISHBENPEL ! predation
-CARIN    -> FISHBENPEL ! predation
+ALG   ->  FBP    ! grazing
+MIZ   ->  FBP    ! predation
+DET   ->  FBP    ! predation
+SUF   ->  FBP    ! predation
+GRI   ->  FBP    ! predation
+FPL   ->  FBP    ! predation
+GRA   ->  FBP    ! predation
+CAR   ->  FBP    ! predation
 
 ! OUT
 
-!-- FISHDEM
+!-- FDM
 ! IN
-POM_s     -> FISHDEM ! filtering
-MICROZOO  -> FISHDEM ! predation
-DETR      -> FISHDEM ! predation
-GRIMO     -> FISHDEM ! predation
-FISHBENPEL-> FISHDEM ! predation
+OMS   ->  FDM    ! filtering
+MIZ   ->  FDM    ! predation
+DET   ->  FDM    ! predation
+GRI   ->  FDM    ! predation
+FBP   ->  FDM    ! predation
 
 ! OUT
 
-!-- BIRDS
+!-- BIR
 ! IN
-GRIMO   -> BIRDS ! predation
-FISHPEL -> BIRDS ! predation
-FISHDEM -> BIRDS ! predation
+GRI   ->  BIR    ! predation
+FPL   ->  BIR    ! predation
+FDM   ->  BIR    ! predation
 
 ! OUT
 
 !-- MAM
 ! IN
-FISHPEL -> MAM ! predation
+FPL   ->  MAM    ! predation
+eCEP  ->  MAM    ! predation
 
 ! OUT
 
 ## END FLOWS
+
+
+!--------------------------------------------------------------------------------------------------!									
+!                                                                                                  !									
+!                                         DATA DECLARATION                                         !									
+!                                  (RATES, EQUATIONS, CONSTRAINTS)                                 !									
+!                                                                                                  !									
+!--------------------------------------------------------------------------------------------------!
+
