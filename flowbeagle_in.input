@@ -21,10 +21,10 @@ Tomás I. Marina, Karline Soetaert, Dick van Oevelen
 !-- STOCKS
 ! Bacteria from Carrasco et al. 2023 (https://doi.org/10.1016/j.jmarsys.2023.103880)
 
-minstDOC      = 0.56  {mg C/L}    ! 
-maxstDOC      = 1.09  {mg C/L}    ! 
-stPHY         = 88.93 {µg C/L}    ! mean spring 2012-2014, Iachetti et al. 2021
-stDOC         = 0.78  {mg C/L}    ! 
+minstDOC      = 0.56  {mg C/L}  ! 
+maxstDOC      = 1.09  {mg C/L}  ! 
+stPHY         = 88.93 {µg C/L}  ! mean spring 2012-2014, Iachetti et al. 2021
+stDOC         = 0.78  {mg C/L}  ! 
 stAMP         = 0.399 {g C/m2}
 stSUF         = 2.493 {g C/m2}
 
@@ -42,9 +42,47 @@ stSUF         = 2.493 {g C/m2}
 !isoBIR    = -17.3             ! Spheniscus magellanicus, Dodino et al. 2022
 
 !-- CONTRIBUTION (from Bruno et al. 2023)
+!-- to wDET
+minsDETtowDET = 0.00
+maxsDETtowDET = 0.14
 minPHYtowDET  = 0.45
 maxPHYtowDET  = 0.75
+minALGtowDET  = 0.00            ! mean 'blades', 'stipes', 'holdfasts'
+maxALGtowDET  = 0.13            ! mean 'blades', 'stipes', 'holdfasts'
+mineTC3towDET = 0.05
+maxeTC3towDET = 0.25
 
+!-- to sDET
+minwDETtosDET = 0.03
+maxwDETtosDET = 0.27
+minPHYtosDET  = 0.01
+maxPHYtosDET  = 0.17
+mineTC3tosDET = 0.02
+maxeTC3tosDET = 0.12
+
+!-- to SUSPENSION FEEDERS
+minwDETtoSUF  = 0.45
+maxwDETtoSUF  = 0.65
+minsDETtoSUF  = 0.35
+maxsDETtoSUF  = 0.47
+minPHYtoSUF   = 0.00
+maxPHYtoSUF   = 0.10
+
+!-- to MICROZOOPLANKTON
+minwDETtoMIZ  = 0.62
+maxwDETtoMIZ  = 0.90
+minsDETtoMIZ  = 0.04
+maxsDETtoMIZ  = 0.26
+minPHYtoMIZ   = 0.03
+maxPHYtoMIZ   = 0.15
+
+!-- to ICHTHYOPLANKTON
+minwDETtoICH  = 0.00
+maxwDETtoICH  = 0.08
+minsDETtoICH  = 0.02
+maxsDETtoICH  = 0.28
+minPHYtoICH   = 0.00
+maxPHYtoICH   = 0.10
 
 ###### END PARAMETERS
 
@@ -58,20 +96,20 @@ maxPHYtowDET  = 0.75
 !-- ORGANIC MATTER (wDET, sDET)
 
 !-- PHYTOPLANKTON (data Latorre et al. 2023)
-respPHY   = PHY ->  DIC       ! respiration
-uptaPHY   = DIC ->  PHY       ! uptake
-prodPHY   = uptaPHY - respPHY ! production
+respPHY   = PHY ->  DIC         ! respiration
+uptaPHY   = DIC ->  PHY         ! uptake
+prodPHY   = uptaPHY - respPHY   ! production
 
 !-- MACROALGAE
-mortALG   = ALG ->  wDET       ! detach of Macrocystis pirifera (ask Juli K.)
+mortALG   = ALG ->  wDET        ! detach of Macrocystis pirifera (ask Juli K.)
 
 !-- BACTERIA (data Malits &/or Rodriguez-Florez et al. 2023)
-respBAC   = BAC ->  DIC       ! respiration
-uptaBAC   = DOC ->  BAC       ! uptake
-prodBAC   = uptaBAC - respBAC ! production
+respBAC   = BAC ->  DIC         ! respiration
+uptaBAC   = DOC ->  BAC         ! uptake
+prodBAC   = uptaBAC - respBAC   ! production
 
 !-- MICROZOOPLANKTON
-respMIZ   = MIZ ->  DIC       ! respiration
+respMIZ   = MIZ ->  DIC         ! respiration
 
 
 !-- ICHTHYOPLANKTON
@@ -114,8 +152,8 @@ respMIZ   = MIZ ->  DIC       ! respiration
 ###### COMPARTMENTS
 
 DOC     ! Dissolved Organic Carbon
-wDET    ! Particulate Organic Matter in water column
-sDET    ! Particulate Organic Matter in sediment
+wDET    ! Particulate organic matter in water column
+sDET    ! Particulate organic matter in sediment
 PHY     ! Phytoplankton (diatsDET)
 BAC     ! Bacteria
 ALG     ! Macroalgae
@@ -124,7 +162,7 @@ ICH     ! Ichthyoplankton
 AMP     ! Amphipoda (Themisto gaudichaudii)
 GRI     ! Grimothea gregaria (Decapoda)
 SUF     ! Suspension-feeders (Mytilus sp.)
-DET     ! Detritivores (Halicarcinus planatus, Isopods)
+DTR     ! Detritivores (Halicarcinus planatus, Isopods)
 GRA     ! Grazers (Nacella sp., limpet, chitons)
 OMN     ! Omnivorous invertebrates (Echinoidea-Arbacia dufresnii)
 CAR     ! Carnivorous invertebrates (Asteroidea, Nemertea)
@@ -158,20 +196,21 @@ DOC    ->  BAC     ! uptake
 !-- TERRESTRIAL PLANTS
 eTC3   ->  wDET    ! terrestrial input
 eTC3   ->  sDET    ! terrestrial input
-eTC3   ->  DET     ! filtering
+eTC3   ->  DTR     ! filtering
 
 !-- ORGANIC MATTER (wDET, sDET)
-wDET   ->  sDET    ! OM deposition
+wDET   ->  sDET    ! deposition
 wDET   ->  MIZ     ! predation
 wDET   ->  ICH     ! predation
 wDET   ->  SUF     ! filtering
 wDET   ->  DOC     ! hydrolisis
 sDET   ->  DOC     ! hydrolisis
+sDET   ->  wDET    ! resuspension
 sDET   ->  MIZ     ! predation
 sDET   ->  ICH     ! predation
 sDET   ->  GRI     ! predation
 sDET   ->  SUF     ! filtering
-sDET   ->  DET     ! filtering
+sDET   ->  DTR     ! filtering
 sDET   ->  GRA     ! grazing
 sDET   ->  FDM     ! filtering
 
@@ -194,7 +233,7 @@ BAC    ->  DOC
 ALG    ->  DIC     ! respiration
 ALG    ->  wDET    ! detach
 ALG    ->  GRI     ! predation
-ALG    ->  DET     ! filtering
+ALG    ->  DTR     ! filtering
 ALG    ->  GRA     ! grazing
 ALG    ->  OMN     ! grazing
 ALG    ->  FBP     ! grazing
@@ -243,15 +282,15 @@ SUF    ->  CAR     ! predation
 SUF    ->  FBP     ! predation
 
 !-- DETRITIVORES
-DET    ->  DIC     ! respiration
-DET    ->  wDET    ! mortality
-DET    ->  GRI     ! predation
-DET    ->  OMN     ! predation
-DET    ->  CAR     ! predation
-DET    ->  FPL     ! predation
-DET    ->  FBP     ! predation
-DET    ->  FDM     ! predation
-DET    ->  BIR     ! predation
+DTR    ->  DIC     ! respiration
+DTR    ->  wDET    ! mortality
+DTR    ->  GRI     ! predation
+DTR    ->  OMN     ! predation
+DTR    ->  CAR     ! predation
+DTR    ->  FPL     ! predation
+DTR    ->  FBP     ! predation
+DTR    ->  FDM     ! predation
+DTR    ->  BIR     ! predation
 
 !-- GRAZERS
 GRA    ->  DIC     ! respiration
@@ -308,14 +347,33 @@ MAM    ->  wDET    ! mortality
 !--------------------------------------------------------------------------------------------------!									
 !                                                                                                  !									
 !                                         DATA DECLARATION                                         !									
-!                                  (RATES, EQUATIONS, CONSTRAINTS)                                 !									
+!                                (RATES, EQUALITIES, INEQUALITIES)                                 !									
 !                                                                                                  !									
 !--------------------------------------------------------------------------------------------------!
 
 ###### INEQUALITIES
 
-PHY ->  wDET = [minPHYtowDET,maxPHYtowDET]*flowto(wDET)
+sDET  ->  wDET  = [minsDETtowDET, maxsDETtowDET]*flowto(wDET)
+PHY   ->  wDET  = [minPHYtowDET, maxPHYtowDET]*flowto(wDET)
+ALG   ->  wDET  = [minALGtowDET, maxALGtowDET]*flowto(wDET)
+eTC3  ->  wDET  = [mineTC3towDET, maxeTC3towDET]*flowto(wDET)
 
+wDET  ->  sDET  = [minwDETtosDET, maxwDETtosDET]*flowto(sDET)
+PHY   ->  sDET  = [minPHYtosDET, maxPHYtosDET]*flowto(sDET)
+ALG   ->  sDET  = [minALGtosDET, maxALGtosDET]*flowto(sDET)
+eTC3  ->  sDET  = [mineTC3tosDET, maxeTC3tosDET]*flowto(sDET)
+
+wDET  ->  SUF  = [minwDETtoSUF, maxwDETtoSUF]*flowto(SUF)
+sDET  ->  SUF  = [minsDETtoSUF, maxsDETtoSUF]*flowto(SUF)
+PHY   ->  SUF  = [minPHYtoSUF, maxPHYtoSUF]*flowto(SUF)
+
+wDET  ->  MIZ  = [minwDETtoMIZ, maxwDETtoMIZ]*flowto(MIZ)
+sDET  ->  MIZ  = [minsDETtoMIZ, maxsDETtoMIZ]*flowto(MIZ)
+PHY   ->  MIZ  = [minPHYtoMIZ, maxPHYtoMIZ]*flowto(MIZ)
+
+wDET  ->  ICH  = [minwDETtoICH, maxwDETtoICH]*flowto(ICH)
+sDET  ->  ICH  = [minsDETtoICH, maxsDETtoICH]*flowto(ICH)
+PHY   ->  ICH  = [minPHYtoICH, maxPHYtoICH]*flowto(ICH)
 
 ###### END INEQUALITIES
 
@@ -325,6 +383,4 @@ PHY ->  wDET = [minPHYtowDET,maxPHYtowDET]*flowto(wDET)
 ! TO DO
 ! Detritus types: labile (natural mortality and primary producers), semi-labile (faeces) & refractory. Is it necessary?
 ! Bacterial data
-! Proportional contribution to wDET, sDET, SUF, MIZ & ICH. Bruno et al. 2023 (table 5)
-! isoPHY, isoDET, iso fishes
 ! How to use energy density data (KJ/g). Do I need to convert it to biomass?
