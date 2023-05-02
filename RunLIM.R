@@ -1,7 +1,7 @@
 require(LIM)
 
 # Read input file and setup the LIM
-readLIM <- Read("flowbeagle_out.input")
+readLIM <- Read("flowbeagle_in.input")
 readLIM
 
 LIMBeagle <- Setup(readLIM)
