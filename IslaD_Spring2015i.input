@@ -1,0 +1,860 @@
+Data    :   LIM model for Isla D station (8-9m water depth) in Potter Cove, spring of 2015									
+									
+Units   :   	Fluxes:             	mmol C/m2/d							
+	Standing stocks:    mmol C/m2								
+									
+Depth   :   upper 5 cm									
+									
+Ulrike Braeckman, Karline Soetaert, Dick van Oevelen									
+#####################################################################################									
+									
+!--------------------------------------------------------------------------------------------------!									
+!                                                                                                  !									
+!                                     PARAMETER & VARIABLES                                        !									
+!                                                                                                  !									
+!--------------------------------------------------------------------------------------------------!									
+									
+									
+## PARAMETERS									
+									
+!!!! FLOW MEASUREMENTS									
+									
+ minPOCdeposition		=	335.21	{mmol C m-2 d-1}					
+ maxPOCdeposition		=	395.37	{mmol C m-2 d-1}					
+! maxTotalHydrolysis		=	14	{mmol C m-2 d-1}					
+ minSedResp		=	1.76	{mmol C m-2 d-1}	! MpbResp + BacResp + NemResp				
+ maxSedResp		=	13.83	{mmol C m-2 d-1}					
+!maxProd_PHYTOP		=	4.67	{mmol C m-2 d-1}	delete if we work with POC_Deposition				
+!minProd_PHYTOP		=	2.39	{mmol C m-2 d-1}	delete if we work with POC_Deposition				
+ minProd_MPB		=	26.86-10.97	{mmol C m-2 d-1} !meanGPP - sdGPP					
+ maxProd_MPB		=	26.86+10.97	{mmol C m-2 d-1} !meanGPP + sdGPP					
+ minTotResp		=	12.98	{mmol C/m2/d}					
+ maxTotResp		=	30.75	{mmol C/m2/d}					
+ Temperature		=	0.83	{°C}					
+ Tlim		=	0.26	{-}					
+! BurialOC		=	1.72	{mmol C/m2/d}					
+									
+!!!! STOCKS									
+!-- Three detritus pools: labile, semi-labile and refractory detritus									
+ lDetritus   		=	1105.9	{mmol C m-2}	! chla in 0-1 cm				
+ sDetritus		=	649.84	{mmol C m-2}	! TOC in 0-5 cm				
+ rDetritus		=	7729 -lDetritus - sDetritus	{mmol C m-2}	! TOC-lDet-sDet				
+ Microphytobenthos		=	0.32	{mmol C m-2}					
+!Phytoplankton		=	70.48	{mmol C m-2}	delete if we work with POC_Deposition				
+ Macroalgae_sed		=	1.994497	{mmol C m-2} 		!from surface -> biomass conversion			
+ Bacteria		=	379.35	{mmol C m-2}					
+ Nema_SelFeeder		=	0.65*67.42	{mmol C m-2}		!0.12 (1A) + 0.53 (2A)			
+ Nema_NonSelFeeder 		=	0.35*67.42	{mmol C m-2}					
+ Nema_PredOmni		=	0	{mmol C m-2}	
+ MeioDepositFeeder		=	48.31	{mmol C m-2}  
+Aequiyoldia		=	1088.66	{mmol C m-2}					
+MacroDepositFeeder		=	13.05	{mmol C m-2}					
+MacroSurfDepoFeeder		=	11.447	{mmol C m-2}					
+MacroSuspenFeeder		=	6.244	{mmol C m-2}					
+MacroPredatorScavenger		=	364.67	{mmol C m-2}					
+ Laternula		=	2070.76	{mmol C m-2}					
+!Malg_hs		=	6602.45	{mmol C/m2} ! macroalgae on hard substrates					
+! DOC_s		=	833	{mmol C/m2} ! from LIM Saravia. Source?					
+									
+ fracLabSemNem		=	2.286	{-}	
+ fracLabSemMeioDF		=	2.286	{-}		 
+ fracLabSemMac		=	2.39	{-}					
+ fracLabSemYol		=	0.376	{-}					
+ fracLabSemLat		=	0.376	{-}					
+ 									
+!-- STABLE ISOTOPE DATA									
+ IsolDET_w		=	-24.28	! phytoplankton 50 µm Potter Cove general in Pasotti et al. (2015)					
+ IsosDET_w      		=	-26.085	! SPM  Potter Cove in general Pasotti et al. (2015)					
+ IsolDET		=	-18.66	! sed 0-1cm from Braeckman et al. (2019) Faro summer 2015					
+ IsosDET		=	-20.77	! sed 3-5 cm from Braeckman et al. (2019) Faro summer 2015					
+ IsoDOCs		=	-16	! van Oevelen et al. (2006) DOCs sources are Bac and Mpb, so signal should be in between.					
+ IsoBAC		=	-19.15442985	! average 0-1 + 4-5 cm layer in Braeckman et al. (2019)					
+ IsoMPB		=	-13.15	!Potter Cove general in Pasotti et al. (2015)					
+ IsoMALG 		=	-25	!Potter Cove general in Pasotti et al. (2015)					
+ IsoNEMSF		=	-16.5	! Mainly epistrate feeders at Isla D, Pasotti et al. (2015)					
+ IsoNEMNF		=	-21.91	! Sabatieria and Odontophora spike exp Pasotti unpublished					
+ IsoNEMPO		=	-17.88	! Sphaerolaimidae spike exp Pasotti unpublished		
+ IsoMEIODF		=	-17.92	!Potter Cove general in Pasotti et al. (2015)  
+ IsoMACSF		=	-21.55484848	! Braeckman et al. (2019) sea pens, ostracods					
+ IsoMACSDF		=	-16.70928161	! Braeckman et al. (2019) cumacea, Mysella, Gastropods					
+ IsoMACDF		=	-18.89	! Ampharetidae					
+ IsoMACPS		=	-15.62	! Aglaophamus trissophyllus					
+ IsoYOL		=	-11.79	!Pasotti et al. (2015)					
+ IsoLAT		=	-24.89	!Potter Cove general Pasotti et al. (2015)					
+									
+!!!! TOTAL FAUNAL RESPIRATION									
+									
+ minNem_Resp		=	4.9	{mmol C m-2 d-1}	! should this also be av Nem Resp/2?				
+ maxNem_Resp		=	14.61	{mmol C m-2 d-1}	! should this also be av Nem resp*2?
+ minMeioDFResp		=	1.18	{mmol C m-2 d-1}	
+ maxMeioDFResp		=	1.92	{mmol C m-2 d-1} 
+ minMacDF_Resp		=	0.11	{mmol C m-2 d-1}					
+ maxMacDF_Resp		=	0.42	{mmol C m-2 d-1}					
+minMacSDF_Resp		=	0.12	{mmol C m-2 d-1}					
+maxMacSDF_Resp		=	0.47	{mmol C m-2 d-1}					
+ minMacSF_Resp		=	0.04	{mmol C m-2 d-1}					
+ maxMacSF_Resp		=	0.18	{mmol C m-2 d-1}					
+minMacPS_Resp		=	1.15	{mmol C m-2 d-1}					
+maxMacPS_Resp		=	4.61	{mmol C m-2 d-1}					
+minYol_Resp		=	5.08	{mmol C m-2 d-1}					
+maxYol_Resp		=	20.32	{mmol C m-2 d-1}					
+ minLat_Resp		=	10.37	{mmol C m-2 d-1}					
+ maxLat_Resp		=	41.47	{mmol C m-2 d-1}					
+									
+!-- DETRITUS									
+ min_lDetDegr		=	0.00274	{/d}					
+ max_lDetDegr		=	0.0329	{/d}					
+ min_sDetDegr		=	0.000821	{/d}					
+ max_sDetDegr		=	0.0151	{/d}					
+ min_rDetDegr		=	0.000002	{/d}					
+ max_rDetDegr		=	0.000822	{/d}					
+ minBurEff 		=	0.035	{-}					
+ maxBurEff		=	0.5	{-}	!read from figure 15.1 in Burdige (2007) p 401 at sediment net accumulation rate of 0.47 g/cm²/y (Monien et al. 2017)				
+!maxRelDOCefflux 		=	0.1	{-} 	!relative to respiration				
+									
+!-- BACTERIA									
+ minBGE		=	0.05	{-} 				
+ maxBGE		=	0.45	{-}					
+ minLysBP		=	0.4	{-}					
+ maxLysBP		=	1	{-}					
+ 									
+!--MICROPHYTOBENTHOS									
+ minResp_MPB		=	0.05	{fraction of GPP}					
+ maxResp_MPB		=	0.3	{fraction of GPP}					
+ minMpbDocProd		= 	0.42	! Goto et al. (1999) in van Oevelen et al. (2006)					
+ maxMpbDocProd		= 	0.73	! Goto et al. (1999) in van Oevelen et al. (2006)					
+ 									
+!--MACROALGAE									
+ maxMalgMort		=	21.036	{mmol C/m2/d} ! based on summer growth of 27 mmol C/m²/d on 2.5 km² hard substrate (Quartino et al. 2008) spread over 3.2 km² soft substrate (Jerosch et al. 2018)					
+ minfracBacUptMalg		= 	0.002	{/d}					
+ maxfracBacUptMalg		=	0.015	{/d}					
+ minfracMalgUptNem		=	0.000006	{/d}					
+ maxfracMalgUptNem		=	0.000039	{/d}
+ minfracMalgUptMeioDF		=	0.000006	{/d}					
+ maxfracMalgUptMeioDF		=	0.000039	{/d}  
+minfracMacDFUptMalg		=	0	{/d}					
+maxfracMacDFUptMalg		=	0.008	{/d}					
+minfracMacSDFUptMalg		=	0	{/d}					
+maxfracMacSDFUptMalg		=	0.015	{/d}					
+minfracMacSFUptMalg		=	0	{/d}					
+maxfracMacSFUptMalg		=	0.0008	{/d}					
+minfracMacPSUptMalg		=	0	{/d}					
+maxfracMacPSUptMalg		=	0.02	{/d}					
+ minfracYolUptMalg		=	0.00001	{/d}					
+ maxfracYolUptMalg		=	0.001	{/d}					
+minfracLatUptMalg		=	0.0002	{/d}					
+maxfracLatUptMalg		=	0.0042	{/d}					
+									
+!-- NEMATODES									
+ MaintRespNemSF		=	Tlim*0.01*Nema_SelFeeder	{mmolC/d}					
+ MaintRespNemNF		=	Tlim*0.01*Nema_NonSelFeeder	{mmolC/d}					
+ MaintRespNemPO		=	Tlim*0.01*Nema_PredOmni	{mmolC/d}					
+ minAENemLab		=	0.59	{-}					
+ maxAENemLab		=	0.77	{-}					
+ minAENemSem		=	0.29	{-}					
+ maxAENemSem		=	0.39{-}				
+ minMorNem		=	0	{-}					
+ maxMorNem		=	Tlim*0.20	{-}					
+ minGrowthNem		=	Tlim*0.05	{/d}					
+ maxGrowthNem		=	Tlim*0.20	{/d}					
+ minNGENem		=	0.6	{-}					
+ maxNGENem		=	0.9	{-}					
+ minfracPOuptNem		=	0.75	{-}					
+ maxfracPOuptNem		=	1	{-}					
+ minselSFuptNem		=	50	{-}					
+ maxselSFuptNem		=	100	{-}					
+ minselNFuptNem		=	1	{-}					
+ maxselNFuptNem		=	10	{-}					
+ fractBacUptNem		=	0.05	{-}	
+
+ !-- MEIODepositFeeders									
+ MaintRespMeioDF	=	Tlim*0.01*MeioDepositFeeder	{mmolC/d}					
+ minAEMeioDFLab		=	0.59	{-}					
+ maxAEMeioDFLab		=	0.77{-}					
+ minAEMeioDFSem		=	0.29	{-}					
+ maxAEMeioDFSem		=	0.39	{-}	
+ minMorMeioDF		=	0	{-}					
+ maxMorMeioDF		=	Tlim*0.20	{-}					
+ minGrowthMeioDF		=	Tlim*0.05	{/d}					
+ maxGrowthMeioDF		=	Tlim*0.20	{/d}					
+ minNGEMeioDF		=	0.6	{-}					
+ maxNGEMeioDF		=	0.9	{-}					
+ minfracPOuptMeioDF		=	0.75	{-}					
+ maxfracPOuptMeioDF		=	1	{-}					
+ minselSFuptMeioDF		=	50	{-}	
+ maxselSFuptMeioDF		=	100	{-}	
+ minselNFuptMeioDF		=	1	{-}					
+ maxselNFuptMeioDF		=	10	{-}					
+ fractBacUptMeioDF		=	0.05	{-}	  
+									
+!--  MACROBENTHOS									
+ MaintRespMacSF		=	Tlim*0.01*MacroSuspenFeeder	{mmolC/m2/d}					
+MaintRespMacDF		=	Tlim*0.01*MacroDepositFeeder	{mmolC/m2/d}					
+MaintRespMacSDF		=	Tlim*0.01*MacroSurfDepoFeeder	{mmolC/m2/d}					
+MaintRespMacPS		=	Tlim*0.01*MacroPredatorScavenger	{mmolC/m2/d}					
+ minAEMacLab		=	0.4	{-}					
+ maxAEMacLab		=	0.75	{-}					
+ minAEMacSem		=	0.2	{-}					
+ maxAEMacSem		=	0.38	{-}					
+ minMorMac		=	0	{-}					
+ maxMorMac		=	Tlim*0.05	{-}					
+ minGrowthMac		=	Tlim*0.0145	{/d} ! was 0.015 but this is too high for Faro Spring 2016				
+ maxGrowthMac		=	Tlim*0.05	{/d}					
+ minNGEMac		=	0.5	{-}					
+ maxNGEMac		=	0.7	{-}					
+minfracPredUptMac		=	0.3	{-}		! was 0.75 but this is too high for many models.				
+maxfracPredUptMac		=	1	{-}					
+minselSDFuptMac		=	50	{-}					
+maxselSDFuptMac		=	100	{-}					
+minselDFuptMac		=	1	{-}					
+maxselDFuptMac		=	10	{-}					
+									
+!--  YOLDIA									
+ MaintRespYol		=	Tlim*0.001*Aequiyoldia						
+ minUptYol		=	0.000001	{/d} 	!Yoldia hyperborea (Stead et al. 2003)				
+ maxUptYol		=	0.85	{/d} 	!Yoldia hyperborea (Stead et al. 2003)				
+ minAEYolLab		=	0.4	{-}					
+ maxAEYolLab		=	0.75	{-}					
+ minAEYolSem		=	0.2	{-}					
+ maxAEYolSem		=	0.38	{-}					
+ minAEYolMalg		=	0.26	{-}	! Tatian et al. (2018)				
+ maxAEYolMalg		=	0.51	{-}	! Tatian et al. (2018)				
+ minMorYol		=	0	{-}					
+ maxMorYol		=	0.0007	{-}	! lower is not possible				
+ minGrowthYol		=	0.00029	{/d}	! Peck et al. (2000)				
+ maxGrowthYol		=	0.0007	{/d}	! Brey and Clarke (1993) 0.00044/d, but lower is not possible				
+ minNGEYol		=	0.5	{-}					
+ maxNGEYol		=	0.7	{-}					
+ minseluptYol		=	50	{-}					
+ maxseluptYol		=	100	{-}					
+									
+!--  LATERNULA									
+ MaintRespLat		=	Tlim*0.001*Laternula						
+ minUptLat		=	Tlim*0.005	{/d} !0.0120 in Zhuang (2005) Laternula marilina, but this is too high for Creek Spring 2015				
+ maxUptLat		=	Tlim*0.0336	{/d} !Zhuang (2005) Laternula marilina					
+ minAELatLab		=	0.4	{-}	!Zhuang (2004) Laternula marilina				
+ maxAELatLab		=	0.83	{-}	!Zhuang (2004) Laternula marilina				
+ minAELatSem		=	0.2	{-}					
+ maxAELatSem		=	0.38	{-}					
+ minAELatMalg		=	0.26	{-}	! Tatian et al. (2018)				
+ maxAELatMalg		=	0.51	{-}	! Tatian et al. (2018)				
+ minMorLat		=	0	{-}					
+ maxMorLat		=	0.0012	{-}	!0.001 in Urban & Mercuri (1998)	! lower is not possible			
+ minGrowthLat		=	0.00035	{/d}	!Urban & Mercuri (1998)				
+ maxGrowthLat		=	0.0012	{/d}	!Urban & Mercuri (1998)				
+ minNGELat		=	0.19	{-}	! was 0.5, but this is too high for Creek Spring 2016			
+ maxNGELat		=	0.7	{-}					
+ minseluptLat		=	50	{-}					
+ maxseluptLat		=	100	{-}					
+									
+## END PARAMETERS									
+									
+############################### VARIABLES 									
+!-- DETRITUS									
+ lDetDep		=	lDet_w->lDet						
+ sDetDep		=	sDet_w->sDet						
+!rDetDep		=	rDet_w->rDet						
+ lDetDis		=	lDet->DOC_s						
+ sDetDis		=	sDet->DOC_s						
+ rDetDis		=	rDet->DOC_s						
+ lDetUpt		=	flowfrom(lDet) - lDetDis						
+ sDetUpt		=	flowfrom(sDet) - sDetDis						
+ lDetDeg		=	lDetDis + lDetUpt						
+ sDetDeg		=	sDetDis + sDetUpt						
+ rDetDeg		=	rDetDis						
+ DetDep		=	lDetDep + sDetDep !+ rDetDep						
+ DetDis		=	lDetDis + sDetDis + rDetDis						
+ BurialOC      		=	 rDet->Burial						
+									
+!-- DOC									
+! DOCefflux		=	flowto(DOC_w)						
+ 									
+!-- MPB									
+ MpbResp		=	Mpb->DIC						
+ MpbUpt		=	DIC->Mpb						
+ MpbProd		=	MpbUpt	-	MpbResp				
+ MpbDocProd		=	Mpb->DOC_s	
+ AccumulationMPB = Mpb->AccumulatedMPB 
+									
+!--MACROALGAE									
+ MalgMort		= 	Malg_hs->Malg_wp 	! Malg on hard substrates tear off into parts in the water					
+ MalgDep		= 	Malg_wp->Malg_ps 	! Malg parts in the water are deposited as parts on the sediment					
+ MalgDis_s		=	Malg_ps->DOC_s		! 				
+ MalgGraz		=	flowfrom(Malg_ps) - MalgDeg						
+ MalgDeg		= 	MalgDis_s + Malg_ps->lDet + Malg_ps->sDet + Malg_ps->rDet							
+ MalgExp		=	Malg_wp->Export						
+									
+!-- BACTERIA									
+ BacResp		=	Bac->DIC						
+ BacUptDOC		=	DOC_s->Bac						
+ BacUptMalg		=	Malg_ps->Bac						
+ BacDOCProd		=	Bac->DOC_s						
+ BacUpt		=	BacUptDOC + BacUptMalg						
+ BacProd		=	BacUpt - BacResp	
+
+ Lysis = MpbDocProd + BacDOCProd + MalgDis_s
+ DOCUpt = BacUptDOC + NemNFUptDOC
+									
+!-- NEMATODES									
+ NemSFResp              		=	NemSF->DIC						
+ NemSFsDetProd		=	NemSF->sDet						
+ NemSFrDetProd		=	NemSF->rDet						
+ NemSFDetProd		=	NemSFsDetProd + NemSFrDetProd						
+ NemSFUptLab		=	lDet->NemSF   +  Bac->NemSF + Mpb->NemSF + Malg_ps->NemSF						
+ NemSFUptSem		=	sDet->NemSF						
+ NemSFUpt		=	flowto(NemSF)	
+ NemSFUptMalg		=	Malg_ps->NemSF 
+ NemSFAssLab		=	NemSFUptLab - NemSFsDetProd						
+ NemSFAssSem 		=	NemSFUptSem - NemSFrDetProd						
+ NemSFAss		=	NemSFAssLab + NemSFAssSem						
+ NemSFProd		=	NemSFAss    - NemSFResp + MaintRespNemSF						
+ NemSFMort 		=	NemSF->lDet						
+ lDetUptNemSF 		=	lDet->NemSF						
+ sDetUptNemSF  		=	sDet->NemSF						
+ BacUptNemSF		=	Bac->NemSF						
+									
+ NemNFResp              		=	NemNF->DIC						
+ NemNFsDetProd		=	NemNF->sDet						
+ NemNFrDetProd		=	NemNF->rDet						
+ NemNFDetProd		=	NemNFsDetProd + NemNFrDetProd						
+ NemNFUptLab		=	DOC_s ->NemNF + lDet->NemNF   +  Bac->NemNF + Mpb->NemNF + Malg_ps->NemNF						
+ NemNFUptSem		=	sDet->NemNF		
+ NemNFUptMalg		=	Malg_ps->NemNF 
+ NemNFUpt		=	flowto(NemNF)
+ NemNFAssLab		=	NemNFUptLab - NemNFsDetProd						
+ NemNFAssSem 		=	NemNFUptSem - NemNFrDetProd						
+ NemNFAss		=	NemNFAssLab + NemNFAssSem						
+ NemNFProd		=	NemNFAss    - NemNFResp + MaintRespNemNF						
+ NemNFMort 		=	NemNF->lDet						
+ lDetUptNemNF 		=	lDet->NemNF						
+ sDetUptNemNF  		=	sDet->NemNF						
+ BacUptNemNF		=	Bac->NemNF						
+ NemNFUptDOC		= 	DOC_s->NemNF
+ 
+ NemPOResp              		=	NemPO->DIC						
+ NemPOsDetProd		=	NemPO->sDet						
+ NemPOrDetProd		=	NemPO->rDet						
+ NemPODetProd		=	NemPOsDetProd + NemPOrDetProd						
+ NemPOUptNem		=	NemSF->NemPO + NemNF->NemPO						
+ NemPOUptLab		=	lDet->NemPO   +  Bac->NemPO + Mpb->NemPO + Malg_ps->NemPO +NemPOUptNem	+ MeioDF->NemPO					
+ NemPOUptSem		=	sDet->NemPO	
+ NemPOUptMalg		=	Malg_ps->NemPO  
+ NemPOUpt		=	flowto(NemPO)						
+ NemPOAssLab		=	NemPOUptLab - NemPOsDetProd						
+ NemPOAssSem 		=	NemPOUptSem - NemPOrDetProd						
+ NemPOAss		=	NemPOAssLab + NemPOAssSem						
+ NemPOProd		=	NemPOAss    - NemPOResp + MaintRespNemPO						
+ NemPOMort 		=	NemPO->lDet						
+									
+ NemResp		=	NemSFResp + NemNFResp + NemPOResp						
+ NemProd		=	NemSFProd + NemNFProd + NemPOProd	
+
+!-- MeioDF									
+ MeioDFResp              		=	MeioDF->DIC						
+ MeioDFsDetProd		=	MeioDF->sDet						
+ MeioDFrDetProd		=	MeioDF->rDet						
+ MeioDFDetProd		=	MeioDFsDetProd + MeioDFrDetProd						
+ MeioDFUptLab		=	lDet->MeioDF   +  Bac->MeioDF + Mpb->MeioDF + Malg_ps->MeioDF						
+ MeioDFUptSem		=	sDet->MeioDF						
+ MeioDFUpt		=	flowto(MeioDF)	
+ MeioDFUptMalg		=	Malg_ps->MeioDF 
+ MeioDFAssLab		=	MeioDFUptLab - MeioDFsDetProd						
+ MeioDFAssSem 		=	MeioDFUptSem - MeioDFrDetProd						
+ MeioDFAss		=	MeioDFAssLab + MeioDFAssSem						
+ MeioDFProd		=	MeioDFAss    - MeioDFResp + MaintRespMeioDF						
+ MeioDFMort 		=	MeioDF->lDet						
+ lDetUptMeioDF 		=	lDet->MeioDF						
+ sDetUptMeioDF  		=	sDet->MeioDF						
+ BacUptMeioDF		=	Bac->MeioDF		  
+ 									
+!-- MACROBENTHOS									
+MacSDFResp		=	MacSDF->DIC						
+MacSDFsDetProd		=	MacSDF->sDet						
+MacSDFrDetProd		=	MacSDF->rDet						
+MacSDFDetProd		=	MacSDFsDetProd + MacSDFrDetProd						
+MacSDFUptLab		=	lDet->MacSDF  + Bac->MacSDF + Malg_ps->MacSDF  + Mpb->MacSDF + NemSF->MacSDF + NemNF->MacSDF + NemPO->MacSDF + MeioDF->MacSDF							
+MacSDFUptSem		=	sDet->MacSDF						
+MacSDFUptMalg		= 	Malg_ps->MacSDF						
+MacSDFUpt		=	flowto(MacSDF)						
+MacSDFAssLab		=	MacSDFUptLab - MacSDFsDetProd						
+MacSDFAssSem		=	MacSDFUptSem - MacSDFrDetProd						
+MacSDFAss		=	MacSDFAssLab + MacSDFAssSem						
+MacSDFProd		=	MacSDFAss - MacSDFResp + MaintRespMacSDF						
+MacSDFMort		=	MacSDF->lDet						
+MacSDFExp		=	MacSDF->Export						
+									
+MacDFResp		=	MacDF->DIC						
+MacDFsDetProd		=	MacDF->sDet						
+MacDFrDetProd		=	MacDF->rDet						
+MacDFDetProd		=	MacDFsDetProd + MacDFrDetProd						
+MacDFUptLab		=	lDet->MacDF  +  Bac->MacDF + Malg_ps->MacDF  + Mpb->MacDF+ NemSF->MacDF + NemNF->MacDF + NemPO->MacDF + MeioDF->MacDF					
+MacDFUptSem		=	sDet->MacDF						
+MacDFUptMalg		= 	Malg_ps->MacDF						
+MacDFUpt		=	flowto(MacDF)						
+MacDFAssLab		=	MacDFUptLab - MacDFsDetProd						
+MacDFAssSem		=	MacDFUptSem - MacDFrDetProd						
+MacDFAss		=	MacDFAssLab + MacDFAssSem						
+MacDFProd		=	MacDFAss - MacDFResp + MaintRespMacDF						
+MacDFMort		=	MacDF->lDet						
+MacDFExp		=	MacDF->Export						
+									
+MacSFResp		=	MacSF->DIC						
+MacSFsDetProd		=	MacSF->sDet						
+MacSFrDetProd		=	MacSF->rDet						
+MacSFDetProd		=	MacSFsDetProd + MacSFrDetProd						
+MacSFUptLab		=	lDet_w->MacSF + MacSFUptMalg						
+MacSFUptSem		=	sDet_w->MacSF						
+MacSFUptMalg		= 	Malg_ps->MacSF						
+MacSFUpt		=	flowto(MacSF)						
+MacSFAssLab		=	MacSFUptLab - MacSFsDetProd						
+MacSFAssSem		=	MacSFUptSem - MacSFrDetProd						
+MacSFAss		=	MacSFAssLab + MacSFAssSem						
+MacSFProd		=	MacSFAss - MacSFResp + MaintRespMacSF						
+MacSFMort		=	MacSF->lDet						
+MacSFExp		=	MacSF->Export						
+									
+MacPSResp		=	MacPS->DIC						
+MacPSsDetProd		=	MacPS->sDet						
+MacPSrDetProd		=	MacPS->rDet						
+MacPSDetProd		=	MacPSsDetProd + MacPSrDetProd						
+MacPSUptLab		=	flowto(MacPS) - sDet->MacPS						
+MacPSUptSem		=	sDet->MacPS						
+MacPSUptMalg		= 	Malg_ps->MacPS						
+MacPSPred		=	flowto(MacPS) - lDet->MacPS  - sDet->MacPS	- Bac->MacPS - Mpb->MacPS - Malg_ps->MacPS 				
+MacPSUpt		=	MacPSUptLab + MacPSUptSem						
+MacPSAssLab		=	MacPSUptLab - MacPSsDetProd						
+MacPSAssSem		=	MacPSUptSem - MacPSrDetProd						
+MacPSAss		=	MacPSAssLab + MacPSAssSem						
+MacPSProd		=	MacPSAss - MacPSResp + MaintRespMacPS						
+MacPSMort		=	MacPS->lDet						
+MacPSExp		=	MacPS->Export						
+									
+!-- YOLDIA									
+ YolResp		=	Yol->DIC						
+ YolsDetProd		=	Yol->sDet						
+ YolrDetProd		=	Yol->rDet						
+ YolDetProd		=	YolsDetProd	+	YolrDetProd				
+ YolUptLab		=	flowto(Yol)	-	sDet->Yol 	-sDet_w->Yol			
+ YolUptSem		=	sDet->Yol	+ sDet_w->Yol					
+ YolUptMalg		=	Malg_ps->Yol						
+ YolUptMPB		= 	Mpb->Yol 						
+ YolUpt		=	flowto(Yol)						
+ YolAssLab		=	YolUptLab	-	YolsDetProd				
+ YolAssSem		=	YolUptSem	-	YolrDetProd				
+ YolAss		=	YolAssLab	+	YolAssSem				
+YolProd		=	YolAss - YolResp + MaintRespYol						
+ YolMort		=	Yol->lDet						
+ YolExp		=	Yol->Export						
+									
+!-- LATERNULA									
+ LatResp		=	Lat->DIC						
+ LatsDetProd	=	Lat->sDet						
+ LatrDetProd	=	Lat->rDet						
+ LatDetProd		=	LatsDetProd	+	LatrDetProd				
+ LatUptLab		=	flowto(Lat)	-	sDet->Lat - sDet_w->Lat				
+ LatUptSem		=	sDet->Lat +  sDet_w->Lat						
+ LatUptMalg		=	Malg_ps->Lat						
+ LatUptMPB		= 	Mpb->Lat 						
+ LatUpt			=	flowto(Lat)						
+ LatAssLab		=	LatUptLab	-	LatsDetProd				
+ LatAssSem		=	LatUptSem	-	LatrDetProd				
+ LatAss			=	LatAssLab	+	LatAssSem				
+ LatProd		=	LatAss - LatResp + MaintRespLat						
+ LatMort		=	Lat->lDet						
+ LatExp			=	Lat->Export						
+									
+ MacProd		=	MacSDFProd + MacDFProd + MacSFProd + MacPSProd + YolProd + LatProd	
+ TotMacResp		=	MacSDFResp + MacDFResp + MacSFResp + MacPSResp	+	YolResp	+	LatResp		
+ TotMacExp		=	MacSDFExp  + MacDFExp  + MacSFExp  + MacPSExp	+	YolExp	+	LatExp	
+ 									
+!-- TOTALS														
+ TotDeposition		=	 lDetDep + sDetDep  +MalgDep !+ rDetDep						
+ TotSuspensionfeeding =	lDet_w->MacSF + sDet_w->MacSF + lDet_w->Yol + sDet_w->Yol + lDet_w->Lat + sDet_w->Lat	
+
+ GrazBac = Bac->NemSF +Bac->NemNF +Bac->NemPO +Bac->MeioDF + Bac->MacSDF +Bac->MacDF+Bac->MacPS+Bac->Yol+Bac->Lat
+ GrazMpb = Mpb->NemSF +Mpb->NemNF +Mpb->NemPO + Mpb->MeioDF + Mpb->MacSDF +Mpb->MacDF+Mpb->MacPS+Mpb->Yol+Mpb->Lat
+ GrazMalg = flowfrom(Malg_ps) - MalgDeg - Malg_ps->Bac	
+ GrazDet_s = flowfrom(lDet) - lDet->DOC_s + flowfrom(sDet) - sDet->DOC_s 
+ Predation = flowto(NemPO) + flowto(MacPS) - lDet->NemPO - lDet ->MacPS - sDet->NemPO - sDet->MacPS - Bac->NemPO - Bac->MacPS - Mpb->NemPo - Mpb->MacPS - Malg_ps->NemPO - Malg_ps->MacPS
+ 
+ TotOCinput		=	TotDeposition	+	MpbUpt	+	TotSuspensionfeeding		
+ TotExport		=	TotMacExp	+	MalgExp				
+ TotResp		=	BacResp	+	NemResp	+	MeioDFResp + TotMacResp	+	MpbResp
+ SedResp		=	BacResp	+	MpbResp	+	NemResp		+ MeioDFResp
+ TotInputSyst   = Malg_hs->Malg_wp + lDetDep + sDetDep + MpbUpt	+	TotSuspensionfeeding
+ 
+ Massbalance = TotInputSyst - TotExport - TotResp - BurialOC - AccumulationMPB
+ 		
+################################## END VARIABLES									
+									
+									
+									
+!--------------------------------------------------------------------------------------------------!									
+!                                                                                                  !									
+!                                         SYSTEM DECLARATION                                       !									
+!                                   (STOCKS, EXTERNALS, FLOWS)                                     !									
+!                                                                                                  !									
+!--------------------------------------------------------------------------------------------------!									
+################################### STOCKS 									
+									
+ lDet		=	lDetritus						
+ sDet		=	sDetritus						
+ rDet		=	rDetritus						
+ DOC_s								
+ Bac		=	Bacteria						
+ Mpb		= 	Microphytobenthos 
+ Malg_wp 	
+ Malg_ps		=	Macroalgae_sed						
+ NemSF 		=	Nema_SelFeeder						
+ NemNF		=	Nema_NonSelFeeder						
+ NemPO		=	Nema_PredOmni
+ MeioDF		= 	MeioDepositFeeder 
+MacDF		=	MacroDepositFeeder						
+MacSDF		=	MacroSurfDepoFeeder						
+MacSF		=	MacroSuspenFeeder						
+MacPS		=	MacroPredatorScavenger						
+Yol		=	Aequiyoldia						
+ Lat  		=	Laternula						
+									
+##################################### END STOCKS									
+									
+################################ EXTERNALS 									
+									
+ lDet_w									
+ sDet_w									
+!rDet_w									
+!DOC_w									
+ Malg_hs									
+ DIC									
+ AccumulatedMPB									
+ Burial									
+ Export									
+									
+################################# END EXTERNALS									
+									
+################################# FLOW 									
+									
+!-- DIC									
+ DIC		->	  Mpb						
+									
+!-- DETRITUS									
+ lDet_w		->	lDet						
+ lDet_w		->	MacSF						
+ lDet_w		->	Lat						
+ lDet_w		->	Yol						
+ sDet_w		->	sDet						
+ sDet_w		->	MacSF						
+ sDet_w		->	Yol						
+ sDet_w		->	Lat						
+!rDet_w		->	rDet						
+ lDet		->	DOC_s						
+ sDet		->	DOC_s						
+ rDet		->	DOC_s						
+ lDet		->	NemSF						
+ lDet		->	NemNF						
+ lDet		->	NemPO	
+ lDet		->  MeioDF 
+ lDet		->	MacSDF						
+ lDet		->	MacDF						
+ lDet		->	MacPS						
+ lDet		->	Yol						
+ lDet		->	Lat						
+ sDet		->	NemSF						
+ sDet		->	NemNF						
+ sDet		->	NemPO
+ sDet		->	MeioDF 
+ sDet		->	MacDF						
+ sDet		->	MacSDF						
+ sDet		->	MacPS						
+ sDet		->	Yol						
+ sDet		->	Lat						
+rDet		->	Burial						
+									
+!-- DOC									
+!DOC_s		->	DOC_w						
+ DOC_s		->	Bac						
+!DOC_s		->	Mpb						
+ DOC_s		->	NemNF						
+									
+!-- Malg									
+ Malg_hs		->	Malg_wp						
+ Malg_wp		->	Malg_ps						
+ Malg_ps		->	Bac						
+ Malg_ps		->	DOC_s						
+ Malg_ps		->	lDet						
+ Malg_ps		->	sDet						
+ Malg_ps		->	rDet 						
+ Malg_ps		->	NemSF						
+ Malg_ps		->	NemNF						
+ Malg_ps		->	NemPO	
+ Malg_ps		->  MeioDF 
+ Malg_ps		->	MacDF						
+ Malg_ps		->	MacSDF						
+ Malg_ps		->	MacSF						
+ Malg_ps		->	MacPS						
+ Malg_ps		->	Yol						
+ Malg_ps		->	Lat						
+ Malg_wp		->	Export						
+									
+!--MPB									
+ Mpb		->	DIC						
+ Mpb		->  DOC_s						
+ Mpb		->	AccumulatedMPB						
+ Mpb		->	lDet						
+ Mpb		->	NemSF						
+ Mpb		->  NemNF						
+ Mpb		->	NemPO	
+ Mpb		->  MeioDF 
+ Mpb		->	MacDF						
+ Mpb		->	MacSDF						
+ Mpb		->	MacPS						
+ Mpb		->	Yol						
+ Mpb		->	Lat		 				
+									
+!-- BACTERIA									
+ Bac		->	DIC						
+ Bac		->  	DOC_s						
+ Bac		->	NemSF						
+ Bac		->	NemNF						
+ Bac		->	NemPO
+ Bac		->  MeioDF 
+ Bac		->	MacDF						
+Bac		->	MacSDF						
+Bac		->	MacPS						
+Bac		->  	Yol						
+ Bac		->  	Lat						
+									
+!-- NEMATODES									
+ NemSF		->	DIC						
+ NemSF		->	lDet	!mortality					
+ NemSF		->	sDet						
+ NemSF		->	rDet						
+ NemSF		->  	NemPO						
+ NemSF		->	MacSDF						
+ NemSF		->	MacDF						
+ NemSF		->  	MacPS						
+ 									
+NemNF		->	DIC						
+NemNF		->  	lDet	!mortality					
+NemNF		->	sDet						
+NemNF		->	rDet						
+NemNF		->  	NemPO						
+NemNF		->	MacSDF						
+NemNF		->	MacDF						
+NemNF		->  	MacPS						
+									
+ NemPO		->	DIC						
+ NemPO		->  	lDet	!mortality					
+ NemPO		->	sDet						
+ NemPO		->	rDet						
+ NemPO		->  MacSDF							
+ NemPO		->	MacDF						
+ NemPO		->	MacPS	
+
+!-- MeioDF									
+ MeioDF		->	DIC						
+ MeioDF		->	lDet	!mortality					
+ MeioDF		->	sDet						
+ MeioDF		->	rDet						
+ MeioDF		->  	NemPO						
+ MeioDF		->	MacSDF						
+ MeioDF		->	MacDF						
+ MeioDF		->  	MacPS		 
+ 									
+!--MACOBENTHOS - SDF, DF, SF and PS									
+MacSDF		->	DIC						
+MacSDF		->	lDet !mortality						
+MacSDF		->	sDet						
+MacSDF		->	rDet						
+MacSDF		->	MacPS						
+MacSDF		->	Export						
+MacDF		->	DIC						
+MacDF		->	lDet !mortality						
+MacDF		->	sDet						
+MacDF		->	rDet						
+MacDF		->	MacPS						
+MacDF		->	Export						
+MacSF		->	DIC						
+MacSF		->	lDet !mortality						
+MacSF		->	sDet						
+MacSF		->	rDet						
+MacSF		->	MacPS						
+MacSF		->	Export						
+MacPS		->	DIC						
+MacPS		->	lDet !mortality						
+MacPS		->	sDet						
+MacPS		->	rDet						
+MacPS		->	Export						
+									
+!--YOLDIA									
+Yol		->	DIC						
+Yol		->	lDet	!mortality					
+Yol		->	sDet						
+Yol		->	rDet						
+Yol		->	Export						
+									
+!--LATERNULA									
+ Lat		->	DIC						
+ Lat		->	lDet	!mortality					
+ Lat		->	sDet						
+ Lat		->	rDet						
+ Lat		->	Export						
+    									
+################################# END FLOW									
+									
+									
+!--------------------------------------------------------------------------------------------------!									
+!                                                                                                  !									
+!                                         DATA DECLARATION                                         !									
+!                                   (RATES, EQUATIONS, CONSTRAINTS)                                !									
+!                                                                                                  !									
+!--------------------------------------------------------------------------------------------------!									
+									
+#################################RATE  									
+									
+! model is assumed to be in steady state->all rates are zero									
+									
+################################# END RATE									
+									
+#####################  EQUALITIES									
+0 = lDet->NemNF * IsolDET + sDet->NemNF * IsosDET + Bac->NemNF *IsoBAC + Mpb->NemNF * IsoMPB + Malg_ps->NemNF * IsoMALG + DOC_s->NemNF * IsoDOCs - IsoNEMNF*flowto(NemNF)									
+0 = lDet->NemSF * IsolDET + sDet->NemSF * IsosDET + Bac->NemSF *IsoBAC + Mpb->NemSF * IsoMPB + Malg_ps->NemSF * IsoMALG - IsoNEMSF*flowto(NemSF)									
+0 = lDet->NemPO * IsolDET + sDet->NemPO * IsosDET + Bac->NemPO *IsoBAC + Mpb->NemPO * IsoMPB + Malg_ps->NemPO * IsoMALG + NemNF->NemPO *IsoNEMNF + NemSF->NemPO *IsoNEMSF - IsoNEMPO*flowto(NemPO)									
+0 = lDet->MeioDF * IsolDET + sDet->MeioDF * IsosDET + Bac->MeioDF *IsoBAC + Mpb->MeioDF * IsoMPB + Malg_ps->MeioDF * IsoMALG - IsoNEMSF*flowto(MeioDF)									
+0 = lDet->MacPS * IsolDET + sDet->MacPS * IsosDET + Bac->MacPS *IsoBAC + Mpb->MacPS * IsoMPB + Malg_ps->MacPS * IsoMALG + NemSF->MacPS *IsoNEMSF + NemNF->MacPS *IsoNEMNF + NemPO->MacPS *IsoNEMPO + MacDF->MacPS*IsoMACDF + MacSDF->MacPS*IsoMACSDF + MacSF->MacPS*IsoMACSF - IsoMACPS*flowto(MacPS)									
+0 = lDet->MacDF * IsolDET + sDet->MacDF * IsosDET + Bac->MacDF *IsoBAC+ Mpb->MacDF * IsoMPB + Malg_ps->MacDF * IsoMALG + NemSF->MacDF *IsoNEMSF - IsoMACDF*flowto(MacDF)									
+0 = lDet_w->MacSF * IsolDet_w + lDet_w->MacSF *3 +  sDet_w->MacSF * IsosDet_w +  sDet_w->MacSF * 3 + Malg_ps->MacSF * IsoMALG + Malg_ps->MacSF * 3- IsoMACSF*flowto(MacSF)									
+0 = lDet->MacSDF * IsolDET + sDet->MacSDF * IsosDET + Bac->MacSDF *IsoBAC+ Mpb->MacSDF * IsoMPB + Malg_ps->MacSDF * IsoMALG + NemSF->MacSDF *IsoNEMSF + NemNF->MacSDF *IsoNEMNF + NemPO->MacSDF *IsoNEMPO- IsoMACSDF*flowto(MacSDF)									
+0 = lDet_w->Yol * IsolDet_w  + lDet->Yol * IsolDET + sDet_w->Yol * IsosDet_w  + sDet->Yol * IsosDET + Bac->Yol *IsoBAC + Mpb->Yol * IsoMPB + Mpb->Yol *2 + Malg_ps->Yol * IsoMALG - IsoYOL*flowto(Yol)									
+0 = lDet_w->Lat * IsolDet_w + sDet_w->Lat * IsosDet_w + lDet->Lat * IsolDET + sDet->Lat * IsosDET + Bac->Lat *IsoBAC+ Mpb->Lat * IsoMPB + Malg_ps->Lat * IsoMALG - IsoLAT*flowto(Lat)	
+								
+#####################  END EQUALITIES									
+									
+################################# CONSTRAINT 									
+									
+! Detritus deposition 									
+ DetDep		=	 [0, maxPOCdeposition] 	! minPOCdeposition is too high, set at zero					
+									
+!-- Total respiration									
+ TotResp		=	[minTotResp,maxTotResp]						
+ 									
+!--Sediment respiration									
+! SedResp		=	[minSedResp,maxSedResp]						
+									
+!-- Total hydrolysis									
+! DetDis		<	maxTotalHydrolysis						
+									
+!-- Burial efficiency									
+ BurialOC		=	[minBurEff,maxBurEff]*TotOCinput      !Burdige book pg. 410						
+									
+!-- Efflux of DOC from the sediment									
+! DOCefflux		<	maxRelDOCefflux*TotResp               !Burdige GCA 63:1507-1515						
+									
+!-- DETRITUS									
+ lDetDeg 		=	[min_lDetDegr, max_lDetDegr]*lDet						
+ sDetDeg		=	[min_sDetDegr, max_sDetDegr]*sDet						
+ rDetDeg		=	[min_rDetDegr, max_rDetDegr]*rDet						
+ 									
+!--MPB									
+ MpbProd		=	[minProd_MPB,maxProd_MPB]						
+ MpbResp		= 	[minResp_MPB, maxResp_MPB]*MpbProd						
+ MpbDocProd		= 	[minMpbDocProd, maxMpbDocProd]*MpbResp						
+ 									
+!-- MACROALGAE									
+ MalgMort		<	maxMalgMort				
+ BacUptMalg		=	[minfracBacUptMalg,maxfracBacUptMalg]*Malg_ps						
+! NemSFUptMalg		=	[minfracMalgUptNem,maxfracMalgUptNem]*Malg_ps						
+! NemNFUptMalg		=	[minfracMalgUptNem,maxfracMalgUptNem]*Malg_ps
+! NemPOUptMalg		=	[minfracMalgUptNem,maxfracMalgUptNem]*Malg_ps 
+! NemSFUptMalg + NemNFUptMalg + NemPOUptMalg < maxfracMalgUptNem*Malg_ps
+ MeioDFUptMalg		=	[minfracMalgUptMeioDF,maxfracMalgUptMeioDF]*Malg_ps	
+ MacDFUptMalg		=	[minfracMacDFUptMalg,maxfracMacDFUptMalg]*Malg_ps						
+ MacSDFUptMalg		=	[minfracMacSDFUptMalg,maxfracMacSDFUptMalg]*Malg_ps						
+ MacSFUptMalg		=	[minfracMacSFUptMalg,maxfracMacSFUptMalg]*Malg_ps						
+ MacPSUptMalg		=	[minfracMacPSUptMalg,maxfracMacPSUptMalg]*Malg_ps						
+ YolUptMalg		=	[minfracYolUptMalg,maxfracYolUptMalg]*Malg_ps						
+ LatUptMalg		=	[minfracLatUptMalg,maxfracLatUptMalg]*Malg_ps						
+									
+!-- BACTERIA									
+ BacProd		=	[minBGE,MaxBGE]*BacUpt						
+ BacDOCProd		=	[minLysBP,maxLysBP]*BacProd						
+									
+!-- NEMATODES									
+! NemUptBac             <    fractBacUptNem * NemUpt									
+ 									
+ NemSFUptLab                              =   			[minselSFuptNem,maxselSFuptNem]*fracLabSemNem*NemSFUptSem						
+ NemSFAssLab                              =   			[minAENemLab,maxAENemLab] * NemSFUptLab						
+ NemSFAssSem                              =   			[minAENemSem,maxAENemSem] * NemSFUptSem						
+ NemSFAss - NemSFResp + MaintRespNemSF    =   			[minNGENem, maxNGENem]*NemSFAss						
+ NemSFAss - NemSFResp + MaintRespNemSF    =   			[minGrowthNem,maxGrowthNem]*NemSF						
+ NemSFMort                                =   			[minMorNem, maxMorNem]*NemSF						
+ 									
+ NemNFUptLab                              =   			[minselNFuptNem,maxselNFuptNem]*fracLabSemNem*NemNFUptSem						
+ NemNFAssLab                              =   			[minAENemLab,maxAENemLab] * NemNFUptLab						
+ NemNFAssSem                              =   			[minAENemSem,maxAENemSem] * NemNFUptSem						
+ NemNFAss - NemNFResp + MaintRespNemNF    =   			[minNGENem, maxNGENem]*NemNFAss						
+ NemNFAss - NemNFResp + MaintRespNemNF    =   			[minGrowthNem,maxGrowthNem]*NemNF						
+ NemNFMort                                =   			[minMorNem, maxMorNem]*NemNF						
+									
+ NemPOUptLab                              =   			[minfracPOuptNem,maxfracPOuptNem]*NemPOUpt						
+ NemPOAssLab                              =   			[minAENemLab,maxAENemLab] * NemPOUptLab						
+ NemPOAssSem                              =   			[minAENemSem,maxAENemSem] * NemPOUptSem						
+ NemPOAss - NemPOResp + MaintRespNemPO    =   			[minNGENem, maxNGENem]*NemPOAss						
+ NemPOAss - NemPOResp + MaintRespNemPO    =   			[minGrowthNem,maxGrowthNem]*NemPO						
+ NemPOMort                                =   			[minMorNem, maxMorNem]*NemPO	
+
+!--MeioDF
+ MeioDFUptLab                              =   			[minselSFuptMeioDF,maxselSFuptMeioDF]*fracLabSemMeioDF*MeioDFUptSem						
+ MeioDFAssLab                              =   			[minAEMeioDFLab,maxAEMeioDFLab] * MeioDFUptLab						
+ MeioDFAssSem                              =   			[minAEMeioDFSem,maxAEMeioDFSem] * MeioDFUptSem						
+ MeioDFAss - MeioDFResp + MaintRespMeioDF    =   			[minNGEMeioDF, maxNGEMeioDF]*MeioDFAss						
+ MeioDFAss - MeioDFResp + MaintRespMeioDF    =   			[minGrowthMeioDF,maxGrowthMeioDF]*MeioDF						
+ MeioDFMort                                =   			[minMorMeioDF, maxMorMeioDF]*MeioDF	 
+									
+!-- MACROBENTHOS									
+MacSDFUptLab		=	[minselSDFuptMac,maxselSDFuptMac]*fracLabSemMac*MacSDFUptSem						
+MacSDFAssLab		=	[minAEMacLab, maxAEMacLab] * MacSDFUptLab						
+MacSDFAssSem		=	[minAEMacSem, maxAEMacSem] * MacSDFUptSem						
+MacSDFAss - MacSDFResp + MaintRespMacSDF			=	[minNGEMac, maxNGEMac]*MacSDFAss					
+MacSDFAss - MacSDFResp + MaintRespMacSDF			=	[minGrowthMac,maxGrowthMac]*MacSDF					
+MacSDFMort		=	[minMorMac, maxMorMac]*MacSDF						
+									
+MacDFUptLab		=	[minselDFuptMac,maxselDFuptMac]*fracLabSemMac*MacDFUptSem						
+MacDFAssLab		=	[minAEMacLab, maxAEMacLab] * MacDFUptLab						
+MacDFAssSem		=	[minAEMacSem, maxAEMacSem] * MacDFUptSem						
+MacDFAss - MacDFResp + MaintRespMacDF			=	[minNGEMac, maxNGEMac]*MacDFAss					
+MacDFAss - MacDFResp + MaintRespMacDF			=	[minGrowthMac,maxGrowthMac]*MacDF					
+MacDFMort		=	[minMorMac, maxMorMac]*MacDF						
+									
+MacSFAssLab		=	[minAEMacLab, maxAEMacLab] * MacSFUptLab						
+MacSFAssSem		=	[minAEMacSem, maxAEMacSem] * MacSFUptSem						
+MacSFAss - MacSFResp + MaintRespMacSF			=	[minNGEMac, maxNGEMac]*MacSFAss					
+MacSFAss - MacSFResp + MaintRespMacSF			=	[minGrowthMac,maxGrowthMac]*MacSF					
+MacSFMort		=	[minMorMac, maxMorMac]*MacSF						
+									
+MacPSPred		=	[minfracPredUptMac,maxfracPredUptMac]*MacPSUpt					
+MacPSAssLab		=	[minAEMacLab, maxAEMacLab] * MacPSUptLab						
+MacPSAssSem		=	[minAEMacSem, maxAEMacSem] * MacPSUptSem						
+MacPSAss - MacPSResp + MaintRespMacPS			=	[minNGEMac, maxNGEMac]*MacPSAss					
+MacPSAss - MacPSResp + MaintRespMacPS			=	[minGrowthMac,maxGrowthMac]*MacPS					
+MacPSMort		=	[minMorMac, maxMorMac]*MacPS						
+									
+!--YOLDIA									
+ YolUptLab		=	[minseluptYol,maxseluptYol]*fracLabSemYol*YolUptSem						
+ YolUpt 		= 	[minUptYol, maxUptYol]*Yol						
+ YolAssLab		=	[minAEYolLab,	maxAEYolLab]	*	YolUptLab			
+ YolAssSem		=	[minAEYolSem,	maxAEYolSem]	*	YolUptSem			
+ YolAss	-	YolResp	+	MaintRespYol	=	[minNGEYol,	maxNGEYol]*YolAss		
+ YolAss	-	YolResp	+	MaintRespYol	=	[minGrowthYol,	maxGrowthYol]*Yol		
+ YolMort		=	[minMorYol,	maxMorYol]*Yol								
+									
+!--LATERNULA									
+! LatUptLab		=	[minseluptLat,maxseluptLat]*fracLabSemLat*LatUptSem						
+ LatUpt 		= 	[minUptLat, maxUptLat]*Lat						
+ LatAssLab		=	[minAELatLab,	maxAELatLab]	*	LatUptLab			
+ LatAssSem		=	[minAELatSem,	maxAELatSem]	*	LatUptSem			
+ LatAss	-	LatResp	+	MaintRespLat	=	[minNGELat,	maxNGELat]*LatAss		
+ LatAss	-	LatResp	+	MaintRespLat	=	[minGrowthLat,	maxGrowthLat]*Lat		
+ LatMort		=	[minMorLat,	maxMorLat]*Lat									
+									
+################################# END CONSTRAINT										
