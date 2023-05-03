@@ -27,7 +27,7 @@ stPHY         	= 	88.93	{µg	 C/L}
 stDOC         	= 	0.78	{mg	 C/L}  
 stSUF         	= 	2.493	{g 	C/m2}
 
-!-- PROPORTIONAL CONTRIBUTIONS (from Bruno et al. 2023)
+!-- PROPORTIONAL CONTRIBUTIONS (from Bruno et al. 2023 & Presta et al. 2023)
 !-- to wDET
 minsDETtowDET   = 0.00
 maxsDETtowDET   = 0.14
@@ -64,6 +64,12 @@ maxsDETtoMIZ    = 0.26
 minPHYtoMIZ     = 0.03
 maxPHYtoMIZ     = 0.15
 
+!-- to MESOZOOPLANKTON
+minsDETPHYtoMEZ = 0.32
+maxsDETPHYtoMEZ = 0.67
+minMIZtoMEZ     = 0.14
+maxMIZtoMEZ     = 0.34
+
 !-- to ICHTHYOPLANKTON
 minwDETtoICH    = 0.00
 maxwDETtoICH    = 0.08
@@ -71,6 +77,12 @@ minsDETtoICH    = 0.02
 maxsDETtoICH    = 0.28
 minPHYtoICH     = 0.00
 maxPHYtoICH     = 0.10
+
+!-- to GRIMOTHEA
+minsDETPHYtoGRI = 0.15
+maxsDETPHYtoGRI = 0.62
+minMIZtoGRI     = 0.07
+maxMIZtoGRI     = 0.36
 
 ###### END PARAMETERS
 
@@ -350,27 +362,33 @@ MAM   ->  wDET    ! mortality
 ###### INEQUALITIES
 
 !-- Proportional contributions
-sDET  ->  wDET  = [minsDETtowDET, maxsDETtowDET]*flowto(wDET)
-PHY   ->  wDET  = [minPHYtowDET, maxPHYtowDET]*flowto(wDET)
-ALG   ->  wDET  = [minALGtowDET, maxALGtowDET]*flowto(wDET)
-eTC3  ->  wDET  = [mineTC3towDET, maxeTC3towDET]*flowto(wDET)
+sDET  ->  wDET      = [minsDETtowDET, maxsDETtowDET]*flowto(wDET)
+PHY   ->  wDET      = [minPHYtowDET, maxPHYtowDET]*flowto(wDET)
+ALG   ->  wDET      = [minALGtowDET, maxALGtowDET]*flowto(wDET)
+eTC3  ->  wDET      = [mineTC3towDET, maxeTC3towDET]*flowto(wDET)
 
-wDET  ->  sDET  = [minwDETtosDET, maxwDETtosDET]*flowto(sDET)
-PHY   ->  sDET  = [minPHYtosDET, maxPHYtosDET]*flowto(sDET)
-ALG   ->  sDET  = [minALGtosDET, maxALGtosDET]*flowto(sDET)
-eTC3  ->  sDET  = [mineTC3tosDET, maxeTC3tosDET]*flowto(sDET)
+wDET  ->  sDET      = [minwDETtosDET, maxwDETtosDET]*flowto(sDET)
+PHY   ->  sDET      = [minPHYtosDET, maxPHYtosDET]*flowto(sDET)
+ALG   ->  sDET      = [minALGtosDET, maxALGtosDET]*flowto(sDET)
+eTC3  ->  sDET      = [mineTC3tosDET, maxeTC3tosDET]*flowto(sDET)
 
-wDET  ->  SUF  = [minwDETtoSUF, maxwDETtoSUF]*flowto(SUF)
-sDET  ->  SUF  = [minsDETtoSUF, maxsDETtoSUF]*flowto(SUF)
-PHY   ->  SUF  = [minPHYtoSUF, maxPHYtoSUF]*flowto(SUF)
+wDET  ->  MIZ       = [minwDETtoMIZ, maxwDETtoMIZ]*flowto(MIZ)
+sDET  ->  MIZ       = [minsDETtoMIZ, maxsDETtoMIZ]*flowto(MIZ)
+PHY   ->  MIZ       = [minPHYtoMIZ, maxPHYtoMIZ]*flowto(MIZ)
 
-wDET  ->  MIZ  = [minwDETtoMIZ, maxwDETtoMIZ]*flowto(MIZ)
-sDET  ->  MIZ  = [minsDETtoMIZ, maxsDETtoMIZ]*flowto(MIZ)
-PHY   ->  MIZ  = [minPHYtoMIZ, maxPHYtoMIZ]*flowto(MIZ)
+MIZ   ->  MEZ       = [minMIZtoMEZ, maxMIZtoMEZ]*flowto(MEZ)
+sDET->MEZ+PHY->MEZ  = [minsDETPHYtoMEZ, maxsDETPHYtoMEZ]*flowto(MEZ)
 
-wDET  ->  ICH  = [minwDETtoICH, maxwDETtoICH]*flowto(ICH)
-sDET  ->  ICH  = [minsDETtoICH, maxsDETtoICH]*flowto(ICH)
-PHY   ->  ICH  = [minPHYtoICH, maxPHYtoICH]*flowto(ICH)
+wDET  ->  ICH       = [minwDETtoICH, maxwDETtoICH]*flowto(ICH)
+sDET  ->  ICH       = [minsDETtoICH, maxsDETtoICH]*flowto(ICH)
+PHY   ->  ICH       = [minPHYtoICH, maxPHYtoICH]*flowto(ICH)
+
+MIZ   ->  GRI       = [minMIZtoGRI, maxMIZtoGRI]*flowto(GRI)
+sDET->GRI+PHY->GRI  = [minsDETPHYtoGRI, maxsDETPHYtoGRI]*flowto(GRI)
+
+wDET  ->  SUF       = [minwDETtoSUF, maxwDETtoSUF]*flowto(SUF)
+sDET  ->  SUF       = [minsDETtoSUF, maxsDETtoSUF]*flowto(SUF)
+PHY   ->  SUF       = [minPHYtoSUF, maxPHYtoSUF]*flowto(SUF)
 
 !-- Autochthonous vs Alochthonous
 AuttowDET     > AlotowDET
@@ -380,7 +398,10 @@ AuttosDET     > AlotosDET
 
 
 ! TO DO
-! Bacterial data
+! Add bacteria data
+! Add DIC & DOC values, Presta et al. 2023
+! Add inequalities from Presta et al. 2023
+! Micro and MesoZ: convert density to g C/m^2
+
 ! How to use energy density data (KJ/g). Do I need to convert it to biomass?
-! DIC & DOC values, Presta et al. 2023
-! Inequalities from Presta et al. 2023
+! Can you set min & max stocks for externals? eDIC
