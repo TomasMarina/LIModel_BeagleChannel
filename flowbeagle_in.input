@@ -21,11 +21,11 @@ Tomás I. Marina, Karline Soetaert, Dick van Oevelen
 !-- STOCKS
 ! Bacteria from Carrasco et al. 2023 (https://doi.org/10.1016/j.jmarsys.2023.103880)
 
-minstDOC      	= 	0.56	{mg	 C/L}  
-maxstDOC      	= 	1.09	{mg	 C/L}  
-stPHY         	= 	88.93	{µg	 C/L}  
-stDOC         	= 	0.78	{mg	 C/L}  
-stSUF         	= 	2.493	{g 	C/m2}
+stBAC           =     {g 	C/m2}
+stPHY         	= 		{g C/m^2}   ! Iachetti et al. 2021
+stDOC         	= 	  {g 	C/m2}  
+stMEZ           =     {g 	C/m2}
+stSUF         	= 	  {g 	C/m2}
 
 !-- PROPORTIONAL CONTRIBUTIONS (from Bruno et al. 2023 & Presta et al. 2023)
 !-- to wDET
@@ -400,8 +400,11 @@ AuttosDET     > AlotosDET
 ! TO DO
 ! Add bacteria data
 ! Add DIC & DOC values, Presta et al. 2023
-! Add inequalities from Presta et al. 2023
 ! Micro and MesoZ: convert density to g C/m^2
+! Add Diez et al. 2009 (> 70 m)
+
+! Add lost term in wDET->sDET. Read Flores-Melo et al.
+! Set up depth: 100 m
 
 ! How to use energy density data (KJ/g). Do I need to convert it to biomass?
 ! Can you set min & max stocks for externals? eDIC
