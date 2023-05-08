@@ -155,7 +155,7 @@ respMIZ   = MIZ   ->  eDIC        ! respiration
 DOC     ! Dissolved Organic Carbon
 wDET    ! Particulate organic matter in water column
 sDET    ! Particulate organic matter in sediment
-PHY     ! Phytoplankton (diatsDET)
+PHY     ! Phytoplankton (diatoms)
 BAC     ! Bacteria
 ALG     ! Macroalgae
 MIZ     ! Microzooplankton (Copepoda & Cirripedia nauplii, 67–200 μm)
@@ -163,7 +163,7 @@ MEZ     ! Mesozooplankton (Copepoda copepodites & adults, Appendicularia, Echino
 ICH     ! Ichthyoplankton (fish larvae)
 GRI     ! Grimothea gregaria (Decapoda)
 SUF     ! Suspension-feeders (Mytilus sp.)
-DTR     ! Detritivores (Halicarcinus planatus, Isopods)
+DTR     ! Detritivores (Halicarcinus planatus, Isopoda, Bryozoa, Holothuroidea)
 GRA     ! Grazers (Nacella sp., limpet, chitons)
 OMN     ! Omnivorous invertebrates (Echinoidea-Arbacia dufresnii)
 CAR     ! Carnivorous invertebrates (Asteroidea, Nemertea)
