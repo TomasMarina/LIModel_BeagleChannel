@@ -1,0 +1,58 @@
+=======================================================================================
+Carbon flow model in plankton community during spring in inner (western) Beagle Channel
+
+Time: spring
+Space: inner & outer BC
+
+Units:  fluxes: g C/m3/d
+        stocks: g C/m3
+
+Tomás I. Marina, Karline Soetaert, Dick van Oevelen
+=======================================================================================
+
+!--------------------------------------------------------------------------------------------------!									
+!                                                                                                  !									
+!                                     PARAMETERS & VARIABLES                                       !									
+!                                                                                                  !									
+!--------------------------------------------------------------------------------------------------!
+
+###### PARAMETERS
+###### END PARAMETERS
+
+!--------------------------------------------------------------------------------------------------!									
+!                                                                                                  !									
+!                                        SYSTEM DECLARATION                                        !									
+!                                  (COMPARTMENTS, EXTERNALS, FLOWS)                                !									
+!                                                                                                  !									
+!--------------------------------------------------------------------------------------------------!
+
+###### COMPARTMENTS
+
+wDET    ! Particulate organic mater in water column
+sDET    ! Particulate organic mater in sediment
+DOC     ! Dissolved Organic Carbon
+PHY     ! Phytoplankton (mainly Diatoms)
+MIZ     ! Microzooplankton (Copepoda & Cirripedia nauplii, 67–200 μm)
+MEZ     ! Mesozooplankton (Copepoda copepodites & adults, Appendicularia, Echinoderm larvae, 200–20000 μm)
+ICH     ! Ichthyoplankton (mainly Patagonotothen spp.)
+
+###### END COMPARTMENTS
+
+###### EXTERNALS
+
+eDIC
+
+###### END EXTERNALS
+
+###### FLOWS
+###### END FLOWS
+
+!--------------------------------------------------------------------------------------------------!									
+!                                                                                                  !									
+!                                         DATA DECLARATION                                         !									
+!                                (RATES, EQUALITIES, INEQUALITIES)                                 !									
+!                                                                                                  !									
+!--------------------------------------------------------------------------------------------------!
+
+
+
