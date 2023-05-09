@@ -162,10 +162,10 @@ MIZ     ! Microzooplankton (Copepoda & Cirripedia nauplii, 67–200 μm)
 MEZ     ! Mesozooplankton (Copepoda copepodites & adults, Appendicularia, Echinoderm larvae, 200–20000 μm)
 ICH     ! Ichthyoplankton (fish larvae)
 GRI     ! Grimothea gregaria (Decapoda)
-SUF     ! Suspension-feeders (Mytilus sp.)
+SUF     ! Suspension-feeders (Mytilus sp., Porifera)
 DTR     ! Detritivores (Halicarcinus planatus, Isopoda, Bryozoa, Holothuroidea)
 GRA     ! Grazers (Nacella sp., limpet, chitons)
-OMN     ! Omnivorous invertebrates (Echinoidea-Arbacia dufresnii)
+OMN     ! Omnivorous invertebrates (Echinoidea-Arbacia dufresnii, Ophiuroidea)
 CAR     ! Carnivorous invertebrates (Asteroidea, Nemertea)
 FPL     ! Pelagic fish (Sprattus fuegensis)
 FBP     ! Benthopelagic fish (Patagonotothen sp., Eleginops maclovinus)
@@ -400,8 +400,8 @@ AuttosDET     > AlotosDET
 ! TO DO
 ! Add bacteria data
 ! Add DIC & DOC values, Presta et al. 2023
-! Micro and MesoZ: convert density to g C/m^2
 ! Add Diez et al. 2009 (> 70 m)
+! Add Gross Primary Production, Latorre et al. 2023
 
 ! Add lost term in wDET->sDET. Read Flores-Melo et al.
 ! Set up depth: 100 m
