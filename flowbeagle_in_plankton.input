@@ -2,7 +2,7 @@
 Carbon flow model in plankton community during spring in inner (western) Beagle Channel
 
 Time: spring
-Space: inner & outer BC
+Space: inner BC, mixed layer
 
 Units:  fluxes: g C/m3/d
         stocks: g C/m3
@@ -17,6 +17,48 @@ Tomás I. Marina, Karline Soetaert, Dick van Oevelen
 !--------------------------------------------------------------------------------------------------!
 
 ###### PARAMETERS
+
+!-- STOCKS
+stwDET         	=
+stDOC         	=
+stPHY         	=   0.1059  {g C/m3}
+stMIZ           =
+stMEZ           =   0.0768  {g C/m3}
+stICH         	=   0.0002  {g C/m3}
+stGRI         	=
+stFPL         	=
+
+
+!-- PROPORTIONAL CONTRIBUTIONS (from Bruno et al. 2023 & Presta et al. 2023)
+!-- to Detritus in water column
+minPHYtowDET    = 0.45
+maxPHYtowDET    = 0.75
+miniMACtowDET   = 0.00            ! mean 'blades', 'stipes', 'holdfasts'
+maxiMACtowDET   = 0.13            ! mean 'blades', 'stipes', 'holdfasts'
+miniTC3towDET   = 0.05
+maxiTC3towDET   = 0.25
+
+!-- to MICROZOOPLANKTON
+minwDETtoMIZ    = 0.62
+maxwDETtoMIZ    = 0.90
+minPHYtoMIZ     = 0.03
+maxPHYtoMIZ     = 0.15
+
+!-- to MESOZOOPLANKTON
+minMIZtoMEZ     = 0.14
+maxMIZtoMEZ     = 0.34
+
+!-- to ICHTHYOPLANKTON
+minwDETtoICH    = 0.00
+maxwDETtoICH    = 0.08
+minPHYtoICH     = 0.00
+maxPHYtoICH     = 0.10
+
+!-- to GRIMOTHEA
+minMIZtoGRI     = 0.07
+maxMIZtoGRI     = 0.36
+
+
 ###### END PARAMETERS
 
 !--------------------------------------------------------------------------------------------------!									
@@ -26,25 +68,98 @@ Tomás I. Marina, Karline Soetaert, Dick van Oevelen
 !                                                                                                  !									
 !--------------------------------------------------------------------------------------------------!
 
+! I didn't consider detritus in sediment as input (to wDET, DOC, and food for MIZ, MEZ, ICH, GRI), only as export to benthos.
+
 ###### COMPARTMENTS
 
-wDET    ! Particulate organic mater in water column
-sDET    ! Particulate organic mater in sediment
+wDET    ! Detritus in water column
 DOC     ! Dissolved Organic Carbon
+BAC     ! Bacteria
 PHY     ! Phytoplankton (mainly Diatoms)
 MIZ     ! Microzooplankton (Copepoda & Cirripedia nauplii, 67–200 μm)
 MEZ     ! Mesozooplankton (Copepoda copepodites & adults, Appendicularia, Echinoderm larvae, 200–20000 μm)
-ICH     ! Ichthyoplankton (mainly Patagonotothen spp.)
+ICH     ! Ichthyoplankton (all fish spp)
+GRI     ! Grimothea gregaria (Decapoda)
+FPL     ! Fish pelagic (Sprattus fuegensis)
 
 ###### END COMPARTMENTS
 
 ###### EXTERNALS
 
-eDIC
+iTC3    ! input of terrestrial plants
+iMAC    ! input of detached macroalgae
+eDIC    ! export of Dissolved Inorganic Carbon
+eDET    ! export of detritus to sediments
+eHTL    ! export to Higher Tropic Levels (seabirds & marine mammals)
 
 ###### END EXTERNALS
 
 ###### FLOWS
+
+!-- EXTERNALS
+iTC3    ->  wDET    ! terrestrial input
+iTC3    ->  DOC     ! terrestrial input
+iMAC    ->  wDET    ! macroalgae input
+
+
+!-- DETRITUS
+wDET    ->  eDET    ! export to benthos
+wDET    ->  DOC     ! hydrolisis
+wDET    ->  BAC     ! consumption
+wDET    ->  MIZ     ! consumption
+wDET    ->  MEZ     ! consumption
+wDET    ->  ICH     ! consumption
+
+!-- DISSOLVED ORGANIC CARBON
+DOC     ->  BAC     ! uptake
+
+!-- BACTERIA
+BAC     ->  DOC     ! DOC production
+BAC     ->  eDIC    ! respiration
+
+!-- PHYTOPLANKTON
+PHY     ->  eDIC    ! respiration
+PHY     ->  wDET    ! natural mortality=phytodetritus
+PHY     ->  DOC     ! exudation
+PHY     ->  MIZ     ! consumption
+PHY     ->  MEZ     ! consumption
+PHY     ->  ICH     ! consumption
+PHY     ->  GRI     ! consumption
+PHY     ->  FPL     ! consumption
+
+!-- MICROZOOPLANKTON
+MIZ     ->  eDIC    ! respiration
+MIZ     ->  wDET    ! natural mortality
+MIZ     ->  MEZ     ! consumption
+MIZ     ->  ICH     ! consumption
+MIZ     ->  GRI     ! consumption
+MIZ     ->  FPL     ! consumption
+
+!-- MESOZOOPLANKTON
+MEZ     ->  eDIC    ! respiration
+MEZ     ->  wDET    ! natural mortality
+MEZ     ->  MEZ     ! consumption
+MEZ     ->  ICH     ! consumption
+MEZ     ->  GRI     ! consumption
+MEZ     ->  FPL     ! consumption
+MEZ     ->  eHTL    ! consumption by seabirds
+
+!-- ICHTHYOPLANKTON
+ICH     ->  eDIC    ! respiration
+ICH     ->  wDET    ! natural mortality
+ICH     ->  FPL     ! consumption
+ICH     ->  eHTL    ! consumption by seabirds
+
+!-- GRIMOTHEA GREGARIA
+GRI     ->  eDIC    ! respiration
+GRI     ->  wDET    ! natural mortality
+GRI     ->  eHTL    ! consumption by seabirds & marine mammals
+
+!-- FISH PELAGIC
+FPL     ->  eDIC    ! respiration
+FPL     ->  wDET    ! natural mortality
+FPL     ->  eHTL    ! consumption by seabirds & marine mammals
+
 ###### END FLOWS
 
 !--------------------------------------------------------------------------------------------------!									
