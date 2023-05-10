@@ -63,7 +63,6 @@ minsDETtoMIZ    = 0.04
 maxsDETtoMIZ    = 0.26
 minPHYtoMIZ     = 0.03
 maxPHYtoMIZ     = 0.15
-
 !-- to MESOZOOPLANKTON
 minsDETPHYtoMEZ = 0.32
 maxsDETPHYtoMEZ = 0.67
@@ -406,5 +405,5 @@ AuttosDET     > AlotosDET
 ! Add lost term in wDET->sDET. Read Flores-Melo et al.
 ! Set up depth: 100 m
 
-! How to use energy density data (KJ/g). Do I need to convert it to biomass?
-! Can you set min & max stocks for externals? eDIC
+! How to use energy density data (KJ/g)? Need density data
+! Can you set min & max stocks for externals? NO

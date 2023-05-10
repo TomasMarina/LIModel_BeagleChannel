@@ -22,10 +22,10 @@ Tomás I. Marina, Karline Soetaert, Dick van Oevelen
 stwDET         	=
 stDOC         	=
 stPHY         	=   0.1059  {g C/m3}
-stMIZ           =
+stMIZ           =   0.0075  {g C/m3}
 stMEZ           =   0.0768  {g C/m3}
 stICH         	=   0.0002  {g C/m3}
-stGRI         	=
+stGRI         	=   0.4349  {g C/m2}
 stFPL         	=
 
 
@@ -58,8 +58,15 @@ maxPHYtoICH     = 0.10
 minMIZtoGRI     = 0.07
 maxMIZtoGRI     = 0.36
 
-
 ###### END PARAMETERS
+
+###### VARIABLES
+
+!-- Autochtonous vs Alochthonous (from Bruno et al. 2023)
+AlotowDET       = iTC3->wDET
+AuttowDET       = iMAC->wDET + PHY->wDET
+
+###### END VARIABLES
 
 !--------------------------------------------------------------------------------------------------!									
 !                                                                                                  !									
@@ -169,5 +176,34 @@ FPL     ->  eHTL    ! consumption by seabirds & marine mammals
 !                                                                                                  !									
 !--------------------------------------------------------------------------------------------------!
 
+###### INEQUALITIES
 
+!-- Proportional contributions
+!-- to Detritus in water column
+PHY   ->  wDET      = [minPHYtowDET, maxPHYtowDET]*flowto(wDET)
+iMAC  ->  wDET      = [minALGtowDET, maxALGtowDET]*flowto(wDET)
+iTC3  ->  wDET      = [miniTC3towDET, maxiTC3towDET]*flowto(wDET)
+
+!-- export to Detritus in benthos
+wDET  ->  eDET      = [minwDETtoeDET, maxwDETtoeDET]*flowto(sDET)
+PHY   ->  eDET      = [minPHYtoeDET, maxPHYtoeDET]*flowto(sDET)
+
+!-- to Microzooplankton
+wDET  ->  MIZ       = [minwDETtoMIZ, maxwDETtoMIZ]*flowto(MIZ)
+PHY   ->  MIZ       = [minPHYtoMIZ, maxPHYtoMIZ]*flowto(MIZ)
+
+!-- to Mesozooplankton
+MIZ   ->  MEZ       = [minMIZtoMEZ, maxMIZtoMEZ]*flowto(MEZ)
+
+!-- to Ichthyoplankton
+wDET  ->  ICH       = [minwDETtoICH, maxwDETtoICH]*flowto(ICH)
+PHY   ->  ICH       = [minPHYtoICH, maxPHYtoICH]*flowto(ICH)
+
+!-- to Grimothea gregaria
+MIZ   ->  GRI       = [minMIZtoGRI, maxMIZtoGRI]*flowto(GRI)
+
+!-- Autochthonous vs Alochthonous
+AuttowDET           > AlotowDET
+
+###### END INEQUALITIES
 
