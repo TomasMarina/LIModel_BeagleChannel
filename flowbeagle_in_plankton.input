@@ -4,8 +4,8 @@ Carbon flow model in plankton community during spring in inner (western) Beagle 
 Time: spring
 Space: inner BC, mixed layer
 
-Units:  fluxes: g C/m3/d
-        stocks: g C/m3
+Units:  fluxes: mg C/m3/d
+        stocks: mg C/m3
 
 Tomás I. Marina, Karline Soetaert, Dick van Oevelen
 =======================================================================================
@@ -18,53 +18,72 @@ Tomás I. Marina, Karline Soetaert, Dick van Oevelen
 
 ###### PARAMETERS
 
-!-- STOCKS
-stwDET         	=
-stDOC         	=
-stPHY         	=   0.1059  {g C/m3}
-stMIZ           =   0.0075  {g C/m3}
-stMEZ           =   0.0768  {g C/m3}
-stICH         	=   0.0002  {g C/m3}
-stGRI         	=   0.4349  {g C/m2}
-stFPL         	=
+!!! STOCKS
+!stwDET         	=
+stDOC         	=   1090.0    {mg C/m3}
+stBAC           =   0.0000083 {mg C/m3}
+stPHY         	=   105.866   {mg C/m3}
+stMIZ           =   7.4513    {mg C/m3}
+stMEZ           =   76.780    {mg C/m3}
+stICH         	=   0.2136    {mg C/m3}
+stGRI         	=   438.87    {mg C/m2}
+!stFPL         	=
 
+!!! FLOW MEASUREMENTS
+minProdPHY      =   51.19 - 5.2   {mg C/m3/d}    ! mean GPP - sdGPP
+maxProdPHY      =   51.19 + 5.2   {mg C/m3/d}    ! mean GPP + sdGPP
 
-!-- PROPORTIONAL CONTRIBUTIONS (from Bruno et al. 2023 & Presta et al. 2023)
+!!! RESPIRATION
+minRespPHY      =   24.48 - 0.64  {mg C/m3/d}    ! mean Resp - sdResp
+maxRespPHY      =   24.48 + 0.64  {mg C/m3/d}    ! mean Resp + sdResp
+
+!!! PROPORTIONAL CONTRIBUTIONS (from Bruno et al. 2023 & Presta et al. 2023)
+!-- export to Detritus in benthos
+minwDETtoeDET   =   0.03
+maxwDETtoeDET   =   0.27
+minPHYtoeDET    =   0.01
+maxPHYtoeDET    =   0.17
+
 !-- to Detritus in water column
-minPHYtowDET    = 0.45
-maxPHYtowDET    = 0.75
-miniMACtowDET   = 0.00            ! mean 'blades', 'stipes', 'holdfasts'
-maxiMACtowDET   = 0.13            ! mean 'blades', 'stipes', 'holdfasts'
-miniTC3towDET   = 0.05
-maxiTC3towDET   = 0.25
+minPHYtowDET    =   0.45
+maxPHYtowDET    =   0.75
+miniMACtowDET   =   0.00            ! mean 'blades', 'stipes', 'holdfasts'
+maxiMACtowDET   =   0.13            ! mean 'blades', 'stipes', 'holdfasts'
+miniTC3towDET   =   0.05
+maxiTC3towDET   =   0.25
 
 !-- to MICROZOOPLANKTON
-minwDETtoMIZ    = 0.62
-maxwDETtoMIZ    = 0.90
-minPHYtoMIZ     = 0.03
-maxPHYtoMIZ     = 0.15
+minwDETtoMIZ    =   0.62
+maxwDETtoMIZ    =   0.90
+minPHYtoMIZ     =   0.03
+maxPHYtoMIZ     =   0.15
 
 !-- to MESOZOOPLANKTON
-minMIZtoMEZ     = 0.14
-maxMIZtoMEZ     = 0.34
+minMIZtoMEZ     =   0.14
+maxMIZtoMEZ     =   0.34
 
 !-- to ICHTHYOPLANKTON
-minwDETtoICH    = 0.00
-maxwDETtoICH    = 0.08
-minPHYtoICH     = 0.00
-maxPHYtoICH     = 0.10
+minwDETtoICH    =   0.00
+maxwDETtoICH    =   0.08
+minPHYtoICH     =   0.00
+maxPHYtoICH     =   0.10
 
 !-- to GRIMOTHEA
-minMIZtoGRI     = 0.07
-maxMIZtoGRI     = 0.36
+minMIZtoGRI     =   0.07
+maxMIZtoGRI     =   0.36
 
 ###### END PARAMETERS
 
 ###### VARIABLES
 
+!-- PHYTOPLANKTON
+PHYResp		      =   PHY   ->  eDIC						
+PHYUpt		      =	  eDIC  ->  PHY			
+PHYProd		      =	  PHYUpt	-	PHYResp
+
 !-- Autochtonous vs Alochthonous (from Bruno et al. 2023)
-AlotowDET       = iTC3->wDET
-AuttowDET       = iMAC->wDET + PHY->wDET
+AlotowDET       =   iTC3->wDET
+AuttowDET       =   iMAC->wDET + PHY->wDET
 
 ###### END VARIABLES
 
@@ -107,7 +126,7 @@ eHTL    ! export to Higher Tropic Levels (seabirds & marine mammals)
 iTC3    ->  wDET    ! terrestrial input
 iTC3    ->  DOC     ! terrestrial input
 iMAC    ->  wDET    ! macroalgae input
-
+eDIC    ->  PHY     ! uptake
 
 !-- DETRITUS
 wDET    ->  eDET    ! export to benthos
@@ -126,6 +145,7 @@ BAC     ->  eDIC    ! respiration
 
 !-- PHYTOPLANKTON
 PHY     ->  eDIC    ! respiration
+PHY     ->  eDET    ! natural mortality & deposition
 PHY     ->  wDET    ! natural mortality=phytodetritus
 PHY     ->  DOC     ! exudation
 PHY     ->  MIZ     ! consumption
@@ -178,15 +198,15 @@ FPL     ->  eHTL    ! consumption by seabirds & marine mammals
 
 ###### INEQUALITIES
 
-!-- Proportional contributions
+!!! PROPORTIONAL CONTRIBUTIONS
 !-- to Detritus in water column
 PHY   ->  wDET      = [minPHYtowDET, maxPHYtowDET]*flowto(wDET)
-iMAC  ->  wDET      = [minALGtowDET, maxALGtowDET]*flowto(wDET)
+iMAC  ->  wDET      = [miniMACtowDET, maxiMACtowDET]*flowto(wDET)
 iTC3  ->  wDET      = [miniTC3towDET, maxiTC3towDET]*flowto(wDET)
 
 !-- export to Detritus in benthos
-wDET  ->  eDET      = [minwDETtoeDET, maxwDETtoeDET]*flowto(sDET)
-PHY   ->  eDET      = [minPHYtoeDET, maxPHYtoeDET]*flowto(sDET)
+wDET  ->  eDET      = [minwDETtoeDET, maxwDETtoeDET]*flowto(eDET)
+PHY   ->  eDET      = [minPHYtoeDET, maxPHYtoeDET]*flowto(eDET)
 
 !-- to Microzooplankton
 wDET  ->  MIZ       = [minwDETtoMIZ, maxwDETtoMIZ]*flowto(MIZ)
@@ -204,6 +224,12 @@ MIZ   ->  GRI       = [minMIZtoGRI, maxMIZtoGRI]*flowto(GRI)
 
 !-- Autochthonous vs Alochthonous
 AuttowDET           > AlotowDET
+
+
+!!! METABOLISM
+!-- Phytoplankton
+PHYProd		=	[minProdPHY, maxProdPHY]
+PHYResp		= [minRespPHY, maxRespPHY]*PHYProd
 
 ###### END INEQUALITIES
 
