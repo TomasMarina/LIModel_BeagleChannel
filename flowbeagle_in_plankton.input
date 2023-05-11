@@ -6,6 +6,7 @@ Space: inner BC, mixed layer
 
 Units:  fluxes: mg C/m3/d
         stocks: mg C/m3
+Depth:  mixed layer (40-70 m)
 
 Tomás I. Marina, Karline Soetaert, Dick van Oevelen
 =======================================================================================
@@ -21,13 +22,13 @@ Tomás I. Marina, Karline Soetaert, Dick van Oevelen
 !!! STOCKS
 !stwDET         	=
 stDOC         	=   1090.0    {mg C/m3}
-stBAC           =   0.0000083 {mg C/m3}
+stBAC           =   8.3       {mg C/m3}
 stPHY         	=   105.866   {mg C/m3}
 stMIZ           =   7.4513    {mg C/m3}
 stMEZ           =   76.780    {mg C/m3}
 stICH         	=   0.2136    {mg C/m3}
 stGRI         	=   438.87    {mg C/m2}
-!stFPL         	=
+!stFPL         	  =
 
 !!! FLOW MEASUREMENTS
 minProdPHY      =   51.19 - 5.2   {mg C/m3/d}    ! mean GPP - sdGPP
@@ -233,3 +234,7 @@ PHYResp		= [minRespPHY, maxRespPHY]*PHYProd
 
 ###### END INEQUALITIES
 
+
+!!! DOUBTS
+! Add growth rates: minGrowthLat = 0.00035	{/d}. I should know the length and weight of succesive days, right?
+! Add assimilation efficiencies: maxAEMeioDFSem	=	0.39	{-}

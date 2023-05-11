@@ -9,7 +9,7 @@ LIMBeagle
 
 # Solve the LIM by range estimation
 flowranges <- Xranges(LIMBeagle)
-Plotranges(LIMBeagle, lab.cex = 0.7, xlab = "g C /m^2/d",
+Plotranges(LIMBeagle, lab.cex = 0.7, xlab = "g C /m^3/d",
            main = "Beagle Channel food web")
 
 # Plot a single solution
