@@ -5,7 +5,7 @@ Time: spring
 Space: inner BC, mixed layer
 
 Units:  fluxes: mg C/m3/d
-        stocks: mg C/m3
+        stocks: mg C/m3 (converted from gAFDW)
 Depth:  mixed layer (40-70 m)
 
 Tomás I. Marina, Karline Soetaert, Dick van Oevelen
@@ -34,9 +34,19 @@ stGRI         	=   438.87    {mg C/m2}
 minProdPHY      =   51.19 - 5.2   {mg C/m3/d}    ! mean GPP - sdGPP
 maxProdPHY      =   51.19 + 5.2   {mg C/m3/d}    ! mean GPP + sdGPP
 
-!!! RESPIRATION
+!!! METABOLIC RATES (ingestion, respiration, assimilation)
+!-- Phytoplankton
 minRespPHY      =   24.48 - 0.64  {mg C/m3/d}    ! mean Resp - sdResp
 maxRespPHY      =   24.48 + 0.64  {mg C/m3/d}    ! mean Resp + sdResp
+
+!-- Grimothea gregaria (from Romero et al. 2006)
+minUptGRI       =   0.015         {-}
+maxUptGRI       =   0.05          {-}
+minAEGRIMEZ     =   0.935         {-}
+maxAEGRIMEZ     =   0.975         {-}
+minAEGRIwDET    =   0.95          {-}
+maxAEGRIwDET    =   0.975         {-}
+
 
 !!! PROPORTIONAL CONTRIBUTIONS (from Bruno et al. 2023 & Presta et al. 2023)
 !-- export to Detritus in benthos
@@ -53,34 +63,46 @@ maxiMACtowDET   =   0.13            ! mean 'blades', 'stipes', 'holdfasts'
 miniTC3towDET   =   0.05
 maxiTC3towDET   =   0.25
 
-!-- to MICROZOOPLANKTON
+!-- to MicroZooplankton
 minwDETtoMIZ    =   0.62
 maxwDETtoMIZ    =   0.90
 minPHYtoMIZ     =   0.03
 maxPHYtoMIZ     =   0.15
 
-!-- to MESOZOOPLANKTON
+!-- to MesoZooplankton
 minMIZtoMEZ     =   0.14
 maxMIZtoMEZ     =   0.34
 
-!-- to ICHTHYOPLANKTON
+!-- to Ichthyoplankton
 minwDETtoICH    =   0.00
 maxwDETtoICH    =   0.08
 minPHYtoICH     =   0.00
 maxPHYtoICH     =   0.10
 
-!-- to GRIMOTHEA
+!-- to Grimothea gregaria
 minMIZtoGRI     =   0.07
-maxMIZtoGRI     =   0.36
+maxMIZtoGRI     =   0.39
+minMEZtoGRI     =   0.006
+maxMEZtoGRI     =   0.13
+minICHtoGRI     =   0.00
+maxICHtoGRI     =   0.11
 
 ###### END PARAMETERS
 
 ###### VARIABLES
 
-!-- PHYTOPLANKTON
+!-- Phytoplankton
 PHYResp		      =   PHY   ->  eDIC						
 PHYUpt		      =	  eDIC  ->  PHY			
 PHYProd		      =	  PHYUpt	-	PHYResp
+
+!-- Grimothea gregaria
+GRIUpt          = flowto(GRI)
+GRIwDETProd     = GRI   ->  wDET
+GRIUptwDET      = wDET  ->  GRI
+GRIUptMEZ       = MEZ   ->  GRI
+GRIAswDET       = GRIUptwDET  - GRIwDETProd
+GRIAsMEZ        = GRIUptMEZ   - GRIwDETProd
 
 !-- Autochtonous vs Alochthonous (from Bruno et al. 2023)
 AlotowDET       =   iTC3->wDET
@@ -133,6 +155,7 @@ eDIC    ->  PHY     ! uptake
 wDET    ->  eDET    ! export to benthos
 wDET    ->  DOC     ! hydrolisis
 wDET    ->  BAC     ! consumption
+wDET    ->  GRI     ! consumption
 wDET    ->  MIZ     ! consumption
 wDET    ->  MEZ     ! consumption
 wDET    ->  ICH     ! consumption
@@ -175,6 +198,7 @@ MEZ     ->  eHTL    ! consumption by seabirds
 !-- ICHTHYOPLANKTON
 ICH     ->  eDIC    ! respiration
 ICH     ->  wDET    ! natural mortality
+ICH     ->  GRI     ! consumption
 ICH     ->  FPL     ! consumption
 ICH     ->  eHTL    ! consumption by seabirds
 
@@ -209,11 +233,11 @@ iTC3  ->  wDET      = [miniTC3towDET, maxiTC3towDET]*flowto(wDET)
 wDET  ->  eDET      = [minwDETtoeDET, maxwDETtoeDET]*flowto(eDET)
 PHY   ->  eDET      = [minPHYtoeDET, maxPHYtoeDET]*flowto(eDET)
 
-!-- to Microzooplankton
+!-- to MicroZooplankton
 wDET  ->  MIZ       = [minwDETtoMIZ, maxwDETtoMIZ]*flowto(MIZ)
 PHY   ->  MIZ       = [minPHYtoMIZ, maxPHYtoMIZ]*flowto(MIZ)
 
-!-- to Mesozooplankton
+!-- to MesoZooplankton
 MIZ   ->  MEZ       = [minMIZtoMEZ, maxMIZtoMEZ]*flowto(MEZ)
 
 !-- to Ichthyoplankton
@@ -222,6 +246,8 @@ PHY   ->  ICH       = [minPHYtoICH, maxPHYtoICH]*flowto(ICH)
 
 !-- to Grimothea gregaria
 MIZ   ->  GRI       = [minMIZtoGRI, maxMIZtoGRI]*flowto(GRI)
+MEZ   ->  GRI       = [minMEZtoGRI, maxMEZtoGRI]*flowto(GRI)
+ICH   ->  GRI       = [minICHtoGRI, maxICHtoGRI]*flowto(GRI)
 
 !-- Autochthonous vs Alochthonous
 AuttowDET           > AlotowDET
@@ -232,9 +258,21 @@ AuttowDET           > AlotowDET
 PHYProd		=	[minProdPHY, maxProdPHY]
 PHYResp		= [minRespPHY, maxRespPHY]*PHYProd
 
+!-- Grimothea gregaria
+GRIUpt    = [minUptGRI, maxUptGRI]*stGRI
+GRIAswDET = [minAEGRIwDET, maxAEGRIwDET]*GRIUptwDET
+GRIAsMEZ  = [minAEGRIMEZ, maxAEGRIMEZ]*GRIUptMEZ
+
+
 ###### END INEQUALITIES
 
 
 !!! DOUBTS
-! Add growth rates: minGrowthLat = 0.00035	{/d}. I should know the length and weight of succesive days, right?
-! Add assimilation efficiencies: maxAEMeioDFSem	=	0.39	{-}
+! Implementation of growth rates: minGrowthLat = 0.00035	{/d}. I should know the length and weight of succesive days, right?
+! m2 to m3. Have to divide it by depth?
+! Convert μlO2 /h/g to mg C /m3/d. Of Grimothea gregaria from Romero et al. 2006
+
+! Added assimilation efficiencies: GRI, 
+! Add exports in Variables: GRIExp = GRI -> eHTL, ICHExp = ICH -> eHTL, ...
+! Add respiration for Grimothea gregaria
+! Look for metabolism (production, assimilation, respiration) of Calanoid/Cyclopoid copepod (MEZ)
