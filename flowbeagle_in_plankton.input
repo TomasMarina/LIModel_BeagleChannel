@@ -6,7 +6,7 @@ Space: inner BC, mixed layer
 
 Units:  fluxes: mg C/m3/d
         stocks: mg C/m3 (converted from gAFDW)
-Depth:  mixed layer (40-70 m)
+Depth:  mixed layer (0-40 m)
 
 Tomás I. Marina, Karline Soetaert, Dick van Oevelen
 =======================================================================================
@@ -24,6 +24,7 @@ Tomás I. Marina, Karline Soetaert, Dick van Oevelen
 stDOC         	=   1090.0    {mg C/m3}
 stBAC           =   8.3       {mg C/m3}
 stPHY         	=   105.866   {mg C/m3}
+stHNF           =   80.2069   {mg C/m3}
 stMIZ           =   7.4513    {mg C/m3}
 stMEZ           =   76.780    {mg C/m3}
 stICH         	=   0.2136    {mg C/m3}
@@ -31,21 +32,27 @@ stGRI         	=   438.87    {mg C/m2}
 !stFPL         	  =
 
 !!! FLOW MEASUREMENTS
-minProdPHY      =   51.19 - 5.2   {mg C/m3/d}    ! mean GPP - sdGPP
-maxProdPHY      =   51.19 + 5.2   {mg C/m3/d}    ! mean GPP + sdGPP
+meanProdPHY     =   51.19         {mg C/m3/d}
+sdProdPHY       =   5.2           {mg C/m3/d}
+minProdPHY      =   meanProdPHY - sdProdPHY   {mg C/m3/d}
+maxProdPHY      =   meanProdPHY + sdProdPHY   {mg C/m3/d}
 
 !!! METABOLIC RATES (ingestion, respiration, assimilation)
 !-- Phytoplankton
-minRespPHY      =   24.48 - 0.64  {mg C/m3/d}    ! mean Resp - sdResp
-maxRespPHY      =   24.48 + 0.64  {mg C/m3/d}    ! mean Resp + sdResp
+meanRespPHY     =   24.48         {mg C/m3/d}
+sdRespPHY       =   0.64          {mg C/m3/d}
+minRespPHY      =   meanRespPHY - sdRespPHY   {mg C/m3/d}
+maxRespPHY      =   meanRespPHY + sdRespPHY   {mg C/m3/d}
+
+!-- Heterotrophic nanoflagellates (from Gonzalez et al. 2016)
+minUptHNF       = 0.1
+maxUptHNF       = 0.2
 
 !-- Grimothea gregaria (from Romero et al. 2006)
 minUptGRI       =   0.015         {-}
 maxUptGRI       =   0.05          {-}
-minAEGRIMEZ     =   0.935         {-}
-maxAEGRIMEZ     =   0.975         {-}
-minAEGRIwDET    =   0.95          {-}
-maxAEGRIwDET    =   0.975         {-}
+minAEGRI        =   0.945         {-}
+maxAEGRI        =   0.975         {-}
 
 
 !!! PROPORTIONAL CONTRIBUTIONS (from Bruno et al. 2023 & Presta et al. 2023)
@@ -92,21 +99,35 @@ maxICHtoGRI     =   0.11
 ###### VARIABLES
 
 !-- Phytoplankton
-PHYResp		      =   PHY   ->  eDIC						
-PHYUpt		      =	  eDIC  ->  PHY			
-PHYProd		      =	  PHYUpt	-	PHYResp
+PHYResp		      = PHY   ->  eDIC						
+PHYUpt		      =	eDIC  ->  PHY			
+PHYProd		      =	PHYUpt	-	PHYResp
+
+!-- Heterotrophic nanoflagellates
+HNFUptBAC       = BAC   ->  HNF
+
+!-- MesoZooplankton
+MEZExp          = MEZ   ->  eHTL
+
+!-- Ichthyoplankton
+ICHExp          = ICH   ->  eHTL
 
 !-- Grimothea gregaria
 GRIUpt          = flowto(GRI)
 GRIwDETProd     = GRI   ->  wDET
-GRIUptwDET      = wDET  ->  GRI
-GRIUptMEZ       = MEZ   ->  GRI
-GRIAswDET       = GRIUptwDET  - GRIwDETProd
-GRIAsMEZ        = GRIUptMEZ   - GRIwDETProd
+GRIAs           = GRIUpt  - GRIwDETProd
+GRIExp          = GRI   ->  eHTL
+
+!-- Fish pelagic
+FPLExp          = FPL   ->  eHTL
 
 !-- Autochtonous vs Alochthonous (from Bruno et al. 2023)
-AlotowDET       =   iTC3->wDET
-AuttowDET       =   iMAC->wDET + PHY->wDET
+AlotowDET       = iTC3  ->  wDET
+AuttowDET       = iMAC  ->  wDET + PHY  ->  wDET
+
+!!! TOTALS
+HTLExp          = MEZExp + ICHExp + GRIExp + FPLExp
+
 
 ###### END VARIABLES
 
@@ -125,6 +146,7 @@ wDET    ! Detritus in water column
 DOC     ! Dissolved Organic Carbon
 BAC     ! Bacteria
 PHY     ! Phytoplankton (mainly Diatoms)
+HNF     ! Heterotrophic nanoflagellates
 MIZ     ! Microzooplankton (Copepoda & Cirripedia nauplii, 67–200 μm)
 MEZ     ! Mesozooplankton (Copepoda copepodites & adults, Appendicularia, Echinoderm larvae, 200–20000 μm)
 ICH     ! Ichthyoplankton (all fish spp)
@@ -145,13 +167,13 @@ eHTL    ! export to Higher Tropic Levels (seabirds & marine mammals)
 
 ###### FLOWS
 
-!-- EXTERNALS
+!-- External
 iTC3    ->  wDET    ! terrestrial input
 iTC3    ->  DOC     ! terrestrial input
 iMAC    ->  wDET    ! macroalgae input
 eDIC    ->  PHY     ! uptake
 
-!-- DETRITUS
+!-- Detritus
 wDET    ->  eDET    ! export to benthos
 wDET    ->  DOC     ! hydrolisis
 wDET    ->  BAC     ! consumption
@@ -160,14 +182,15 @@ wDET    ->  MIZ     ! consumption
 wDET    ->  MEZ     ! consumption
 wDET    ->  ICH     ! consumption
 
-!-- DISSOLVED ORGANIC CARBON
+!-- Dissolved Organic Carbon
 DOC     ->  BAC     ! uptake
 
-!-- BACTERIA
+!-- Bacteria
 BAC     ->  DOC     ! DOC production
 BAC     ->  eDIC    ! respiration
+BAC     ->  HNF     ! consumption
 
-!-- PHYTOPLANKTON
+!-- Phytoplankton
 PHY     ->  eDIC    ! respiration
 PHY     ->  eDET    ! natural mortality & deposition
 PHY     ->  wDET    ! natural mortality=phytodetritus
@@ -178,7 +201,12 @@ PHY     ->  ICH     ! consumption
 PHY     ->  GRI     ! consumption
 PHY     ->  FPL     ! consumption
 
-!-- MICROZOOPLANKTON
+!-- Heterotrophic nanoflagellates
+HNF     ->  eDIC    ! respiration
+HNF     ->  wDET    ! natural mortality
+HNF     ->  MIZ     ! consumption
+
+!-- MicroZooplankton
 MIZ     ->  eDIC    ! respiration
 MIZ     ->  wDET    ! natural mortality
 MIZ     ->  MEZ     ! consumption
@@ -186,7 +214,7 @@ MIZ     ->  ICH     ! consumption
 MIZ     ->  GRI     ! consumption
 MIZ     ->  FPL     ! consumption
 
-!-- MESOZOOPLANKTON
+!-- MesoZooplankton
 MEZ     ->  eDIC    ! respiration
 MEZ     ->  wDET    ! natural mortality
 MEZ     ->  MEZ     ! consumption
@@ -195,19 +223,19 @@ MEZ     ->  GRI     ! consumption
 MEZ     ->  FPL     ! consumption
 MEZ     ->  eHTL    ! consumption by seabirds
 
-!-- ICHTHYOPLANKTON
+!-- Ichthyoplankton
 ICH     ->  eDIC    ! respiration
 ICH     ->  wDET    ! natural mortality
 ICH     ->  GRI     ! consumption
 ICH     ->  FPL     ! consumption
 ICH     ->  eHTL    ! consumption by seabirds
 
-!-- GRIMOTHEA GREGARIA
+!-- Grimothea gregaria
 GRI     ->  eDIC    ! respiration
 GRI     ->  wDET    ! natural mortality
 GRI     ->  eHTL    ! consumption by seabirds & marine mammals
 
-!-- FISH PELAGIC
+!-- Fish pelagic
 FPL     ->  eDIC    ! respiration
 FPL     ->  wDET    ! natural mortality
 FPL     ->  eHTL    ! consumption by seabirds & marine mammals
@@ -258,21 +286,24 @@ AuttowDET           > AlotowDET
 PHYProd		=	[minProdPHY, maxProdPHY]
 PHYResp		= [minRespPHY, maxRespPHY]*PHYProd
 
+!-- Heterotrophic nanoflagellates
+HNFUptBAC = [minUptHNF, maxUptHNF]*stHNF
+
 !-- Grimothea gregaria
 GRIUpt    = [minUptGRI, maxUptGRI]*stGRI
-GRIAswDET = [minAEGRIwDET, maxAEGRIwDET]*GRIUptwDET
-GRIAsMEZ  = [minAEGRIMEZ, maxAEGRIMEZ]*GRIUptMEZ
-
+GRIAs     = [minAEGRI, maxAEGRI]*GRIUpt
 
 ###### END INEQUALITIES
 
 
 !!! DOUBTS
-! Implementation of growth rates: minGrowthLat = 0.00035	{/d}. I should know the length and weight of succesive days, right?
+! Implementation of growth rates: minGrowthLat = 0.00035	{/d}. I should know the length and weight of succesive days, right? YES
 ! m2 to m3. Have to divide it by depth?
 ! Convert μlO2 /h/g to mg C /m3/d. Of Grimothea gregaria from Romero et al. 2006
 
 ! Added assimilation efficiencies: GRI, 
-! Add exports in Variables: GRIExp = GRI -> eHTL, ICHExp = ICH -> eHTL, ...
 ! Add respiration for Grimothea gregaria
 ! Look for metabolism (production, assimilation, respiration) of Calanoid/Cyclopoid copepod (MEZ)
+! Add Heterotrophic nanoflagellates (HNF), stock (Malits2023) & bacterivory rate (Gonzalez2016)
+! Transform ingestion rate of HNF (to bacteria): 20-37 pgC HNF−1 d−1 to mgC m-3 d-1. Multiple by abundance (cell mL-1)
+! Vertical POC flux (flowto(eDET)): 
