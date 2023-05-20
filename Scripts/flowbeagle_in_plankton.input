@@ -36,6 +36,8 @@ meanProdPHY     =   51.19         {mg C/m3/d}
 sdProdPHY       =   5.2           {mg C/m3/d}
 minProdPHY      =   meanProdPHY - sdProdPHY   {mg C/m3/d}
 maxProdPHY      =   meanProdPHY + sdProdPHY   {mg C/m3/d}
+DETExp          =   3.64          {mg C/m3/d}
+!POCContMEZ      =   0.95          {-}
 
 !!! METABOLIC RATES (ingestion, respiration, assimilation)
 !-- Phytoplankton
@@ -44,9 +46,9 @@ sdRespPHY       =   0.64          {mg C/m3/d}
 minRespPHY      =   meanRespPHY - sdRespPHY   {mg C/m3/d}
 maxRespPHY      =   meanRespPHY + sdRespPHY   {mg C/m3/d}
 
-!-- Heterotrophic nanoflagellates (from Gonzalez et al. 2016)
-minUptHNF       = 0.1
-maxUptHNF       = 0.2
+!-- Heterotrophic nanoflagellates (from González et al. 2016)
+minUptHNF       = 20.37           {mg C/m3/d}
+maxUptHNF       = 37.6845         {mg C/m3/d}
 
 !-- Grimothea gregaria (from Romero et al. 2006)
 minUptGRI       =   0.015         {-}
@@ -114,8 +116,8 @@ ICHExp          = ICH   ->  eHTL
 
 !-- Grimothea gregaria
 GRIUpt          = flowto(GRI)
-GRIwDETProd     = GRI   ->  wDET
-GRIAs           = GRIUpt  - GRIwDETProd
+GRIeDETProd     = GRI   ->  eDET
+GRIAs           = GRIUpt  - GRIeDETProd
 GRIExp          = GRI   ->  eHTL
 
 !-- Fish pelagic
@@ -125,7 +127,12 @@ FPLExp          = FPL   ->  eHTL
 AlotowDET       = iTC3  ->  wDET
 AuttowDET       = iMAC  ->  wDET + PHY  ->  wDET
 
+!-- Contribution of plankton community to wDET (from González et al. 2016)
+POCContMEZ      = MEZ   ->  wDET
+POCContPlk      = PHY->wDET + BAC->wDET + HNF->wDET + MIZ->wDET + ICH->wDET
+
 !!! TOTALS
+DETExp          = flowto(eDET)
 HTLExp          = MEZExp + ICHExp + GRIExp + FPLExp
 
 
@@ -189,11 +196,12 @@ DOC     ->  BAC     ! uptake
 BAC     ->  DOC     ! DOC production
 BAC     ->  eDIC    ! respiration
 BAC     ->  HNF     ! consumption
+BAC     ->  wDET    ! POC in water column
 
 !-- Phytoplankton
 PHY     ->  eDIC    ! respiration
 PHY     ->  eDET    ! natural mortality & deposition
-PHY     ->  wDET    ! natural mortality=phytodetritus
+PHY     ->  wDET    ! POC in water column
 PHY     ->  DOC     ! exudation
 PHY     ->  MIZ     ! consumption
 PHY     ->  MEZ     ! consumption
@@ -203,12 +211,14 @@ PHY     ->  FPL     ! consumption
 
 !-- Heterotrophic nanoflagellates
 HNF     ->  eDIC    ! respiration
-HNF     ->  wDET    ! natural mortality
+HNF     ->  eDET    ! natural mortality & deposition
+HNF     ->  wDET    ! POC in water column (faeces)
 HNF     ->  MIZ     ! consumption
 
 !-- MicroZooplankton
 MIZ     ->  eDIC    ! respiration
-MIZ     ->  wDET    ! natural mortality
+MIZ     ->  eDET    ! natural mortality & deposition
+MIZ     ->  wDET    ! POC in water column (faeces)
 MIZ     ->  MEZ     ! consumption
 MIZ     ->  ICH     ! consumption
 MIZ     ->  GRI     ! consumption
@@ -216,7 +226,8 @@ MIZ     ->  FPL     ! consumption
 
 !-- MesoZooplankton
 MEZ     ->  eDIC    ! respiration
-MEZ     ->  wDET    ! natural mortality
+MEZ     ->  eDET    ! natural mortality & deposition
+MEZ     ->  wDET    ! POC in water column (faeces)
 MEZ     ->  MEZ     ! consumption
 MEZ     ->  ICH     ! consumption
 MEZ     ->  GRI     ! consumption
@@ -225,20 +236,23 @@ MEZ     ->  eHTL    ! consumption by seabirds
 
 !-- Ichthyoplankton
 ICH     ->  eDIC    ! respiration
-ICH     ->  wDET    ! natural mortality
+ICH     ->  eDET    ! natural mortality & deposition
+ICH     ->  wDET    ! POC in water column (faeces)
 ICH     ->  GRI     ! consumption
 ICH     ->  FPL     ! consumption
 ICH     ->  eHTL    ! consumption by seabirds
 
 !-- Grimothea gregaria
 GRI     ->  eDIC    ! respiration
-GRI     ->  wDET    ! natural mortality
+GRI     ->  eDET    ! natural mortality & deposition
 GRI     ->  eHTL    ! consumption by seabirds & marine mammals
+GRI     ->  wDET    ! POC in water column (faeces)
 
 !-- Fish pelagic
 FPL     ->  eDIC    ! respiration
-FPL     ->  wDET    ! natural mortality
+FPL     ->  eDET    ! natural mortality & deposition
 FPL     ->  eHTL    ! consumption by seabirds & marine mammals
+FPL     ->  wDET    ! POC in water column (faeces)
 
 ###### END FLOWS
 
@@ -280,6 +294,8 @@ ICH   ->  GRI       = [minICHtoGRI, maxICHtoGRI]*flowto(GRI)
 !-- Autochthonous vs Alochthonous
 AuttowDET           > AlotowDET
 
+!-- Contribution of plankton community to wDET (POC)
+POCContMEZ          > POCContPlk
 
 !!! METABOLISM
 !-- Phytoplankton
@@ -298,12 +314,10 @@ GRIAs     = [minAEGRI, maxAEGRI]*GRIUpt
 
 !!! DOUBTS
 ! Implementation of growth rates: minGrowthLat = 0.00035	{/d}. I should know the length and weight of succesive days, right? YES
-! m2 to m3. Have to divide it by depth?
-! Convert μlO2 /h/g to mg C /m3/d. Of Grimothea gregaria from Romero et al. 2006
+! m2 to m3. Have to divide it by depth? Check vertical flux (m2 to m3)
+! Check conversion bacterivory rate of HNF
 
 ! Added assimilation efficiencies: GRI, 
 ! Add respiration for Grimothea gregaria
 ! Look for metabolism (production, assimilation, respiration) of Calanoid/Cyclopoid copepod (MEZ)
-! Add Heterotrophic nanoflagellates (HNF), stock (Malits2023) & bacterivory rate (Gonzalez2016)
-! Transform ingestion rate of HNF (to bacteria): 20-37 pgC HNF−1 d−1 to mgC m-3 d-1. Multiple by abundance (cell mL-1)
-! Vertical POC flux (flowto(eDET)): 
+! Vertical POC flux (flowto(eDET)): 182 mg m-2 d-1 at 50 m
