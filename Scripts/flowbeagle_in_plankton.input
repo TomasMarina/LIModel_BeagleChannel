@@ -21,14 +21,14 @@ Tomás I. Marina, Karline Soetaert, Dick van Oevelen
 
 !!! STOCKS
 !stwDET         	=
-stDOC         	=   1090.0    {mg C/m3}
-stBAC           =   8.3       {mg C/m3}
-stPHY         	=   105.866   {mg C/m3}
-stHNF           =   80.2069   {mg C/m3}
-stMIZ           =   7.4513    {mg C/m3}
-stMEZ           =   76.780    {mg C/m3}
-stICH         	=   0.2136    {mg C/m3}
-stGRI         	=   438.87    {mg C/m2}
+stDOC         	=   1090.0        {mg C/m3}
+stBAC           =   8.3           {mg C/m3}
+stPHY         	=   105.866       {mg C/m3}
+stHNF           =   80.2069       {mg C/m3}
+stMIZ           =   7.4513        {mg C/m3}
+stMEZ           =   71.7459       {mg C/m3}
+stICH         	=   0.2136        {mg C/m3}
+stGRI         	=   10.872        {mg C/m2}
 !stFPL         	  =
 
 !!! FLOW MEASUREMENTS
@@ -40,6 +40,8 @@ DETExp          =   3.64          {mg C/m3/d}
 !POCContMEZ      =   0.95          {-}
 
 !!! METABOLIC RATES (ingestion, respiration, assimilation)
+Temperature     =   6.89          {°C}  ! mean 6.28 & 7.51 (Presta et al. 2023)
+
 !-- Phytoplankton
 meanRespPHY     =   24.48         {mg C/m3/d}
 sdRespPHY       =   0.64          {mg C/m3/d}
@@ -47,8 +49,18 @@ minRespPHY      =   meanRespPHY - sdRespPHY   {mg C/m3/d}
 maxRespPHY      =   meanRespPHY + sdRespPHY   {mg C/m3/d}
 
 !-- Heterotrophic nanoflagellates (from González et al. 2016)
-minUptHNF       = 20.37           {mg C/m3/d}
-maxUptHNF       = 37.6845         {mg C/m3/d}
+minUptHNF       =   20.37         {mg C/m3/d}
+maxUptHNF       =   37.6845       {mg C/m3/d}
+
+!-- Ichthyoplankton
+minGrowthICH    =   0.0022        {-}
+maxGrowthICH    =   0.0734        {-}
+
+!-- MesoZooplankton
+minUptMEZ       =   6.34          {mg C/m3/d}
+maxUptMEZ       =   15.63         {mg C/m3/d}
+minRespMEZ      =   3.69          {mg C/m3/d}
+maxRespMEZ      =   16.81         {mg C/m3/d}
 
 !-- Grimothea gregaria (from Romero et al. 2006)
 minUptGRI       =   0.015         {-}
@@ -59,56 +71,58 @@ maxAEGRI        =   0.975         {-}
 
 !!! PROPORTIONAL CONTRIBUTIONS (from Bruno et al. 2023 & Presta et al. 2023)
 !-- export to Detritus in benthos
-minwDETtoeDET   =   0.03
-maxwDETtoeDET   =   0.27
-minPHYtoeDET    =   0.01
-maxPHYtoeDET    =   0.17
+minwDETtoeDET   =   0.03          {-}
+maxwDETtoeDET   =   0.27          {-}
+minPHYtoeDET    =   0.01          {-}
+maxPHYtoeDET    =   0.17          {-}
 
 !-- to Detritus in water column
-minPHYtowDET    =   0.45
-maxPHYtowDET    =   0.75
-miniMACtowDET   =   0.00            ! mean 'blades', 'stipes', 'holdfasts'
-maxiMACtowDET   =   0.13            ! mean 'blades', 'stipes', 'holdfasts'
-miniTC3towDET   =   0.05
-maxiTC3towDET   =   0.25
+minPHYtowDET    =   0.45          {-}
+maxPHYtowDET    =   0.75          {-}
+miniMACtowDET   =   0.00          {-}   ! mean 'blades', 'stipes', 'holdfasts'
+maxiMACtowDET   =   0.13          {-}   ! mean 'blades', 'stipes', 'holdfasts'
+miniTC3towDET   =   0.05          {-}
+maxiTC3towDET   =   0.25          {-}
 
 !-- to MicroZooplankton
-minwDETtoMIZ    =   0.62
-maxwDETtoMIZ    =   0.90
-minPHYtoMIZ     =   0.03
-maxPHYtoMIZ     =   0.15
+minwDETtoMIZ    =   0.62          {-}
+maxwDETtoMIZ    =   0.90          {-}
+minPHYtoMIZ     =   0.03          {-}
+maxPHYtoMIZ     =   0.15          {-}  
 
 !-- to MesoZooplankton
-minMIZtoMEZ     =   0.14
-maxMIZtoMEZ     =   0.34
+minMIZtoMEZ     =   0.14          {-}  
+maxMIZtoMEZ     =   0.34          {-}
 
 !-- to Ichthyoplankton
-minwDETtoICH    =   0.00
-maxwDETtoICH    =   0.08
-minPHYtoICH     =   0.00
-maxPHYtoICH     =   0.10
+minwDETtoICH    =   0.00          {-}
+maxwDETtoICH    =   0.08          {-}
+minPHYtoICH     =   0.00          {-}
+maxPHYtoICH     =   0.10          {-}
 
 !-- to Grimothea gregaria
-minMIZtoGRI     =   0.07
-maxMIZtoGRI     =   0.39
-minMEZtoGRI     =   0.006
-maxMEZtoGRI     =   0.13
-minICHtoGRI     =   0.00
-maxICHtoGRI     =   0.11
+minMIZtoGRI     =   0.07          {-}
+maxMIZtoGRI     =   0.39          {-}
+minMEZtoGRI     =   0.006         {-}
+maxMEZtoGRI     =   0.13          {-}
+minICHtoGRI     =   0.00          {-}
+maxICHtoGRI     =   0.11          {-}
 
 ###### END PARAMETERS
 
 ###### VARIABLES
 
 !-- Phytoplankton
-PHYResp		      = PHY   ->  eDIC						
-PHYUpt		      =	eDIC  ->  PHY			
+PHYResp		      = PHY   ->  eDIC				
+PHYUpt		      =	eDIC  ->  PHY		
 PHYProd		      =	PHYUpt	-	PHYResp
 
 !-- Heterotrophic nanoflagellates
 HNFUptBAC       = BAC   ->  HNF
 
 !-- MesoZooplankton
+MEZResp         = MEZ   ->  eDIC
+MEZUpt          = flowto(MEZ)
 MEZExp          = MEZ   ->  eHTL
 
 !-- Ichthyoplankton
@@ -116,8 +130,8 @@ ICHExp          = ICH   ->  eHTL
 
 !-- Grimothea gregaria
 GRIUpt          = flowto(GRI)
-GRIeDETProd     = GRI   ->  eDET
-GRIAs           = GRIUpt  - GRIeDETProd
+GRIwDETProd     = GRI   ->  wDET
+GRIAs           = GRIUpt  - GRIwDETProd
 GRIExp          = GRI   ->  eHTL
 
 !-- Fish pelagic
@@ -214,6 +228,7 @@ HNF     ->  eDIC    ! respiration
 HNF     ->  eDET    ! natural mortality & deposition
 HNF     ->  wDET    ! POC in water column (faeces)
 HNF     ->  MIZ     ! consumption
+HNF     ->  MEZ     ! consumption
 
 !-- MicroZooplankton
 MIZ     ->  eDIC    ! respiration
@@ -305,6 +320,13 @@ PHYResp		= [minRespPHY, maxRespPHY]*PHYProd
 !-- Heterotrophic nanoflagellates
 HNFUptBAC = [minUptHNF, maxUptHNF]*stHNF
 
+!-- Ichthyoplankton
+ICHGrowth = [minGrowthICH, maxGrowthICH]*stICH
+
+!-- MesoZooplankton
+MEZUpt    = [minUptMEZ, maxUptMEZ]
+MEZResp   = [minRespMEZ, maxRespMEZ]
+
 !-- Grimothea gregaria
 GRIUpt    = [minUptGRI, maxUptGRI]*stGRI
 GRIAs     = [minAEGRI, maxAEGRI]*GRIUpt
@@ -313,11 +335,13 @@ GRIAs     = [minAEGRI, maxAEGRI]*GRIUpt
 
 
 !!! DOUBTS
-! Implementation of growth rates: minGrowthLat = 0.00035	{/d}. I should know the length and weight of succesive days, right? YES
+! Implementation of growth rates: minGrowthICH = 0.02	{mm/d}, maxGrowthICH = 0.67	{mm/d}. I should know the length and weight of succesive days, right? YES
 ! m2 to m3. Have to divide it by depth? Check vertical flux (m2 to m3)
 ! Check conversion bacterivory rate of HNF
+! Add secondary productions from Brey 2012 model. Is it worth it?
+! How to estimate maintenance respiration?
+! Is it possible to add growth rate (in proportion) without knowing any other parameter?
 
 ! Added assimilation efficiencies: GRI, 
 ! Add respiration for Grimothea gregaria
 ! Look for metabolism (production, assimilation, respiration) of Calanoid/Cyclopoid copepod (MEZ)
-! Vertical POC flux (flowto(eDET)): 182 mg m-2 d-1 at 50 m
