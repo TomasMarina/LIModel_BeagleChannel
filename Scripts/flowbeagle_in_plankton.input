@@ -42,6 +42,10 @@ DETExp          =   3.64          {mg C/m3/d}
 !!! METABOLIC RATES (ingestion, respiration, assimilation)
 Temperature     =   6.89          {°C}  ! mean 6.28 & 7.51 (Presta et al. 2023)
 
+!-- Bacteria
+minBGE          = 0.05            {-}   ! bacterial growth efficiency
+maxBGE          = 0.45            {-}   ! bacterial growth efficiency
+
 !-- Phytoplankton
 meanRespPHY     =   24.48         {mg C/m3/d}
 sdRespPHY       =   0.64          {mg C/m3/d}
@@ -112,6 +116,11 @@ maxICHtoGRI     =   0.11          {-}
 
 ###### VARIABLES
 
+!-- Bacteria
+RespBAC         = BAC   ->  eDIC
+UptBAC          = flowto(BAC)
+ProdBAC         = UptBAC  - RespBAC
+
 !-- Phytoplankton
 PHYResp		      = PHY   ->  eDIC				
 PHYUpt		      =	eDIC  ->  PHY		
@@ -127,6 +136,7 @@ MEZExp          = MEZ   ->  eHTL
 
 !-- Ichthyoplankton
 ICHExp          = ICH   ->  eHTL
+ICHGrowth       = flowto(ICH) - ICH->wDET - ICH->eDIC     ! ingestion-faeces-respiration
 
 !-- Grimothea gregaria
 GRIUpt          = flowto(GRI)
@@ -192,6 +202,7 @@ eHTL    ! export to Higher Tropic Levels (seabirds & marine mammals)
 iTC3    ->  wDET    ! terrestrial input
 iTC3    ->  DOC     ! terrestrial input
 iMAC    ->  wDET    ! macroalgae input
+iMAC    ->  BAC     ! uptake
 eDIC    ->  PHY     ! uptake
 
 !-- Detritus
@@ -313,6 +324,10 @@ AuttowDET           > AlotowDET
 POCContMEZ          > POCContPlk
 
 !!! METABOLISM
+
+!-- Bacteria
+ProdBAC   = [minBGE, maxBGE]*UptBAC
+
 !-- Phytoplankton
 PHYProd		=	[minProdPHY, maxProdPHY]
 PHYResp		= [minRespPHY, maxRespPHY]*PHYProd
@@ -336,12 +351,12 @@ GRIAs     = [minAEGRI, maxAEGRI]*GRIUpt
 
 !!! DOUBTS
 ! Implementation of growth rates: minGrowthICH = 0.02	{mm/d}, maxGrowthICH = 0.67	{mm/d}. I should know the length and weight of succesive days, right? YES
-! m2 to m3. Have to divide it by depth? Check vertical flux (m2 to m3)
-! Check conversion bacterivory rate of HNF
+! m2 to m3. Have to divide it by depth? YES
 ! Add secondary productions from Brey 2012 model. Is it worth it?
-! How to estimate maintenance respiration?
-! Is it possible to add growth rate (in proportion) without knowing any other parameter?
+! How to estimate maintenance respiration? Prod = Ass - Resp
+! Do I need to adjust every metabolic rate to local temperature? YES, Q10=2, Tlim=0.26. For growth rate ichthyoplankton
 
 ! Added assimilation efficiencies: GRI, 
 ! Add respiration for Grimothea gregaria
-! Look for metabolism (production, assimilation, respiration) of Calanoid/Cyclopoid copepod (MEZ)
+! P = 0,80 * 10-7 * L3,9497
+! Look for Resp & AE of: HNF, BAC
