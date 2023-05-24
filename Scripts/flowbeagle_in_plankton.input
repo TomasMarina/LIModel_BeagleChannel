@@ -40,11 +40,14 @@ DETExp          =   3.64          {mg C/m3/d}
 !POCContMEZ      =   0.95          {-}
 
 !!! METABOLIC RATES (ingestion, respiration, assimilation)
-Temperature     =   6.89          {°C}  ! mean 6.28 & 7.51 (Presta et al. 2023)
+!Temperature     =   6.89          {°C}  ! mean 6.28 & 7.51 (Presta et al. 2023)
+!Tlim            =   0.26          {-}   ! metabolic correction factor Q10=2
 
 !-- Bacteria
 minBGE          = 0.05            {-}   ! bacterial growth efficiency
 maxBGE          = 0.45            {-}   ! bacterial growth efficiency
+minLysBAC       = 0.06            {-}   ! virus-mediated bacterial mortality
+maxLysBAC       = 0.58            {-}   ! virus-mediated bacterial mortality
 
 !-- Phytoplankton
 meanRespPHY     =   24.48         {mg C/m3/d}
@@ -53,22 +56,22 @@ minRespPHY      =   meanRespPHY - sdRespPHY   {mg C/m3/d}
 maxRespPHY      =   meanRespPHY + sdRespPHY   {mg C/m3/d}
 
 !-- Heterotrophic nanoflagellates (from González et al. 2016)
-minUptHNF       =   20.37         {mg C/m3/d}
-maxUptHNF       =   37.6845       {mg C/m3/d}
+minUptaHNF      =   20.37         {mg C/m3/d}
+maxUptaHNF      =   37.6845       {mg C/m3/d}
 
 !-- Ichthyoplankton
 minGrowthICH    =   0.0022        {-}
 maxGrowthICH    =   0.0734        {-}
 
 !-- MesoZooplankton
-minUptMEZ       =   6.34          {mg C/m3/d}
-maxUptMEZ       =   15.63         {mg C/m3/d}
+minUptaMEZ      =   6.34          {mg C/m3/d}
+maxUptaMEZ      =   15.63         {mg C/m3/d}
 minRespMEZ      =   3.69          {mg C/m3/d}
 maxRespMEZ      =   16.81         {mg C/m3/d}
 
 !-- Grimothea gregaria (from Romero et al. 2006)
-minUptGRI       =   0.015         {-}
-maxUptGRI       =   0.05          {-}
+minUptaGRI      =   0.015         {-}
+maxUptaGRI      =   0.05          {-}
 minAEGRI        =   0.945         {-}
 maxAEGRI        =   0.975         {-}
 
@@ -118,30 +121,33 @@ maxICHtoGRI     =   0.11          {-}
 
 !-- Bacteria
 RespBAC         = BAC   ->  eDIC
-UptBAC          = flowto(BAC)
-ProdBAC         = UptBAC  - RespBAC
+ProdDOCBAC      = BAC   ->  DOC
+UptaBAC         = flowto(BAC)
+ProdBAC         = UptaBAC - RespBAC
 
 !-- Phytoplankton
 PHYResp		      = PHY   ->  eDIC				
-PHYUpt		      =	eDIC  ->  PHY		
-PHYProd		      =	PHYUpt	-	PHYResp
+PHYUpta		      =	eDIC  ->  PHY		
+PHYProd		      =	PHYUpta	-	PHYResp
 
 !-- Heterotrophic nanoflagellates
-HNFUptBAC       = BAC   ->  HNF
+HNFUptaBAC      = BAC   ->  HNF
 
 !-- MesoZooplankton
 MEZResp         = MEZ   ->  eDIC
-MEZUpt          = flowto(MEZ)
+MEZUpta         = flowto(MEZ)
 MEZExp          = MEZ   ->  eHTL
 
 !-- Ichthyoplankton
+ICHResp         = ICH   ->  eDIC
+ICHFaec         = ICH   ->  wDET  
+ICHGrowth       = flowto(ICH) - ICHFaec - ICHResp     ! ingestion-faeces-respiration
 ICHExp          = ICH   ->  eHTL
-ICHGrowth       = flowto(ICH) - ICH->wDET - ICH->eDIC     ! ingestion-faeces-respiration
 
 !-- Grimothea gregaria
-GRIUpt          = flowto(GRI)
-GRIwDETProd     = GRI   ->  wDET
-GRIAs           = GRIUpt  - GRIwDETProd
+GRIUpta         = flowto(GRI)
+GRIFaec         = GRI   ->  wDET
+GRIAssi         = GRIUpta - GRIFaec
 GRIExp          = GRI   ->  eHTL
 
 !-- Fish pelagic
@@ -149,11 +155,11 @@ FPLExp          = FPL   ->  eHTL
 
 !-- Autochtonous vs Alochthonous (from Bruno et al. 2023)
 AlotowDET       = iTC3  ->  wDET
-AuttowDET       = iMAC  ->  wDET + PHY  ->  wDET
+AuttowDET       = iMAC->wDET + PHY->wDET
 
 !-- Contribution of plankton community to wDET (from González et al. 2016)
 POCContMEZ      = MEZ   ->  wDET
-POCContPlk      = PHY->wDET + BAC->wDET + HNF->wDET + MIZ->wDET + ICH->wDET
+POCContPlk      = PHY->wDET + HNF->wDET + MIZ->wDET + ICH->wDET
 
 !!! TOTALS
 DETExp          = flowto(eDET)
@@ -202,12 +208,11 @@ eHTL    ! export to Higher Tropic Levels (seabirds & marine mammals)
 iTC3    ->  wDET    ! terrestrial input
 iTC3    ->  DOC     ! terrestrial input
 iMAC    ->  wDET    ! macroalgae input
-iMAC    ->  BAC     ! uptake
 eDIC    ->  PHY     ! uptake
 
 !-- Detritus
 wDET    ->  eDET    ! export to benthos
-wDET    ->  DOC     ! hydrolisis
+wDET    ->  DOC     ! hydrolysis
 wDET    ->  BAC     ! consumption
 wDET    ->  GRI     ! consumption
 wDET    ->  MIZ     ! consumption
@@ -218,10 +223,9 @@ wDET    ->  ICH     ! consumption
 DOC     ->  BAC     ! uptake
 
 !-- Bacteria
-BAC     ->  DOC     ! DOC production
+BAC     ->  DOC     ! DOC production (viral shunt)
 BAC     ->  eDIC    ! respiration
 BAC     ->  HNF     ! consumption
-BAC     ->  wDET    ! POC in water column
 
 !-- Phytoplankton
 PHY     ->  eDIC    ! respiration
@@ -326,25 +330,26 @@ POCContMEZ          > POCContPlk
 !!! METABOLISM
 
 !-- Bacteria
-ProdBAC   = [minBGE, maxBGE]*UptBAC
+ProdBAC             = [minBGE, maxBGE]*UptaBAC
+ProdDOCBAC	        =	[minLysBAC, maxLysBAC]*ProdBAC
 
 !-- Phytoplankton
-PHYProd		=	[minProdPHY, maxProdPHY]
-PHYResp		= [minRespPHY, maxRespPHY]*PHYProd
+PHYProd		          =	[minProdPHY, maxProdPHY]
+PHYResp		          = [minRespPHY, maxRespPHY]
 
 !-- Heterotrophic nanoflagellates
-HNFUptBAC = [minUptHNF, maxUptHNF]*stHNF
+HNFUptaBAC          = [minUptaHNF, maxUptaHNF]
 
 !-- Ichthyoplankton
-ICHGrowth = [minGrowthICH, maxGrowthICH]*stICH
+ICHGrowth           = [minGrowthICH, maxGrowthICH]*stICH
 
 !-- MesoZooplankton
-MEZUpt    = [minUptMEZ, maxUptMEZ]
-MEZResp   = [minRespMEZ, maxRespMEZ]
+MEZUpta             = [minUptaMEZ, maxUptaMEZ]
+MEZResp             = [minRespMEZ, maxRespMEZ]
 
 !-- Grimothea gregaria
-GRIUpt    = [minUptGRI, maxUptGRI]*stGRI
-GRIAs     = [minAEGRI, maxAEGRI]*GRIUpt
+GRIUpta             = [minUptaGRI, maxUptaGRI]*stGRI
+GRIAssi             = [minAEGRI, maxAEGRI]*GRIUpta
 
 ###### END INEQUALITIES
 
@@ -352,11 +357,12 @@ GRIAs     = [minAEGRI, maxAEGRI]*GRIUpt
 !!! DOUBTS
 ! Implementation of growth rates: minGrowthICH = 0.02	{mm/d}, maxGrowthICH = 0.67	{mm/d}. I should know the length and weight of succesive days, right? YES
 ! m2 to m3. Have to divide it by depth? YES
-! Add secondary productions from Brey 2012 model. Is it worth it?
+! Add secondary productions from Brey 2012 model. Is it worth it? NO
 ! How to estimate maintenance respiration? Prod = Ass - Resp
 ! Do I need to adjust every metabolic rate to local temperature? YES, Q10=2, Tlim=0.26. For growth rate ichthyoplankton
 
 ! Added assimilation efficiencies: GRI, 
 ! Add respiration for Grimothea gregaria
 ! P = 0,80 * 10-7 * L3,9497
-! Look for Resp & AE of: HNF, BAC
+! Look for Resp & AE of: HNF, BAC, MEZ
+! Add community respiration: PHY->eDIC + BAC->eDIC + HNF->eDIC. Latorre et al. 2023

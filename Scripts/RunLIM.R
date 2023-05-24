@@ -2,10 +2,7 @@ require(LIM)
 
 # Read input file and setup the LIM
 readLIM <- Read("Scripts/flowbeagle_in_plankton.input")
-readLIM
-
 LIMBeagle <- Setup(readLIM)
-LIMBeagle
 
 # Solve the LIM by range estimation
 flowranges <- Xranges(LIMBeagle)
