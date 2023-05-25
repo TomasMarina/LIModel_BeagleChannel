@@ -6,6 +6,7 @@ LIMBeagle <- Setup(readLIM)
 
 # Solve the LIM by range estimation
 flowranges <- Xranges(LIMBeagle)
+#Varranges(LIMBeagle)  # shows variable ranges
 Plotranges(LIMBeagle, lab.cex = 0.7, xlab = "g C /m^3/d",
            main = "Beagle Channel food web")
 

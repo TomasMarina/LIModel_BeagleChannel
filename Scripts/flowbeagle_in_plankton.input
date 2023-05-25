@@ -28,14 +28,14 @@ stHNF           =   80.2069       {mg C/m3}
 stMIZ           =   7.4513        {mg C/m3}
 stMEZ           =   71.7459       {mg C/m3}
 stICH         	=   0.2136        {mg C/m3}
-stGRI         	=   10.872        {mg C/m2}
-!stFPL         	  =
+stGRI         	=   10.872        {mg C/m3}
+stFPL         	=   6808.164      {mg C/m3}
 
 !!! FLOW MEASUREMENTS
-meanProdPHY     =   51.19         {mg C/m3/d}
-sdProdPHY       =   5.2           {mg C/m3/d}
-minProdPHY      =   meanProdPHY - sdProdPHY   {mg C/m3/d}
-maxProdPHY      =   meanProdPHY + sdProdPHY   {mg C/m3/d}
+meanGProdPHY     =   51.19         {mg C/m3/d}    ! Gross primary production
+sdGProdPHY       =   5.2          {mg C/m3/d}    ! Gross primary production
+minGProdPHY      =   meanGProdPHY - sdGProdPHY   {mg C/m3/d}
+maxGProdPHY      =   meanGProdPHY + sdGProdPHY   {mg C/m3/d}
 DETExp          =   3.64          {mg C/m3/d}
 !POCContMEZ      =   0.95          {-}
 
@@ -45,19 +45,19 @@ DETExp          =   3.64          {mg C/m3/d}
 
 !-- Bacteria
 minBGE          = 0.05            {-}   ! bacterial growth efficiency
-maxBGE          = 0.45            {-}   ! bacterial growth efficiency
+maxBGE          = 0.5             {-}   ! bacterial growth efficiency
 minLysBAC       = 0.06            {-}   ! virus-mediated bacterial mortality
 maxLysBAC       = 0.58            {-}   ! virus-mediated bacterial mortality
-
-!-- Phytoplankton
-meanRespPHY     =   24.48         {mg C/m3/d}
-sdRespPHY       =   0.64          {mg C/m3/d}
-minRespPHY      =   meanRespPHY - sdRespPHY   {mg C/m3/d}
-maxRespPHY      =   meanRespPHY + sdRespPHY   {mg C/m3/d}
 
 !-- Heterotrophic nanoflagellates (from González et al. 2016)
 minUptaHNF      =   20.37         {mg C/m3/d}
 maxUptaHNF      =   37.6845       {mg C/m3/d}
+
+!-- Community respiration
+meanCommRes     =   24.48         {mg C/m3/d}
+sdCommRes       =   0.64          {mg C/m3/d}
+minCommRes      =   meanCommRes - sdCommRes   {mg C/m3/d}
+maxCommRes      =   meanCommRes + sdCommRes   {mg C/m3/d}
 
 !-- Ichthyoplankton
 minGrowthICH    =   0.0022        {-}
@@ -127,8 +127,8 @@ ProdBAC         = UptaBAC - RespBAC
 
 !-- Phytoplankton
 PHYResp		      = PHY   ->  eDIC				
-PHYUpta		      =	eDIC  ->  PHY		
-PHYProd		      =	PHYUpta	-	PHYResp
+PHYGProd		    =	flowto(PHY)		
+PHYNProd		    =	PHYGProd	-	PHYResp
 
 !-- Heterotrophic nanoflagellates
 HNFUptaBAC      = BAC   ->  HNF
@@ -162,6 +162,7 @@ POCContMEZ      = MEZ   ->  wDET
 POCContPlk      = PHY->wDET + HNF->wDET + MIZ->wDET + ICH->wDET
 
 !!! TOTALS
+CommRes         = PHY->eDIC + BAC->eDIC + HNF->eDIC
 DETExp          = flowto(eDET)
 HTLExp          = MEZExp + ICHExp + GRIExp + FPLExp
 
@@ -334,11 +335,14 @@ ProdBAC             = [minBGE, maxBGE]*UptaBAC
 ProdDOCBAC	        =	[minLysBAC, maxLysBAC]*ProdBAC
 
 !-- Phytoplankton
-PHYProd		          =	[minProdPHY, maxProdPHY]
-PHYResp		          = [minRespPHY, maxRespPHY]
+PHYGProd		        =	[minGProdPHY, maxGProdPHY]
+!PHYResp		          = [minRespPHY, maxRespPHY]
 
 !-- Heterotrophic nanoflagellates
 HNFUptaBAC          = [minUptaHNF, maxUptaHNF]
+
+!-- Plankton community
+CommRes             = [minCommRes, maxCommRes]
 
 !-- Ichthyoplankton
 ICHGrowth           = [minGrowthICH, maxGrowthICH]*stICH
@@ -361,8 +365,4 @@ GRIAssi             = [minAEGRI, maxAEGRI]*GRIUpta
 ! How to estimate maintenance respiration? Prod = Ass - Resp
 ! Do I need to adjust every metabolic rate to local temperature? YES, Q10=2, Tlim=0.26. For growth rate ichthyoplankton
 
-! Added assimilation efficiencies: GRI, 
-! Add respiration for Grimothea gregaria
-! P = 0,80 * 10-7 * L3,9497
-! Look for Resp & AE of: HNF, BAC, MEZ
-! Add community respiration: PHY->eDIC + BAC->eDIC + HNF->eDIC. Latorre et al. 2023
+! Look for Resp & AE of: HNF, BAC, MEZ, FPL
