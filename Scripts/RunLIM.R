@@ -13,4 +13,3 @@ Plotranges(LIMBeagle, lab.cex = 0.7, xlab = "g C /m^3/d",
 # Plot a single solution
 plotweb(Flowmatrix(LIMBeagle),
         main="Beagle food web", bty="n", lab.size=0.85)
-
