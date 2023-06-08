@@ -366,3 +366,4 @@ GRIAssi             = [minAEGRI, maxAEGRI]*GRIUpta
 ! Do I need to adjust every metabolic rate to local temperature? YES, Q10=2, Tlim=0.26. For growth rate ichthyoplankton
 
 ! Look for Resp & AE of: HNF, BAC, MEZ, FPL
+! Check fish larvae data from Presta et al. 2023
