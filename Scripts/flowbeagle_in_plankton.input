@@ -363,7 +363,7 @@ GRIAssi             = [minAEGRI, maxAEGRI]*GRIUpta
 ! m2 to m3. Have to divide it by depth? YES
 ! Add secondary productions from Brey 2012 model. Is it worth it? NO
 ! How to estimate maintenance respiration? Prod = Ass - Resp
-! Do I need to adjust every metabolic rate to local temperature? YES, Q10=2, Tlim=0.26. For growth rate ichthyoplankton
+! Do I need to adjust every metabolic rate to local temperature? YES, Q10=2. Tlim = Q10^((T2-T1)/10), where T2=20, T1=local temp. Then, multiply every metabolic rate you want to standardize.
 
 ! Look for Resp & AE of: HNF, BAC, MEZ, FPL
 ! Check fish larvae data from Presta et al. 2023
