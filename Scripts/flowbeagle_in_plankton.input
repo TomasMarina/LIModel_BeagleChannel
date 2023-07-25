@@ -36,8 +36,11 @@ meanGProdPHY     =   51.19         {mg C/m3/d}    ! Gross primary production
 sdGProdPHY       =   5.2          {mg C/m3/d}    ! Gross primary production
 minGProdPHY      =   meanGProdPHY - sdGProdPHY   {mg C/m3/d}
 maxGProdPHY      =   meanGProdPHY + sdGProdPHY   {mg C/m3/d}
-DETExp          =   3.64          {mg C/m3/d}
-!POCContMEZ      =   0.95          {-}
+DETExp           =   7.3633          {mg C/m3/d}
+minMEZConPOC     =   0            {mg C/m3/d}  
+maxMEZConPOC     =   2.88         {mg C/m3/d}
+minGRIConPOC     =   0            {mg C/m3/d}
+maxGRIConPOC     =   0.4067       {mg C/m3/d}
 
 !!! METABOLIC RATES (ingestion, respiration, assimilation)
 !Temperature     =   6.89          {°C}  ! mean 6.28 & 7.51 (Presta et al. 2023)
@@ -157,9 +160,9 @@ FPLExp          = FPL   ->  eHTL
 AlotowDET       = iTC3  ->  wDET
 AuttowDET       = iMAC->wDET + PHY->wDET
 
-!-- Contribution of plankton community to wDET (from González et al. 2016)
-POCContMEZ      = MEZ   ->  wDET
-POCContPlk      = PHY->wDET + HNF->wDET + MIZ->wDET + ICH->wDET
+!-- Contribution of plankton community to wDET (Flores-Melo et al. 2023)
+MEZConPOC       = GRI   ->  wDET
+GRIConPOC       = MEZ   ->  wDET
 
 !!! TOTALS
 CommRes         = PHY->eDIC + BAC->eDIC + HNF->eDIC
@@ -326,7 +329,8 @@ ICH   ->  GRI       = [minICHtoGRI, maxICHtoGRI]*flowto(GRI)
 AuttowDET           > AlotowDET
 
 !-- Contribution of plankton community to wDET (POC)
-POCContMEZ          > POCContPlk
+MEZConPOC       = [minMEZConPOC, maxMEZConPOC]
+GRIConPOC       = [minGRIConPOC, maxGRIConPOC]
 
 !!! METABOLISM
 
@@ -361,9 +365,10 @@ GRIAssi             = [minAEGRI, maxAEGRI]*GRIUpta
 !!! DOUBTS
 ! Implementation of growth rates: minGrowthICH = 0.02	{mm/d}, maxGrowthICH = 0.67	{mm/d}. I should know the length and weight of succesive days, right? YES
 ! m2 to m3. Have to divide it by depth? YES
-! Add secondary productions from Brey 2012 model. Is it worth it? NO
+! Add secondary productions from Brey 2012 model. Is it worth? NO
 ! How to estimate maintenance respiration? Prod = Ass - Resp
-! Do I need to adjust every metabolic rate to local temperature? YES, Q10=2. Tlim = Q10^((T2-T1)/10), where T2=20, T1=local temp. Then, multiply every metabolic rate you want to standardize.
+! Do I need to adjust every metabolic rate to local temperature? YES, Q10=2. Tlim = Q10^((T2-T1)/10), where T2=20, T1=local temp. Then, multiply every metabolic rate you want to standardize. See Ulrike's LIM
 
 ! Look for Resp & AE of: HNF, BAC, MEZ, FPL
 ! Check fish larvae data from Presta et al. 2023
+! Add min vertical flux = 0 mg C m-3 d-1
