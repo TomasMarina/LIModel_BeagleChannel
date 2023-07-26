@@ -32,19 +32,21 @@ stGRI         	=   10.872        {mg C/m3}
 stFPL         	=   6808.164      {mg C/m3}
 
 !!! FLOW MEASUREMENTS
-meanGProdPHY     =   51.19         {mg C/m3/d}    ! Gross primary production
+meanGProdPHY     =   51.19        {mg C/m3/d}    ! Gross primary production
 sdGProdPHY       =   5.2          {mg C/m3/d}    ! Gross primary production
 minGProdPHY      =   meanGProdPHY - sdGProdPHY   {mg C/m3/d}
 maxGProdPHY      =   meanGProdPHY + sdGProdPHY   {mg C/m3/d}
-DETExp           =   7.3633          {mg C/m3/d}
-minMEZConPOC     =   0            {mg C/m3/d}  
-maxMEZConPOC     =   2.88         {mg C/m3/d}
-minGRIConPOC     =   0            {mg C/m3/d}
-maxGRIConPOC     =   0.4067       {mg C/m3/d}
+VerFlux          =   7.3633       {mg C/m3/d}
+
+! Contribution to Detritus in water column (flowto(wDET))
+minFPGRI         =   0            {mg C/m3/d}     ! Contribution to POC in sediments
+maxFPGRI         =   2.88         {mg C/m3/d}     ! Contribution to POC in sediments
+minMEZConwDET    =   0            {mg C/m3/d}     ! Contribution to POC in sediments
+maxMEZConwDET    =   0.6633       {mg C/m3/d}     ! Copepods + Euphausiids
 
 !!! METABOLIC RATES (ingestion, respiration, assimilation)
-!Temperature     =   6.89          {°C}  ! mean 6.28 & 7.51 (Presta et al. 2023)
-!Tlim            =   0.26          {-}   ! metabolic correction factor Q10=2
+!Temperature     =   6.89         {°C}  ! mean 6.28 & 7.51 (Presta et al. 2023)
+!Tlim            =   0.26         {-}   ! metabolic correction factor Q10=2
 
 !-- Bacteria
 minBGE          = 0.05            {-}   ! bacterial growth efficiency
@@ -83,8 +85,8 @@ maxAEGRI        =   0.975         {-}
 !-- export to Detritus in benthos
 minwDETtoeDET   =   0.03          {-}
 maxwDETtoeDET   =   0.27          {-}
-minPHYtoeDET    =   0.01          {-}
-maxPHYtoeDET    =   0.17          {-}
+!minPHYtoeDET    =   0.01          {-}
+!maxPHYtoeDET    =   0.17          {-}
 
 !-- to Detritus in water column
 minPHYtowDET    =   0.45          {-}
@@ -160,13 +162,15 @@ FPLExp          = FPL   ->  eHTL
 AlotowDET       = iTC3  ->  wDET
 AuttowDET       = iMAC->wDET + PHY->wDET
 
-!-- Contribution of plankton community to wDET (Flores-Melo et al. 2023)
-MEZConPOC       = GRI   ->  wDET
-GRIConPOC       = MEZ   ->  wDET
+!-- Contribution to wDET (POC in Flores-Melo et al. 2023)
+MEZConwDET      = MEZ   ->  wDET
+MIZConwDET      = MIZ   ->  wDET
+ICHConwDET      = ICH   ->  wDET
+FPLConwDET      = FPL   ->  wDET
 
 !!! TOTALS
 CommRes         = PHY->eDIC + BAC->eDIC + HNF->eDIC
-DETExp          = flowto(eDET)
+VerFlux         = flowto(eDET)
 HTLExp          = MEZExp + ICHExp + GRIExp + FPLExp
 
 
@@ -189,7 +193,7 @@ BAC     ! Bacteria
 PHY     ! Phytoplankton (mainly Diatoms)
 HNF     ! Heterotrophic nanoflagellates
 MIZ     ! Microzooplankton (Copepoda & Cirripedia nauplii, 67–200 μm)
-MEZ     ! Mesozooplankton (Copepoda copepodites & adults, Appendicularia, Echinoderm larvae, 200–20000 μm)
+MEZ     ! Mesozooplankton (Copepoda copepodites & adults, Appendicularia, Echinoderm larvae, Euphausiids, 200–20000 μm)
 ICH     ! Ichthyoplankton (all fish spp)
 GRI     ! Grimothea gregaria (Decapoda)
 FPL     ! Fish pelagic (Sprattus fuegensis)
@@ -215,7 +219,7 @@ iMAC    ->  wDET    ! macroalgae input
 eDIC    ->  PHY     ! uptake
 
 !-- Detritus
-wDET    ->  eDET    ! export to benthos
+wDET    ->  eDET    ! vertical flux
 wDET    ->  DOC     ! hydrolysis
 wDET    ->  BAC     ! consumption
 wDET    ->  GRI     ! consumption
@@ -233,7 +237,7 @@ BAC     ->  HNF     ! consumption
 
 !-- Phytoplankton
 PHY     ->  eDIC    ! respiration
-PHY     ->  eDET    ! natural mortality & deposition
+!PHY     ->  eDET    ! natural mortality & deposition
 PHY     ->  wDET    ! POC in water column
 PHY     ->  DOC     ! exudation
 PHY     ->  MIZ     ! consumption
@@ -244,15 +248,15 @@ PHY     ->  FPL     ! consumption
 
 !-- Heterotrophic nanoflagellates
 HNF     ->  eDIC    ! respiration
-HNF     ->  eDET    ! natural mortality & deposition
+!HNF     ->  eDET    ! natural mortality & deposition
 HNF     ->  wDET    ! POC in water column (faeces)
 HNF     ->  MIZ     ! consumption
 HNF     ->  MEZ     ! consumption
 
 !-- MicroZooplankton
 MIZ     ->  eDIC    ! respiration
-MIZ     ->  eDET    ! natural mortality & deposition
-MIZ     ->  wDET    ! POC in water column (faeces)
+!MIZ     ->  eDET    ! natural mortality & deposition
+MIZ     ->  wDET    ! POC in water column (faecal pellets)
 MIZ     ->  MEZ     ! consumption
 MIZ     ->  ICH     ! consumption
 MIZ     ->  GRI     ! consumption
@@ -260,8 +264,8 @@ MIZ     ->  FPL     ! consumption
 
 !-- MesoZooplankton
 MEZ     ->  eDIC    ! respiration
-MEZ     ->  eDET    ! natural mortality & deposition
-MEZ     ->  wDET    ! POC in water column (faeces)
+!MEZ     ->  eDET    ! natural mortality & deposition
+MEZ     ->  wDET    ! POC in water column (faecal pellets)
 MEZ     ->  MEZ     ! consumption
 MEZ     ->  ICH     ! consumption
 MEZ     ->  GRI     ! consumption
@@ -270,23 +274,23 @@ MEZ     ->  eHTL    ! consumption by seabirds
 
 !-- Ichthyoplankton
 ICH     ->  eDIC    ! respiration
-ICH     ->  eDET    ! natural mortality & deposition
-ICH     ->  wDET    ! POC in water column (faeces)
+!ICH     ->  eDET    ! natural mortality & deposition
+ICH     ->  wDET    ! POC in water column (faecal pellets)
 ICH     ->  GRI     ! consumption
 ICH     ->  FPL     ! consumption
 ICH     ->  eHTL    ! consumption by seabirds
 
 !-- Grimothea gregaria
 GRI     ->  eDIC    ! respiration
-GRI     ->  eDET    ! natural mortality & deposition
+!GRI     ->  eDET    ! natural mortality & deposition
 GRI     ->  eHTL    ! consumption by seabirds & marine mammals
-GRI     ->  wDET    ! POC in water column (faeces)
+GRI     ->  wDET    ! POC in water column (faecal pellets)
 
 !-- Fish pelagic
 FPL     ->  eDIC    ! respiration
-FPL     ->  eDET    ! natural mortality & deposition
+!FPL     ->  eDET    ! natural mortality & deposition
 FPL     ->  eHTL    ! consumption by seabirds & marine mammals
-FPL     ->  wDET    ! POC in water column (faeces)
+FPL     ->  wDET    ! POC in water column (faecal pellets)
 
 ###### END FLOWS
 
@@ -307,7 +311,7 @@ iTC3  ->  wDET      = [miniTC3towDET, maxiTC3towDET]*flowto(wDET)
 
 !-- export to Detritus in benthos
 wDET  ->  eDET      = [minwDETtoeDET, maxwDETtoeDET]*flowto(eDET)
-PHY   ->  eDET      = [minPHYtoeDET, maxPHYtoeDET]*flowto(eDET)
+!PHY   ->  eDET      = [minPHYtoeDET, maxPHYtoeDET]*flowto(eDET)
 
 !-- to MicroZooplankton
 wDET  ->  MIZ       = [minwDETtoMIZ, maxwDETtoMIZ]*flowto(MIZ)
@@ -328,12 +332,15 @@ ICH   ->  GRI       = [minICHtoGRI, maxICHtoGRI]*flowto(GRI)
 !-- Autochthonous vs Alochthonous
 AuttowDET           > AlotowDET
 
-!-- Contribution of plankton community to wDET (POC)
-MEZConPOC       = [minMEZConPOC, maxMEZConPOC]
-GRIConPOC       = [minGRIConPOC, maxGRIConPOC]
+!-- Contribution to Detritus in water column (POC)
+!GRIConwDET = GRIFaec
+MEZConwDET          = [minMEZConwDET, maxMEZConwDET]
+MIZConwDET          < GRIFaec
+ICHConwDET          < GRIFaec
+FPLConwDET          < GRIFaec
+
 
 !!! METABOLISM
-
 !-- Bacteria
 ProdBAC             = [minBGE, maxBGE]*UptaBAC
 ProdDOCBAC	        =	[minLysBAC, maxLysBAC]*ProdBAC
@@ -357,6 +364,7 @@ MEZResp             = [minRespMEZ, maxRespMEZ]
 
 !-- Grimothea gregaria
 GRIUpta             = [minUptaGRI, maxUptaGRI]*stGRI
+GRIFaec             = [minFPGRI, maxFPGRI]
 GRIAssi             = [minAEGRI, maxAEGRI]*GRIUpta
 
 ###### END INEQUALITIES
@@ -365,10 +373,10 @@ GRIAssi             = [minAEGRI, maxAEGRI]*GRIUpta
 !!! DOUBTS
 ! Implementation of growth rates: minGrowthICH = 0.02	{mm/d}, maxGrowthICH = 0.67	{mm/d}. I should know the length and weight of succesive days, right? YES
 ! m2 to m3. Have to divide it by depth? YES
-! Add secondary productions from Brey 2012 model. Is it worth? NO
-! How to estimate maintenance respiration? Prod = Ass - Resp
+! Add secondary productions from Brey 2012 model. Is it worth? NO according to Karline
+! How to estimate maintenance respiration? Prod = Ass - Resp (growth+maintenance)
 ! Do I need to adjust every metabolic rate to local temperature? YES, Q10=2. Tlim = Q10^((T2-T1)/10), where T2=20, T1=local temp. Then, multiply every metabolic rate you want to standardize. See Ulrike's LIM
 
 ! Look for Resp & AE of: HNF, BAC, MEZ, FPL
-! Check fish larvae data from Presta et al. 2023
-! Add min vertical flux = 0 mg C m-3 d-1
+! Add growth rate for Ichthyoplankton: Bruno & García Alonso
+
