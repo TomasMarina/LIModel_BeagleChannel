@@ -1,12 +1,14 @@
+
+# Load packages -----------------------------------------------------------
 require(LIM)
 
-# Read input file and setup the LIM
+# Read & solve model ------------------------------------------------------
 readLIM <- Read("Scripts/flowbeagle_in_plankton.input")
 LIMBeagle <- Setup(readLIM)
-
 # Solve the LIM by range estimation
 flowranges <- Xranges(LIMBeagle)
-# Plot flow estimations
+
+# Plot flows --------------------------------------------------------------
 Plotranges(LIMBeagle, lab.cex = 0.7, xlab = expression("g C m"^-3*" d"^-1))
 # Settings to A4 page
 mtext("Flow estimations", side = 2, line = 2.5)

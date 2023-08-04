@@ -219,6 +219,7 @@ iTC3    ->  wDET    ! terrestrial input
 iTC3    ->  DOC     ! terrestrial input
 iMAC    ->  wDET    ! macroalgae input
 eDIC    ->  PHY     ! uptake
+eDET    ->  wDET    ! resuspension
 
 !-- Detritus
 wDET    ->  eDET    ! vertical flux (excluding faecal pellets)
