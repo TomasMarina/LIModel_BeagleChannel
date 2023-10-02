@@ -21,7 +21,7 @@ Tomás I. Marina, Karline Soetaert, Dick van Oevelen
 
 !!! STOCKS
 !stwDET         	=
-stDOC         	=   1090.0        {mg C/m3}
+stDOC         	=   800.0         {mg C/m3}
 stBAC           =   8.3           {mg C/m3}
 stPHY         	=   105.866       {mg C/m3}
 stHNF           =   80.2069       {mg C/m3}
