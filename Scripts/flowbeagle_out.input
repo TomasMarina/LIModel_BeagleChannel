@@ -22,14 +22,14 @@ Tomás I. Marina, Karline Soetaert, Dick van Oevelen
 !!! STOCKS
 !stwDET         	=
 stDOC         	=   1090.0        {mg C/m3}  ! Updated
-stBAC           =              {mg C/m3}
-stPHY         	=          {mg C/m3}
-stHNF           =          {mg C/m3}
-stMIZ           =           {mg C/m3}
-stMEZ           =          {mg C/m3}
-stICH         	=           {mg C/m3}
-stGRI         	=           {mg C/m3}
-stFPL         	=         {mg C/m3}
+stBAC           =   10.4          {mg C/m3}
+stPHY         	=  {mg C/m3}
+stHNF           =   269.2463      {mg C/m3}
+stMIZ           =  {mg C/m3}
+stMEZ           =  {mg C/m3}
+stICH         	=   0.2390        {mg C/m3}
+stGRI         	=  {mg C/m3}
+stFPL         	=  {mg C/m3}
 
 !!! FLOW MEASUREMENTS
 meanGProdPHY     =           {mg C/m3/d}    ! Gross primary production
