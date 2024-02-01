@@ -3,10 +3,10 @@ require(LIM)
 
 # Read & solve model ------------------------------------------------------
 ## Inner Channel
-readLIM_in <- Read("Scripts/flowbeagle_in_plankton.input")
-LIMBeagle_in <- Setup(readLIM)
+readLIM_in <- Read("Scripts/flowbeagle_in.input")
+LIMBeagle_in <- Setup(readLIM_in)
 # Solve the LIM by range estimation
-flowranges_in <- Xranges(LIMBeagle)
+flowranges_in <- Xranges(LIMBeagle_in)
 
 ## Outer Channel
 readLIM_out <- Read("Scripts/flowbeagle_out.input")
@@ -15,7 +15,8 @@ LIMBeagle_out <- Setup(readLIM_out)
 flowranges_out <- Xranges(LIMBeagle_out)
 
 # Plot flows --------------------------------------------------------------
-Plotranges(LIMBeagle, lab.cex = 0.7, xlab = expression("mg C m"^-3*" d"^-1))
+Plotranges(LIMBeagle_in, lab.cex = 0.7, xlab = expression("mg C m"^-3*" d"^-1))
+
 # Settings to A4 page
 mtext("Flow estimations", side = 2, line = 2.5)
 mtext("Carbon flow model for Beagle Channel", side=3, line=1, adj=0.5, cex=1.5)
@@ -28,9 +29,9 @@ legend(x=113, y=10, c("wDET: Detritus in water column", "DOC: Dissolved Organic 
        y.intersp = .5, cex=0.5, bty="n")
 
 # Plot variable ranges
-Plotranges(LIMBeagle, lab.cex = 0.7, xlab = "g C /m^3/d", type = "V",
-           main = "Variable range estimations for Beagle Channel model")
+Plotranges(LIMBeagle_in, lab.cex = 0.7, xlab = "g C /m^3/d", type = "V",
+           main = "Variable range estimations")
 
 # Plot a single solution
-plotweb(Flowmatrix(LIMBeagle),
+plotweb(Flowmatrix(LIMBeagle_in),
         bty="n", lab.size=0.85)
