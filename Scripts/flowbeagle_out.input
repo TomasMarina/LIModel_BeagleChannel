@@ -26,102 +26,102 @@ stBAC           =   11.79         {mg C/m3}
 stPHY         	=   154.65        {mg C/m3}
 stHNF           =   4.44          {mg C/m3}
 stMIZ           =   {mg C/m3}
-stMEZ           =   {mg C/m3}
+stMEZ           =   256.8833      {mg C/m3}
 stICH         	=   0.2390        {mg C/m3}
 stGRI         	=   {mg C/m3}
 stFPL         	=   {mg C/m3}
 
 !!! FLOW MEASUREMENTS
-meanGProdPHY     =           {mg C/m3/d}    ! Gross primary production
-sdGProdPHY       =             {mg C/m3/d}    ! Gross primary production
+meanGProdPHY     =  {mg C/m3/d}    ! Ask Maite. Gross primary production
+sdGProdPHY       =  {mg C/m3/d}    ! Ask Maite. Gross primary production
 minGProdPHY      =  meanGProdPHY - sdGProdPHY   {mg C/m3/d}
 maxGProdPHY      =  meanGProdPHY + sdGProdPHY   {mg C/m3/d}
-minVerFlux       =               {mg C/m3/d}
-maxVerFlux       =          {mg C/m3/d}
+minVerFlux       =  {mg C/m3/d}
+maxVerFlux       =  {mg C/m3/d}
 
 ! Faecal pellets flux (GRI+MEZ+MIZ+ICH+FPL -> eDET)
-minFPGRI         =               {mg C/m3/d}
-maxFPGRI         =            {mg C/m3/d}
-minFPMEZ         =               {mg C/m3/d}     ! Copepods+Euphausiids
-maxFPMEZ         =          {mg C/m3/d}
-minFPRest        =               {mg C/m3/d}     ! GRI+MEZ+MIZ+ICH+FPL
-maxFPRest        =          {mg C/m3/d}
+minFPGRI         =  {mg C/m3/d}
+maxFPGRI         =  {mg C/m3/d}
+minFPMEZ         =  {mg C/m3/d}     ! Copepods+Euphausiids
+maxFPMEZ         =  {mg C/m3/d}
+minFPRest        =  {mg C/m3/d}     ! GRI+MEZ+MIZ+ICH+FPL
+maxFPRest        =  {mg C/m3/d}
 
 !!! METABOLIC RATES (ingestion, respiration, assimilation)
 !Temperature     =   6.89         {°C}  ! mean 6.28 & 7.51 (Presta et al. 2023)
 !Tlim            =   0.26         {-}   ! metabolic correction factor Q10=2
 
 !-- Bacteria
-minBGE          =             {-}   ! bacterial growth efficiency
-maxBGE          =              {-}   ! bacterial growth efficiency
-minLysBAC       =             {-}   ! virus-mediated bacterial mortality
-maxLysBAC       =             {-}   ! virus-mediated bacterial mortality
+minBGE          =   0.05          {-}   ! bacterial growth efficiency
+maxBGE          =   0.5           {-}   ! bacterial growth efficiency
+minLysBAC       =   0.06          {-}   ! virus-mediated bacterial mortality
+maxLysBAC       =   0.58          {-}   ! virus-mediated bacterial mortality
 
 !-- Heterotrophic nanoflagellates (from González et al. 2016)
-minUptaHNF      =            {mg C/m3/d}
-maxUptaHNF      =          {mg C/m3/d}
+minUptaHNF      =   {mg C/m3/d}
+maxUptaHNF      =   {mg C/m3/d}
 
 !-- Community respiration
-meanCommRes     =            {mg C/m3/d}
-sdCommRes       =             {mg C/m3/d}
+meanCommRes     =   {mg C/m3/d}
+sdCommRes       =   {mg C/m3/d}
 minCommRes      =   meanCommRes - sdCommRes   {mg C/m3/d}
 maxCommRes      =   meanCommRes + sdCommRes   {mg C/m3/d}
 
 !-- Ichthyoplankton
-minGrowthICH    =           {-}
-maxGrowthICH    =           {-}
+minGrowthICH    =   {-}
+maxGrowthICH    =   {-}
 
 !-- MesoZooplankton
-minUptaMEZ      =             {mg C/m3/d}
-maxUptaMEZ      =            {mg C/m3/d}
-minRespMEZ      =             {mg C/m3/d}
-maxRespMEZ      =            {mg C/m3/d}
+minUptaMEZ      =   {mg C/m3/d}
+maxUptaMEZ      =   {mg C/m3/d}
+minRespMEZ      =   {mg C/m3/d}
+maxRespMEZ      =   {mg C/m3/d}
 
 !-- Grimothea gregaria (from Romero et al. 2006)
-minUptaGRI      =            {-}
-maxUptaGRI      =             {-}
-minAEGRI        =            {-}
-maxAEGRI        =            {-}
+minUptaGRI      =   {-}
+maxUptaGRI      =   {-}
+minAEGRI        =   {-}
+maxAEGRI        =   {-}
 
 
 !!! PROPORTIONAL CONTRIBUTIONS (from Bruno et al. 2023 & Presta et al. 2023)
 !-- export to Detritus in benthos
-minwDETtoeDET   =             {-}
-maxwDETtoeDET   =             {-}
-minPHYtoeDET    =             {-}
-maxPHYtoeDET    =             {-}
+minwDETtoeDET   =   {-}
+maxwDETtoeDET   =   {-}
+minPHYtoeDET    =   {-}
+maxPHYtoeDET    =   {-}
 
 !-- to Detritus in water column
-minPHYtowDET    =             {-}
-maxPHYtowDET    =             {-}
-miniMACtowDET   =             {-}   ! mean 'blades', 'stipes', 'holdfasts'
-maxiMACtowDET   =             {-}   ! mean 'blades', 'stipes', 'holdfasts'
-miniTC3towDET   =             {-}
-maxiTC3towDET   =             {-}
+minPHYtowDET    =   {-}
+maxPHYtowDET    =   {-}
+miniMACtowDET   =   {-}   ! mean 'blades', 'stipes', 'holdfasts'
+maxiMACtowDET   =   {-}   ! mean 'blades', 'stipes', 'holdfasts'
+miniTC3towDET   =   {-}
+maxiTC3towDET   =   {-}
 
 !-- to MicroZooplankton
-minwDETtoMIZ    =             {-}
-maxwDETtoMIZ    =             {-}
-minPHYtoMIZ     =             {-}
-maxPHYtoMIZ     =             {-}  
+minwDETtoMIZ    =   {-}
+maxwDETtoMIZ    =   {-}
+minPHYtoMIZ     =   {-}
+maxPHYtoMIZ     =   {-}  
 
 !-- to MesoZooplankton
-minMIZtoMEZ     =             {-}  
-maxMIZtoMEZ     =             {-}
+minMIZtoMEZ     =   {-}  
+maxMIZtoMEZ     =   {-}
 
 !-- to Ichthyoplankton
-minwDETtoICH    =             {-}
-maxwDETtoICH    =             {-}
-minPHYtoICH     =             {-}
-maxPHYtoICH     =             {-}
+minwDETtoICH    =   {-}
+maxwDETtoICH    =   {-}
+minPHYtoICH     =   {-}
+maxPHYtoICH     =   {-}
 
 !-- to Grimothea gregaria
-minMIZtoGRI     =             {-}
-maxMIZtoGRI     =             {-}
-minMEZtoGRI     =            {-}
-maxMEZtoGRI     =             {-}
-minICHtoGRI     =             {-}
-maxICHtoGRI     =             {-}
+minMIZtoGRI     =   {-}
+maxMIZtoGRI     =   {-}
+minMEZtoGRI     =   {-}
+maxMEZtoGRI     =   {-}
+minICHtoGRI     =   {-}
+maxICHtoGRI     =   {-}
 
 ###### END PARAMETERS
 

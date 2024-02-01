@@ -2,10 +2,17 @@
 require(LIM)
 
 # Read & solve model ------------------------------------------------------
-readLIM <- Read("Scripts/flowbeagle_in_plankton.input")
-LIMBeagle <- Setup(readLIM)
+## Inner Channel
+readLIM_in <- Read("Scripts/flowbeagle_in_plankton.input")
+LIMBeagle_in <- Setup(readLIM)
 # Solve the LIM by range estimation
-flowranges <- Xranges(LIMBeagle)
+flowranges_in <- Xranges(LIMBeagle)
+
+## Outer Channel
+readLIM_out <- Read("Scripts/flowbeagle_out.input")
+LIMBeagle_out <- Setup(readLIM_out)
+# Solve the LIM by range estimation
+flowranges_out <- Xranges(LIMBeagle_out)
 
 # Plot flows --------------------------------------------------------------
 Plotranges(LIMBeagle, lab.cex = 0.7, xlab = expression("mg C m"^-3*" d"^-1))
