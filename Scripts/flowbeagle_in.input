@@ -29,13 +29,11 @@ stMIZ           =   0.0288        {mg C/m3}
 stMEZ           =   71.1029       {mg C/m3}
 stICH         	=   0.0198        {mg C/m3}
 stGRI         	=   10.872        {mg C/m3}
-stFPL         	=   6808.164      {mg C/m3}
+stFPL         	=   6808164.671   {mg C/m3}
 
 !!! FLOW MEASUREMENTS
-meanGProdPHY     =  51.19         {mg C/m3/d}    ! Gross primary production
-sdGProdPHY       =  5.2           {mg C/m3/d}    ! Gross primary production
-minGProdPHY      =  meanGProdPHY - sdGProdPHY   {mg C/m3/d}
-maxGProdPHY      =  meanGProdPHY + sdGProdPHY   {mg C/m3/d}
+minGProdPHY      =  33.385        {mg C/m3/d}   ! Gross primary production
+maxGProdPHY      =  52.37         {mg C/m3/d}   ! Gross primary production
 minVerFlux       =  0             {mg C/m3/d}
 maxVerFlux       =  7.3633        {mg C/m3/d}
 
