@@ -25,8 +25,8 @@ stDOC         	=   800.0         {mg C/m3}
 stBAC           =   10.91         {mg C/m3}
 stPHY         	=   25.48         {mg C/m3}
 stHNF           =   1.69          {mg C/m3}
-stMIZ           =   7.4513        {mg C/m3}
-stMEZ           =   71.7459       {mg C/m3}
+stMIZ           =   0.0288        {mg C/m3}
+stMEZ           =   71.1029       {mg C/m3}
 stICH         	=   0.0198        {mg C/m3}
 stGRI         	=   10.872        {mg C/m3}
 stFPL         	=   6808.164      {mg C/m3}
@@ -160,15 +160,16 @@ GRIExp          = GRI   ->  eHTL
 
 !-- Fish pelagic
 FPLExp          = FPL   ->  eHTL
+FPLMor          = FPL   ->  eDET
 
 !-- Autochtonous vs Alochthonous (from Bruno et al. 2023)
 AlotowDET       = iTC3  ->  wDET
 AuttowDET       = iMAC->wDET + PHY->wDET
 
-!-- Faecal pellets flux (GRI+MEZ+MIZ+ICH+FPL -> eDET)
+!-- Faecal pellets flux (GRI+MEZ+MIZ+ICH -> eDET)
 FPGRI           = GRI   ->  eDET
 FPMEZ           = MEZ   ->  eDET
-FPRest          = MIZ->eDET + ICH->eDET + FPL->eDET
+FPRest          = MIZ->eDET + ICH->eDET
 
 !!! TOTALS
 CommRes         = PHY->eDIC + BAC->eDIC + HNF->eDIC
@@ -291,7 +292,7 @@ GRI     ->  eHTL    ! consumption by seabirds & marine mammals
 
 !-- Fish pelagic
 FPL     ->  eDIC    ! respiration
-FPL     ->  eDET    ! faecal pellets
+FPL     ->  eDET    ! natural mortality & deposition
 FPL     ->  wDET    ! faeces
 FPL     ->  eHTL    ! consumption by seabirds & marine mammals
 
@@ -335,14 +336,16 @@ ICH   ->  GRI       = [minICHtoGRI, maxICHtoGRI]*flowto(GRI)
 !-- Autochthonous vs Alochthonous
 AuttowDET           > AlotowDET
 
+
 !!! VERTICAL FLUXES
-!-- GRI, MEZ, MIZ+ICH+FPL('Rest') -> eDET = faecal pellets
+!-- GRI, MEZ, MIZ+ICH('Rest') -> eDET = faecal pellets
 FPGRI               = [minFPGRI, maxFPGRI]
 FPMEZ               = [minFPMEZ, maxFPMEZ]
 FPRest              = [minFPRest, maxFPRest]
 
 !-- POC flux
 VerFlux             = [minVerFlux, maxVerFlux]
+
 
 !!! METABOLISM
 !-- Bacteria
@@ -369,6 +372,10 @@ MEZResp             = [minRespMEZ, maxRespMEZ]
 !-- Grimothea gregaria
 GRIUpta             = [minUptaGRI, maxUptaGRI]*stGRI
 
+!-- Fish pelagic
+!FPLMor              = [minMorFPL, maxMorFPL]
+! 0.59 to 1.0 ind/yr (Cerna et al. 2014). what proportion of stock is this?
+
 ###### END INEQUALITIES
 
 
@@ -381,4 +388,5 @@ GRIUpta             = [minUptaGRI, maxUptaGRI]*stGRI
 
 ! Look for Resp & AE of: HNF, BAC, MEZ, FPL
 ! Add growth rate for Ichthyoplankton: Bruno & García Alonso
+! Add growth & mortality for FPL (Sprattus fuegensis): Cerna et al. 2014
 
