@@ -35,7 +35,7 @@ stICH         	=   0.2390        {mg C/m3}
 minGProdPHY      =  8.3           {mg C/m3/d}   ! Gross primary production
 maxGProdPHY      =  9.81          {mg C/m3/d}   ! Gross primary production
 minVerFlux       =  0             {mg C/m3/d}
-maxVerFlux       =  {mg C/m3/d}
+!maxVerFlux       =  {mg C/m3/d}  ! consultar Xime FM
 
 ! Faecal pellets flux (GRI+MEZ+MIZ+ICH+FPL -> eDET)
 minFPGRI         =  {mg C/m3/d}
