@@ -23,7 +23,7 @@ Tomás I. Marina, Karline Soetaert, Dick van Oevelen
 !stwDET         	=
 stDOC         	=   800.0         {mg C/m3}
 stBAC           =   10.91         {mg C/m3}
-stPHY         	=   25.48         {mg C/m3}
+stPHY         	=   12.93         {mg C/m3}
 stHNF           =   1.69          {mg C/m3}
 stMIZ           =   0.0288        {mg C/m3}
 stMEZ           =   71.1029       {mg C/m3}
@@ -60,10 +60,8 @@ minUptaHNF      =   20.37         {mg C/m3/d}
 maxUptaHNF      =   37.6845       {mg C/m3/d}
 
 !-- Community respiration
-meanCommRes     =   24.48         {mg C/m3/d}
-sdCommRes       =   0.64          {mg C/m3/d}
-minCommRes      =   meanCommRes - sdCommRes   {mg C/m3/d}
-maxCommRes      =   meanCommRes + sdCommRes   {mg C/m3/d}
+minCommRes      =   23.837        {mg C/m3/d}
+maxCommRes      =   25.135        {mg C/m3/d}
 
 !-- Ichthyoplankton
 ! Re-contactar Virginia GA
