@@ -20,7 +20,7 @@ Tomás I. Marina, Karline Soetaert, Dick van Oevelen
 ###### PARAMETERS
 
 !!! STOCKS
-!stwDET         	=
+!stwDET          =
 stDOC         	=   1090.0        {mg C/m3}  ! Updated
 stBAC           =   11.79         {mg C/m3}
 stPHY         	=   154.65        {mg C/m3}
@@ -28,22 +28,23 @@ stHNF           =   4.44          {mg C/m3}
 stMIZ           =   0.01551       {mg C/m3}
 stMEZ           =   256.8833      {mg C/m3}
 stICH         	=   0.2390        {mg C/m3}
-!stGRI         	=   {mg C/m3}
-!stFPL         	=   {mg C/m3}
+!stGRI         	 =   {mg C/m3}
+!stFPL         	 =   {mg C/m3}
 
 !!! FLOW MEASUREMENTS
-minGProdPHY      =  8.3           {mg C/m3/d}   ! Gross primary production
-maxGProdPHY      =  9.81          {mg C/m3/d}   ! Gross primary production
-minVerFlux       =  0             {mg C/m3/d}
-!maxVerFlux       =  {mg C/m3/d}  ! consultar Xime FM
+minGProdPHY     =  8.3           {mg C/m3/d}   ! Gross primary production
+maxGProdPHY     =  9.81          {mg C/m3/d}   ! Gross primary production
+minVerFlux      =  0             {mg C/m3/d}
+!maxVerFlux       =  {mg C/m3/d}  ! consultado a Xime FM
 
-! Faecal pellets flux (GRI+MEZ+MIZ+ICH+FPL -> eDET)
-minFPGRI         =  {mg C/m3/d}
-maxFPGRI         =  {mg C/m3/d}
-minFPMEZ         =  {mg C/m3/d}     ! Copepods+Euphausiids
-maxFPMEZ         =  {mg C/m3/d}
-minFPRest        =  {mg C/m3/d}     ! GRI+MEZ+MIZ+ICH+FPL
-maxFPRest        =  {mg C/m3/d}
+! Faecal pellets flux (GRI+MEZ+MIZ+ICH -> eDET)
+! consultar a Xime FM
+minFPGRI        =  {mg C/m3/d}
+maxFPGRI        =  {mg C/m3/d}
+minFPMEZ        =  {mg C/m3/d}     ! Copepods+Euphausiids
+maxFPMEZ        =  {mg C/m3/d}
+minFPRest       =  {mg C/m3/d}     ! GRI+MEZ+MIZ+ICH
+maxFPRest       =  {mg C/m3/d}
 
 !!! METABOLIC RATES (ingestion, respiration, assimilation)
 !Temperature     =   6.89         {°C}  ! mean 6.28 & 7.51 (Presta et al. 2023)
@@ -60,26 +61,28 @@ minUptaHNF      =   {mg C/m3/d}
 maxUptaHNF      =   {mg C/m3/d}
 
 !-- Community respiration
-meanCommRes     =   {mg C/m3/d}
-sdCommRes       =   {mg C/m3/d}
+! consultar a Maite
+!meanCommRes     =   {mg C/m3/d}
+!sdCommRes       =   {mg C/m3/d}
 minCommRes      =   meanCommRes - sdCommRes   {mg C/m3/d}
 maxCommRes      =   meanCommRes + sdCommRes   {mg C/m3/d}
 
 !-- Ichthyoplankton
-minGrowthICH    =   {-}
-maxGrowthICH    =   {-}
+! Re-contactar Virginia GA
+!minGrowthICH    =   {-}
+!maxGrowthICH    =   {-}
 
 !-- MesoZooplankton
-minUptaMEZ      =   {mg C/m3/d}
-maxUptaMEZ      =   {mg C/m3/d}
-minRespMEZ      =   {mg C/m3/d}
-maxRespMEZ      =   {mg C/m3/d}
+minUptaMEZ      =   6.34          {mg C/m3/d}
+maxUptaMEZ      =   15.63         {mg C/m3/d}
+minRespMEZ      =   3.69          {mg C/m3/d}
+maxRespMEZ      =   16.81         {mg C/m3/d}
 
 !-- Grimothea gregaria (from Romero et al. 2006)
-minUptaGRI      =   {-}
-maxUptaGRI      =   {-}
-minAEGRI        =   {-}
-maxAEGRI        =   {-}
+minUptaGRI      =   0.015         {-}
+maxUptaGRI      =   0.05          {-}
+minAEGRI        =   0.945         {-}
+maxAEGRI        =   0.975         {-}
 
 
 !!! PROPORTIONAL CONTRIBUTIONS (from Bruno et al. 2023 & Presta et al. 2023)
@@ -163,10 +166,10 @@ FPLExp          = FPL   ->  eHTL
 AlotowDET       = iTC3  ->  wDET
 AuttowDET       = iMAC->wDET + PHY->wDET
 
-!-- Faecal pellets flux (GRI+MEZ+MIZ+ICH+FPL -> eDET)
+!-- Faecal pellets flux (GRI+MEZ+MIZ+ICH -> eDET)
 FPGRI           = GRI   ->  eDET
 FPMEZ           = MEZ   ->  eDET
-FPRest          = MIZ->eDET + ICH->eDET + FPL->eDET
+FPRest          = MIZ->eDET + ICH->eDET
 
 !!! TOTALS
 CommRes         = PHY->eDIC + BAC->eDIC + HNF->eDIC
@@ -289,7 +292,7 @@ GRI     ->  eHTL    ! consumption by seabirds & marine mammals
 
 !-- Fish pelagic
 FPL     ->  eDIC    ! respiration
-FPL     ->  eDET    ! faecal pellets
+FPL     ->  eDET    ! natural mortality & deposition
 FPL     ->  wDET    ! faeces
 FPL     ->  eHTL    ! consumption by seabirds & marine mammals
 
@@ -334,7 +337,7 @@ ICH   ->  GRI       = [minICHtoGRI, maxICHtoGRI]*flowto(GRI)
 AuttowDET           > AlotowDET
 
 !!! VERTICAL FLUXES
-!-- GRI, MEZ, MIZ+ICH+FPL('Rest') -> eDET = faecal pellets
+!-- GRI, MEZ, MIZ+ICH ('Rest') -> eDET = faecal pellets
 FPGRI               = [minFPGRI, maxFPGRI]
 FPMEZ               = [minFPMEZ, maxFPMEZ]
 FPRest              = [minFPRest, maxFPRest]
