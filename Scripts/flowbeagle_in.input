@@ -32,18 +32,18 @@ stGRI         	=   10.872        {mg C/m3}
 stFPL         	=   6808164.671   {mg C/m3}
 
 !!! FLOW MEASUREMENTS
-minGProdPHY      =  33.385        {mg C/m3/d}   ! Gross primary production
-maxGProdPHY      =  52.37         {mg C/m3/d}   ! Gross primary production
-minVerFlux       =  0             {mg C/m3/d}
-maxVerFlux       =  7.3633        {mg C/m3/d}
+minGProdPHY     =  33.385        {mg C/m3/d}   ! Gross primary production
+maxGProdPHY     =  52.37         {mg C/m3/d}   ! Gross primary production
+minVerFlux      =  0             {mg C/m3/d}
+maxVerFlux      =  7.3633        {mg C/m3/d}
 
-! Faecal pellets flux (GRI+MEZ+MIZ+ICH+FPL -> eDET)
-minFPGRI         =  0             {mg C/m3/d}
-maxFPGRI         =  2.88          {mg C/m3/d}
-minFPMEZ         =  0             {mg C/m3/d}     ! Copepods+Euphausiids
-maxFPMEZ         =  0.6633        {mg C/m3/d}
-minFPRest        =  0             {mg C/m3/d}     ! GRI+MEZ+MIZ+ICH+FPL
-maxFPRest        =  4.2967        {mg C/m3/d}
+! Faecal pellets flux (GRI+MEZ+MIZ+ICH -> eDET)
+minFPGRI        =  0             {mg C/m3/d}
+maxFPGRI        =  2.88          {mg C/m3/d}
+minFPMEZ        =  0             {mg C/m3/d}     ! Copepods+Euphausiids
+maxFPMEZ        =  0.6633        {mg C/m3/d}
+minFPRest       =  0             {mg C/m3/d}     ! GRI+MEZ+MIZ+ICH
+maxFPRest       =  4.2967        {mg C/m3/d}
 
 !!! METABOLIC RATES (ingestion, respiration, assimilation)
 !Temperature     =   6.89         {°C}  ! mean 6.28 & 7.51 (Presta et al. 2023)
@@ -66,6 +66,7 @@ minCommRes      =   meanCommRes - sdCommRes   {mg C/m3/d}
 maxCommRes      =   meanCommRes + sdCommRes   {mg C/m3/d}
 
 !-- Ichthyoplankton
+! Re-contactar Virginia GA
 minGrowthICH    =   0.0022        {-}
 maxGrowthICH    =   0.0734        {-}
 
