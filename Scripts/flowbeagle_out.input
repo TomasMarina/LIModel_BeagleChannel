@@ -92,8 +92,8 @@ maxPHYtoeDET    =   {-}
 !-- to Detritus in water column
 minPHYtowDET    =   {-}
 maxPHYtowDET    =   {-}
-miniMACtowDET   =   {-}   ! mean 'blades', 'stipes', 'holdfasts'
-maxiMACtowDET   =   {-}   ! mean 'blades', 'stipes', 'holdfasts'
+miniMACtowDET   =   {-}
+maxiMACtowDET   =   {-}
 miniTC3towDET   =   {-}
 maxiTC3towDET   =   {-}
 
