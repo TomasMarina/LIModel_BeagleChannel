@@ -57,8 +57,8 @@ minLysBAC       =   0.06          {-}   ! virus-mediated bacterial mortality
 maxLysBAC       =   0.58          {-}   ! virus-mediated bacterial mortality
 
 !-- Heterotrophic nanoflagellates (from González et al. 2016)
-minUptaHNF      =   {mg C/m3/d}
-maxUptaHNF      =   {mg C/m3/d}
+minUptaHNF      =   20.37         {mg C/m3/d}
+maxUptaHNF      =   37.6845       {mg C/m3/d}
 
 !-- Community respiration
 minCommRes      =   7.877         {mg C/m3/d}
