@@ -29,7 +29,7 @@ legend(x=113, y=10, c("wDET: Detritus in water column", "DOC: Dissolved Organic 
        y.intersp = .5, cex=0.5, bty="n")
 
 # Plot variable ranges
-Plotranges(LIMBeagle_in, lab.cex = 0.7, xlab = "g C /m^3/d", type = "V",
+Plotranges(LIMBeagle_in, lab.cex = 0.7, xlab = expression("mg C m"^-3*" d"^-1), type = "V",
            main = "Variable range estimations")
 
 # Plot a single solution
