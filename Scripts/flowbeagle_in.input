@@ -91,8 +91,8 @@ maxPHYtoeDET    =   0.17          {-}
 !-- to Detritus in water column
 minPHYtowDET    =   0.45          {-}
 maxPHYtowDET    =   0.75          {-}
-miniMACtowDET   =   0.00          {-}   ! mean 'blades', 'stipes', 'holdfasts'
-maxiMACtowDET   =   0.13          {-}   ! mean 'blades', 'stipes', 'holdfasts'
+miniMACtowDET   =   0.00          {-}
+maxiMACtowDET   =   0.34          {-}
 miniTC3towDET   =   0.05          {-}
 maxiTC3towDET   =   0.25          {-}
 
