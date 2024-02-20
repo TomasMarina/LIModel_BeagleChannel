@@ -100,7 +100,7 @@ maxiTC3towDET   =   0.25          {-}
 minwDETtoMIZ    =   0.62          {-}
 maxwDETtoMIZ    =   0.90          {-}
 minPHYtoMIZ     =   0.03          {-}
-maxPHYtoMIZ     =   0.15          {-}  
+maxPHYtoMIZ     =   0.15          {-}
 
 !-- to MesoZooplankton
 minMIZtoMEZ     =   0.14          {-}  

@@ -84,42 +84,40 @@ maxAEGRI        =   0.975         {-}
 
 !!! PROPORTIONAL CONTRIBUTIONS (from Bruno et al. 2023 & Presta et al. 2023)
 !-- export to Detritus in benthos
-minwDETtoeDET   =   {-}
-maxwDETtoeDET   =   {-}
-minPHYtoeDET    =   {-}
-maxPHYtoeDET    =   {-}
+minwDETtoeDET   =   0.03          {-}
+maxwDETtoeDET   =   0.27          {-}
+minPHYtoeDET    =   0.01          {-}
+maxPHYtoeDET    =   0.17          {-}
 
 !-- to Detritus in water column
-minPHYtowDET    =   {-}
-maxPHYtowDET    =   {-}
-miniMACtowDET   =   {-}
-maxiMACtowDET   =   {-}
-miniTC3towDET   =   {-}
-maxiTC3towDET   =   {-}
+minPHYtowDET    =   0.45          {-}
+maxPHYtowDET    =   0.75          {-}
+miniMACtowDET   =   0.00          {-}
+maxiMACtowDET   =   0.34          {-}
 
 !-- to MicroZooplankton
-minwDETtoMIZ    =   {-}
-maxwDETtoMIZ    =   {-}
-minPHYtoMIZ     =   {-}
-maxPHYtoMIZ     =   {-}  
+minwDETtoMIZ    =   0.62          {-}
+maxwDETtoMIZ    =   0.90          {-}
+minPHYtoMIZ     =   0.03          {-}
+maxPHYtoMIZ     =   0.15          {-}
 
 !-- to MesoZooplankton
-minMIZtoMEZ     =   {-}  
-maxMIZtoMEZ     =   {-}
+minMIZtoMEZ     =   0.14          {-}  
+maxMIZtoMEZ     =   0.34          {-}
 
 !-- to Ichthyoplankton
-minwDETtoICH    =   {-}
-maxwDETtoICH    =   {-}
-minPHYtoICH     =   {-}
-maxPHYtoICH     =   {-}
+minwDETtoICH    =   0.00          {-}
+maxwDETtoICH    =   0.08          {-}
+minPHYtoICH     =   0.00          {-}
+maxPHYtoICH     =   0.10          {-}
 
 !-- to Grimothea gregaria
-minMIZtoGRI     =   {-}
-maxMIZtoGRI     =   {-}
-minMEZtoGRI     =   {-}
-maxMEZtoGRI     =   {-}
-minICHtoGRI     =   {-}
-maxICHtoGRI     =   {-}
+minMIZtoGRI     =   0.07          {-}
+maxMIZtoGRI     =   0.39          {-}
+minMEZtoGRI     =   0.006         {-}
+maxMEZtoGRI     =   0.13          {-}
+minICHtoGRI     =   0.00          {-}
+maxICHtoGRI     =   0.11          {-}
 
 ###### END PARAMETERS
 
@@ -308,7 +306,6 @@ FPL     ->  eHTL    ! consumption by seabirds & marine mammals
 !-- to Detritus in water column
 PHY   ->  wDET      = [minPHYtowDET, maxPHYtowDET]*flowto(wDET)
 iMAC  ->  wDET      = [miniMACtowDET, maxiMACtowDET]*flowto(wDET)
-iTC3  ->  wDET      = [miniTC3towDET, maxiTC3towDET]*flowto(wDET)
 
 !-- export to Detritus in benthos
 wDET  ->  eDET      = [minwDETtoeDET, maxwDETtoeDET]*flowto(eDET)
