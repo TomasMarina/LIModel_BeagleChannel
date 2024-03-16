@@ -15,7 +15,10 @@ LIMBeagle_out <- Setup(readLIM_out)
 flowranges_out <- Xranges(LIMBeagle_out)
 
 # Plot flows --------------------------------------------------------------
-Plotranges(LIMBeagle_in, lab.cex = 0.7, xlab = expression("mg C m"^-3*" d"^-1))
+
+plotflows_in <- Plotranges(LIMBeagle_in, lab.cex = 0.7, xlab = expression("mg C m"^-3*" d"^-1))
+plotflows_out <- Plotranges(LIMBeagle_out, lab.cex = 0.7, xlab = expression("mg C m"^-3*" d"^-1))
+# Combine flow plots
 
 # Settings to A4 page
 mtext("Flow estimations", side = 2, line = 2.5)
@@ -33,5 +36,5 @@ Plotranges(LIMBeagle_in, lab.cex = 0.7, xlab = expression("mg C m"^-3*" d"^-1), 
            main = "Variable range estimations")
 
 # Plot a single solution
-plotweb(Flowmatrix(LIMBeagle_in),
+plotweb(Flowmatrix(LIMBeagle_out),
         bty="n", lab.size=0.85)
